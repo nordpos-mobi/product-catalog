@@ -28,7 +28,7 @@
 
     <stripes:layout-component name="button.action">
 
-        <a href="#deleteCategoryDialog" 
+        <a href="#delete_category" 
            data-rel="popup" 
            data-position-to="window" 
            data-transition="pop" 
@@ -36,7 +36,7 @@
             <stripes:label name="label.delete" />
         </a>
         <div data-role="popup" 
-             id="deleteCategoryDialog" 
+             id="delete_category" 
              data-overlay-theme="b" data-theme="b" 
              data-dismissible="false" style="max-width:400px;">
             <div data-role="header" data-theme="a">

@@ -29,23 +29,35 @@
         </sdynattr:link>          
     </stripes:layout-component>
 
-    <stripes:layout-component name="content">
-        <stripes:messages />
+    <%-- Main content of the page implementation to the template for view --%>
+    <stripes:layout-component name="content">        
+        <%-- Errors after run action --%>
         <stripes:errors />
+        <%-- Messages about completed action --%>
+        <stripes:messages />
+        <%-- Listview include search by the name of elements --%>
         <ul data-role="listview" data-filter="true"
             data-filter-placeholder="${actionBean.getLocalizationKey("label.ProductCategory.search")}"
             data-inset="true" data-split-icon="edit" data-split-theme="a">
+            <%-- Create dynamic listview. --%>
             <c:forEach items="${actionBean.categoryList}" var="category">                
                 <li>
+                    <%-- Link to view the selected child elements of the list --%>
                     <sdynattr:link href="/CategoryProductList.action"
                                    data-transition="slide">
+                        <%-- Key parameter for search child elements --%>
                         <stripes:param name="category.id" value="${category.id}"/>
+                        <%-- Name of the list item --%>
                         <c:out value="${category.name}"/>
+                        <%-- Addional information about number of child elements --%>
                         <span class="ui-li-count"><c:out value="${category.productList.size()}"/></span>
                     </sdynattr:link>
+                    <%-- Link to change the current list item --%>
                     <sdynattr:link href="/CategoryChange.action"
                                    data-transition="slide">
+                        <%-- Key parameter for changes of the current list item --%>
                         <stripes:param name="category.id" value="${category.id}"/>
+                        <%-- Description of the action by the current list item --%>
                         <stripes:label name="label.edit" />
                     </sdynattr:link>
                 </li>
