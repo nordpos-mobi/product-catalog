@@ -33,9 +33,6 @@
         <stripes:errors />
         <stripes:messages />
         <stripes:form action="/CategoryCreate.action?add">            
-            <div>
-                <stripes:hidden name="category.id" value="${actionBean.randomId}" />
-            </div>
             <ul data-role="listview" data-inset="true">                
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.name" for="categoryName" />

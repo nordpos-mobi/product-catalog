@@ -33,7 +33,7 @@ public class ProductCategory {
     public static final String NAME = "NAME";
     public static final String CODE = "CODE";
 
-    @DatabaseField(id = true, columnName = ID)
+    @DatabaseField(generatedId = true, columnName = ID)
     private UUID id;
 
     @DatabaseField(columnName = NAME, unique = true, canBeNull = false)
