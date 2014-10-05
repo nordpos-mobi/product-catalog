@@ -17,6 +17,7 @@ package mobi.nordpos.catalog.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -42,10 +43,10 @@ public class Product {
     private String code;
 
     @DatabaseField(columnName = PRICEBUY, canBeNull = false)
-    private Double pricebuy;
+    private BigDecimal pricebuy;
 
     @DatabaseField(columnName = PRICESELL, canBeNull = false)
-    private Double pricesell;
+    private BigDecimal pricesell;
 
     @DatabaseField(foreign = true,
             columnName = CATEGORY,
@@ -78,19 +79,19 @@ public class Product {
         this.code = code;
     }
 
-    public Double getPriceBuy() {
+    public BigDecimal getPriceBuy() {
         return pricebuy;
     }
 
-    public void setPriceBuy(Double pricebuy) {
+    public void setPriceBuy(BigDecimal pricebuy) {
         this.pricebuy = pricebuy;
     }
 
-    public Double getPriceSell() {
+    public BigDecimal getPriceSell() {
         return pricesell;
     }
 
-    public void setPriceSell(Double pricesell) {
+    public void setPriceSell(BigDecimal pricesell) {
         this.pricesell = pricesell;
     }
 

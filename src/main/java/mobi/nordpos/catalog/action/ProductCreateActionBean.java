@@ -23,6 +23,7 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
+import net.sourceforge.stripes.validation.BigDecimalTypeConverter;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -70,10 +71,12 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                 maxlength = 12),
         @Validate(on = {"add"},
                 field = "priceSell",
-                required = true),
+                required = true,
+                converter = BigDecimalTypeConverter.class),
         @Validate(on = {"add"},
                 field = "priceBuy",
-                required = true),
+                required = true,                
+                converter = BigDecimalTypeConverter.class),
         @Validate(field = "productCategory.id",
                 required = true,
                 converter = UUIDTypeConverter.class)
