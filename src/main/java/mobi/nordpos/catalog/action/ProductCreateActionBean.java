@@ -68,7 +68,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                 field = "code",
                 required = true,
                 trim = true,
-                maxlength = 12),
+                maxlength = 13),
         @Validate(on = {"add"},
                 field = "priceSell",
                 required = true,
