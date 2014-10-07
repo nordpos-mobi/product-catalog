@@ -18,6 +18,7 @@ package mobi.nordpos.catalog.action;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.Product;
+import mobi.nordpos.catalog.model.ProductCategory;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -75,22 +76,22 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         return new ForwardResolution(CategoryListActionBean.class);
     }
 
-    @ValidationMethod(on = "update")
-    public void validateProductCodeIsUnique(ValidationErrors errors) {
-        String codeUpdate = getProduct().getCode();
-        if (codeUpdate != null && !codeUpdate.isEmpty() && !codeUpdate.equals(getCodeCurrent())) {
-            try {
-                if (readProduct(codeUpdate) != null) {
-                    errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("label.error.Product.AlreadyExists"), codeUpdate
-                    ));
-                }
-            } catch (SQLException ex) {
-                getContext().getValidationErrors().addGlobalError(
-                        new SimpleError(ex.getMessage()));
-            }
-        }
-    }
+//    @ValidationMethod(on = "update")
+//    public void validateProductCodeIsUnique(ValidationErrors errors) {
+//        String codeUpdate = getProduct().getCode();
+//        if (codeUpdate != null && !codeUpdate.isEmpty() && !codeUpdate.equals(getCodeCurrent())) {
+//            try {
+//                if (readProduct(codeUpdate) != null) {
+//                    errors.addGlobalError(new SimpleError(
+//                            getLocalizationKey("label.error.Product.AlreadyExists"), codeUpdate
+//                    ));
+//                }
+//            } catch (SQLException ex) {
+//                getContext().getValidationErrors().addGlobalError(
+//                        new SimpleError(ex.getMessage()));
+//            }
+//        }
+//    }
 
     @ValidationMethod(on = "form")
     public void validateProductIdIsAvalaible(ValidationErrors errors) {
@@ -98,6 +99,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
             Product product = readProduct(getProduct().getId());
             if (product != null) {
                 setProduct(product);
+//                setCodeCurrent(product.getCode());
             } else {
                 errors.add("product.id", new SimpleError(
                         getLocalizationKey("label.error.CatalogNotInclude")));
@@ -106,10 +108,10 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
             getContext().getValidationErrors().addGlobalError(
                     new SimpleError(ex.getMessage()));
         }
-    }
+    }   
 
     @ValidateNestedProperties({
-        @Validate(on = {"update", "delete"},
+        @Validate(on = {"form", "update", "delete"},
                 field = "id",
                 required = true,
                 converter = UUIDTypeConverter.class),
@@ -118,7 +120,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
                 required = true,
                 trim = true,
                 maxlength = 255),
-        @Validate(on = {"form", "update"},
+        @Validate(on = {"update"},
                 field = "code",
                 required = true,
                 trim = true,
@@ -141,11 +143,11 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         super.setProduct(product);
     }
 
-    public String getCodeCurrent() {
-        return codeCurrent;
-    }
-
-    public void setCodeCurrent(String codeCurrent) {
-        this.codeCurrent = codeCurrent;
-    }
+//    public String getCodeCurrent() {
+//        return codeCurrent;
+//    }
+//
+//    public void setCodeCurrent(String codeCurrent) {
+//        this.codeCurrent = codeCurrent;
+//    }
 }

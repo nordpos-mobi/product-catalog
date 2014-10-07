@@ -27,6 +27,12 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
+        <sdynattr:link href="/ProductChange.action"
+                       class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-left"
+                       role="button">
+            <stripes:param name="product.id" value="${actionBean.product.id}"/>
+            <stripes:label name="label.edit" />
+        </sdynattr:link>        
     </stripes:layout-component>
 
     <stripes:layout-component name="content">

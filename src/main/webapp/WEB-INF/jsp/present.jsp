@@ -17,7 +17,7 @@
     <stripes:layout-component name="button.action">
         <sdynattr:link href="/Presentation.action"
                        event="info"
-                       class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-notext"
+                       class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left"
                        role="button">
             <stripes:label name="label.info" />
         </sdynattr:link>
