@@ -4,9 +4,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -20,8 +20,10 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.UUID;
 import mobi.nordpos.catalog.dao.ormlite.ProductCategoryPersist;
+import mobi.nordpos.catalog.dao.ormlite.UserPersist;
 import mobi.nordpos.catalog.ext.MobileActionBeanContext;
 import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.catalog.model.User;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.controller.StripesFilter;
@@ -36,7 +38,7 @@ public abstract class BaseActionBean implements ActionBean {
     private MobileActionBeanContext context;
 
     Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    
+
     ConnectionSource connection;
 
     @Override
@@ -59,13 +61,13 @@ public abstract class BaseActionBean implements ActionBean {
 
     public String getDataBasePassword() {
         return getContext().getServletContext().getInitParameter("db.password");
-    }    
-    
+    }
+
     public String getLocalizationKey(String key) {
         return StripesFilter.getConfiguration().getLocalizationBundleFactory()
                 .getFormFieldBundle(getContext().getLocale()).getString(key);
-    }   
-    
+    }
+
     protected ProductCategory readProductCategory(UUID uuid) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
@@ -77,5 +79,5 @@ public abstract class BaseActionBean implements ActionBean {
             }
         }
     }
-    
+
 }
