@@ -36,7 +36,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
 
     private static final String PRODUCT_EDIT = "/WEB-INF/jsp/product_edit.jsp";
 
-    private String codeCurrent;
+    private String currentCode;
 
     @DefaultHandler
     public Resolution form() throws SQLException {
@@ -77,12 +77,12 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
 
     @ValidationMethod(on = "update")
     public void validateProductCodeIsUnique(ValidationErrors errors) {
-        String codeUpdate = getProduct().getCode();
-        if (codeUpdate != null && !codeUpdate.isEmpty() && !codeUpdate.equals(getCodeCurrent())) {
+        String updateCode = getProduct().getCode();
+        if (updateCode != null && !updateCode.isEmpty() && !updateCode.equals(getCurrentCode())) {
             try {
-                if (readProduct(codeUpdate) != null) {
+                if (readProduct(updateCode) != null) {
                     errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("label.error.Product.AlreadyExists"), codeUpdate
+                            getLocalizationKey("label.error.Product.AlreadyExists"), updateCode
                     ));
                 }
             } catch (SQLException ex) {
@@ -141,11 +141,11 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         super.setProduct(product);
     }
 
-    public String getCodeCurrent() {
-        return codeCurrent;
+    public String getCurrentCode() {
+        return currentCode;
     }
 
-    public void setCodeCurrent(String codeCurrent) {
-        this.codeCurrent = codeCurrent;
+    public void setCurrentCode(String currentCode) {
+        this.currentCode = currentCode;
     }
 }

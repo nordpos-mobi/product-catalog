@@ -72,7 +72,7 @@
                 <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
                 <stripes:hidden name="product.productCategory.id" value="${actionBean.product.productCategory.id}"/>
                 <stripes:hidden name="product.productCategory.name" value="${actionBean.product.productCategory.name}"/>
-                <stripes:hidden name="codeCurrent" value="${actionBean.product.code}"/>
+                <stripes:hidden name="currentCode" value="${actionBean.product.code}"/>
             </div>
             <ul data-role="listview" data-inset="true">  
                 <li class="ui-field-contain">

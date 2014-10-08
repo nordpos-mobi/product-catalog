@@ -58,7 +58,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                 .addParameter("category.id", product.getProductCategory().getId());
     }
 
-    @ValidateNestedProperties({        
+    @ValidateNestedProperties({
         @Validate(on = {"add"},
                 field = "name",
                 required = true,
@@ -75,7 +75,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                 converter = BigDecimalTypeConverter.class),
         @Validate(on = {"add"},
                 field = "priceBuy",
-                required = true,                
+                required = true,
                 converter = BigDecimalTypeConverter.class),
         @Validate(field = "productCategory.id",
                 required = true,
@@ -99,6 +99,23 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
                     new SimpleError(ex.getMessage()));
+        }
+    }
+
+    @ValidationMethod
+    public void validateProductCodeIsUnique(ValidationErrors errors) {
+        String codeCreate = getProduct().getCode();
+        if (codeCreate != null && !codeCreate.isEmpty()) {
+            try {
+                if (readProduct(codeCreate) != null) {
+                    errors.addGlobalError(new SimpleError(
+                            getLocalizationKey("label.error.Product.AlreadyExists"), codeCreate
+                    ));
+                }
+            } catch (SQLException ex) {
+                getContext().getValidationErrors().addGlobalError(
+                        new SimpleError(ex.getMessage()));
+            }
         }
     }
 

@@ -70,7 +70,7 @@
         <stripes:form action="/CategoryChange.action?update">
             <div>
                 <stripes:hidden name="category.id" value="${actionBean.category.id}"/>                    
-                <stripes:hidden name="codeCurrent" value="${actionBean.category.code}"/>               
+                <stripes:hidden name="currentCode" value="${actionBean.category.code}"/>               
             </div>
             <ul data-role="listview" data-inset="true">  
                 <li class="ui-field-contain">

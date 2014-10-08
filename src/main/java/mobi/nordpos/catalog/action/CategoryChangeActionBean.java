@@ -35,7 +35,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
 
     private static final String CATEGORY_EDIT = "/WEB-INF/jsp/category_edit.jsp";
 
-    private String codeCurrent;
+    private String currentCode;
 
     @DefaultHandler
     public Resolution form() throws SQLException {
@@ -86,12 +86,12 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
 
     @ValidationMethod(on = "update")
     public void validateCategoryCodeIsUnique(ValidationErrors errors) {
-        String codeUpdate = getCategory().getCode();
-        if (codeUpdate != null && !codeUpdate.isEmpty() && !codeUpdate.equals(getCodeCurrent())) {
+        String updateCode = getCategory().getCode();
+        if (updateCode != null && !updateCode.isEmpty() && !updateCode.equals(getCurrentCode())) {
             try {
-                if (readProductCategory(codeUpdate) != null) {
+                if (readProductCategory(updateCode) != null) {
                     errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("label.error.ProductCategory.AlreadyExists"), codeUpdate
+                            getLocalizationKey("label.error.ProductCategory.AlreadyExists"), updateCode
                     ));
                 }
             } catch (SQLException ex) {
@@ -137,11 +137,11 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         super.setCategory(category);
     }
 
-    public String getCodeCurrent() {
-        return codeCurrent;
+    public String getCurrentCode() {
+        return currentCode;
     }
 
-    public void setCodeCurrent(String codeCurrent) {
-        this.codeCurrent = codeCurrent;
+    public void setCurrentCode(String currentCode) {
+        this.currentCode = currentCode;
     }
 }
