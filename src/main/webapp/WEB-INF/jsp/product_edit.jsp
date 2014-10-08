@@ -1,5 +1,5 @@
 <%--
-    Document   : category_create
+    Document   : product_edit
     Author     : Andrey Svininykh (svininykh@gmail.com)
     Copyright  : Nord Trading Network
     License    : Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)
@@ -7,23 +7,24 @@
 
 <%@include file="/WEB-INF/jsp/common/taglibs.jsp"%>
 <stripes:layout-render name="/WEB-INF/jsp/common/layout_main.jsp"
-                       title="Product Change"
-                       pageid="ProductChange">
+                       title="Product Edit"
+                       pageid="ProductEdit">
 
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Presentation.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
             <stripes:label name="label.home" />
-        </sdynattr:link>                  
+        </sdynattr:link>          
         <sdynattr:link href="/CategoryProductList.action"
-                       class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
+                       class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left"
+                       data-prefetch="true">
             <stripes:param name="category.id" value="${actionBean.product.productCategory.id}"/>
             <c:out value="${actionBean.product.productCategory.name}"/>
-        </sdynattr:link>                   
+        </sdynattr:link>           
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.ProductChange"/>
+        <stripes:label name="label.ProductEdit" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
@@ -48,7 +49,8 @@
                 <p><stripes:label name="label.ask.ProductDelete" /></p>
                 <stripes:form action="/ProductChange.action?delete">
                     <div>
-                        <stripes:hidden name="product.id" value="${actionBean.product.id}"/>                    
+                        <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
+                        <stripes:hidden name="product.name" value="${actionBean.product.name}"/>
                     </div>
                     <sdynattr:submit name="yes" data-theme="a" data-icon="check"/>                    
                 </stripes:form>
@@ -69,8 +71,10 @@
             <div>
                 <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
                 <stripes:hidden name="product.productCategory.id" value="${actionBean.product.productCategory.id}"/>
+                <stripes:hidden name="product.productCategory.name" value="${actionBean.product.productCategory.name}"/>
+                <stripes:hidden name="codeCurrent" value="${actionBean.product.code}"/>
             </div>
-            <ul data-role="listview" data-inset="true">                
+            <ul data-role="listview" data-inset="true">  
                 <li class="ui-field-contain">
                     <stripes:label name="label.Product.name" for="productName" />
                     <input name="product.name" id="productName" type="text"
@@ -111,8 +115,9 @@
                         </div>
                     </fieldset>
                 </li>
-            </ul>        
+            </ul>
         </stripes:form>
+
     </stripes:layout-component>
 
     <stripes:layout-component name="footer">
