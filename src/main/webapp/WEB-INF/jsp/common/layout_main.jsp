@@ -25,7 +25,7 @@
             <script src="<c:url value='/js/jquery.mobile-1.4.4.min.js'/>"></script>
             <script src="<c:url value='/js/jquery.flot.min.js'/>" type="text/javascript" ></script>
             <script src="<c:url value='/js/jquery.flot.pie.min.js'/>" type="text/javascript" ></script>
-            
+
         </head>
         <body>
             <div data-role="page" id="${pageid}">
@@ -38,6 +38,14 @@
                     </h2>
                     <div class="ui-btn-right" data-role="controlgroup" data-type="horizontal" data-mini="true">
                         <stripes:layout-component name="button.action"/>
+                        <c:if test="${not empty user}">
+                            <sdynattr:link href="/UserView.action"
+                                           class="ui-btn ui-corner-all ui-btn-icon-left ui-icon-user">
+                                <span>
+                                    <c:out value="${user.name}"/>
+                                </span>
+                            </sdynattr:link>
+                        </c:if>
                     </div>
                 </div>
                 <div data-role="content" style="padding: 15px" align="center">

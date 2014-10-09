@@ -90,6 +90,12 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
         }
     }
 
+    @DontValidate
+    public Resolution logout() throws SQLException {
+        getContext().logout();
+        return new RedirectResolution(this.getClass());
+    }
+
     @ValidateNestedProperties({
         @Validate(field = "name",
                 required = true,
