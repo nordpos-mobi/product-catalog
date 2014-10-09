@@ -29,6 +29,7 @@
                 <img src="<c:url value='/image/logo.png' />" alt="NORD POS mobi"/>
             </a>
             <stripes:errors />
+            <stripes:messages />
             <stripes:form action="/UserAuthorization.action">
                 <div class="ui-field-contain">
                     <stripes:label name="label.login.name"
@@ -38,8 +39,7 @@
                            id="loginName"
                            data-clear-btn="true"
                            placeholder="${actionBean.getLocalizationKey("label.LoginName.enter")}"
-                           value=""
-                           />
+                           value=""/>
                 </div>
                 <div class="ui-field-contain">
                     <stripes:label name="label.login.password"

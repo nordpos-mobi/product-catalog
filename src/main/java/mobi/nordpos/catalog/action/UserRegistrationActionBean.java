@@ -26,6 +26,7 @@ import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
+import net.sourceforge.stripes.validation.BooleanTypeConverter;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -38,6 +39,9 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
 
     private static final String REG_FORM = "/WEB-INF/jsp/user_reg.jsp";
 
+    @Validate(required = true, minlength = 5, maxlength = 20, expression = "${'this' == 'this'.user.password}")
+    private String confirmPassword;
+
     @DefaultHandler
     @DontValidate
     public Resolution form() {
@@ -49,7 +53,7 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
         try {
             user.setPassword(Hashcypher.hashString(user.getPassword()));
             getContext().getMessages().add(
-                    new SimpleMessage(getLocalizationKey("label.message.User.registered"),
+                    new SimpleMessage(getLocalizationKey("message.User.registered"),
                             createUser(user).getName())
             );
         } catch (SQLException ex) {
@@ -61,26 +65,28 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
     }
 
     @ValidateNestedProperties({
-        @Validate(field = "name", required = true, minlength = 5, maxlength = 20),
-        @Validate(field = "password", required = true, minlength = 5, maxlength = 20)})
+        @Validate(field = "name",
+                required = true,
+                minlength = 5,
+                maxlength = 20),
+        @Validate(field = "password",
+                required = true,
+                minlength = 5,
+                maxlength = 20),
+        @Validate(field = "visible",
+                required = true,
+                converter = BooleanTypeConverter.class),
+        @Validate(field = "role",
+                required = true)})
     @Override
     public void setUser(User user) {
         super.setUser(user);
     }
 
-    @Validate(required = true, minlength = 5, maxlength = 20, expression = "this == user.password")
-    private String confirmPassword;
-
-    /**
-     * The 2nd/confirmation password entered by the user.
-     */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
 
-    /**
-     * The 2nd/confirmation password entered by the user.
-     */
     public String getConfirmPassword() {
         return confirmPassword;
     }
