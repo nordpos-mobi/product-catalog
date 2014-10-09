@@ -50,7 +50,7 @@
                     <stripes:label name="label.Product.code" for="productCode" />
                     <input name="product.code" id="productCode" type="text"
                            placeholder="${actionBean.getLocalizationKey("label.ProductCode.enter")}"
-                           value=""
+                           value="${actionBean.generateCode}"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">

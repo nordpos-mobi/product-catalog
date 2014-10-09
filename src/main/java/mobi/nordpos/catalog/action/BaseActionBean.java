@@ -61,6 +61,10 @@ public abstract class BaseActionBean implements ActionBean {
         return getContext().getServletContext().getInitParameter("db.password");
     }
 
+    public String getBarcodePrefix() {
+        return getContext().getServletContext().getInitParameter("barcode.prefix");
+    }
+    
     public String getLocalizationKey(String key) {
         return StripesFilter.getConfiguration().getLocalizationBundleFactory()
                 .getFormFieldBundle(getContext().getLocale()).getString(key);

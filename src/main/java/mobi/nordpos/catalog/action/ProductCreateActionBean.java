@@ -16,6 +16,7 @@
 package mobi.nordpos.catalog.action;
 
 import java.sql.SQLException;
+import java.util.List;
 import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.Product;
 import mobi.nordpos.catalog.model.ProductCategory;
@@ -29,6 +30,8 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
+import org.apache.commons.validator.routines.checkdigit.CheckDigitException;
+import org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -68,7 +71,9 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                 field = "code",
                 required = true,
                 trim = true,
-                maxlength = 13),
+                minlength = 13,
+                maxlength = 13,
+                mask = "[0-9]+"),
         @Validate(on = {"add"},
                 field = "priceSell",
                 required = true,
@@ -117,6 +122,30 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                         new SimpleError(ex.getMessage()));
             }
         }
+    }
+
+    public String getGenerateCode() throws SQLException, CheckDigitException {
+        String prefix = getBarcodePrefix();
+
+        if (!prefix.matches("\\d\\d\\d")) {
+            prefix = "200";
+        }
+
+        String plu = getProduct().getProductCategory().getCode();
+        while (plu.length() < 4) {
+            plu = "0".concat(plu);
+        }
+        if (!plu.matches("\\d\\d\\d\\d")) {
+            plu = "0000";
+        }
+        List<Product> list = listProductByCodePrefix(prefix.concat(plu));
+        String code = Integer.toString(list.size() + 1);
+        while (code.length() < 5) {
+            code = "0".concat(code);
+        }
+        String barcode = prefix.concat(plu).concat(code);        
+        barcode = barcode.concat(new EAN13CheckDigit().calculate(barcode));
+        return barcode;
     }
 
 }

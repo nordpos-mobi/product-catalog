@@ -63,7 +63,8 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         @Validate(field = "code",
                 required = true,
                 trim = true,
-                maxlength = 4)
+                maxlength = 4,
+                mask = "[0-9]+")
     })
     @Override
     public void setCategory(ProductCategory category) {

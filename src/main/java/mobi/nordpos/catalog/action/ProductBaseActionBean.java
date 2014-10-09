@@ -16,7 +16,9 @@
 package mobi.nordpos.catalog.action;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 import mobi.nordpos.catalog.dao.ormlite.ProductPersist;
 import mobi.nordpos.catalog.model.Product;
@@ -53,6 +55,20 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductPersist productDao = new ProductPersist(connection);
             return productDao.read(code);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+    
+    protected List<Product> listProductByCodePrefix(String prefix) throws SQLException {
+        try {
+            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
+            ProductPersist productDao = new ProductPersist(connection);
+            QueryBuilder qb = productDao.queryBuilder();
+            qb.where().like(Product.CODE, prefix.concat("%"));            
+            return qb.query();
         } finally {
             if (connection != null) {
                 connection.close();
