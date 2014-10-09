@@ -44,13 +44,5 @@ public class ProductCategoryPersist extends BaseDaoImpl<ProductCategory, UUID> i
         qb.where().isNotNull(ProductCategory.ID);
         return qb.query();
     }
-    
-    @Override
-    public ProductCategory read(String code) throws SQLException {
-        productCategoryDao = DaoManager.createDao(connectionSource, ProductCategory.class);
-        QueryBuilder qb = productCategoryDao.queryBuilder();
-        qb.where().like(ProductCategory.CODE, code);
-        return (ProductCategory) qb.queryForFirst();
-    }    
 
 }

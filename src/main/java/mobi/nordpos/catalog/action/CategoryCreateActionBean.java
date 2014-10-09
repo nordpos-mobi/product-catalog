@@ -18,7 +18,6 @@ package mobi.nordpos.catalog.action;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.model.ProductCategory;
 import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
@@ -36,7 +35,6 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
     private static final String CATEGORY_CREATE = "/WEB-INF/jsp/category_create.jsp";
 
     @DefaultHandler
-    @DontValidate
     public Resolution form() {
         return new ForwardResolution(CATEGORY_CREATE);
     }
@@ -50,18 +48,20 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
             );
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
-                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+                    new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution(CategoryListActionBean.class);
     }
 
     @ValidateNestedProperties({
-        @Validate(field = "name",
+        @Validate(on = "add",
+                field = "name",
                 required = true,
                 trim = true,
                 maxlength = 255),
         @Validate(field = "code",
+                required = true,
                 trim = true,
                 maxlength = 4)
     })
@@ -71,14 +71,13 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
     }
 
     @ValidationMethod
-    public void validateCategoryCodeIsUnique(ValidationErrors errors) {
-        String codeCreate = getCategory().getCode();
-        if (codeCreate != null && !codeCreate.isEmpty()) {
+    public void validateCategoryNameIsUnique(ValidationErrors errors) {
+        String name = getCategory().getName();
+        if (name != null && !name.isEmpty()) {
             try {
-                if (readProductCategory(codeCreate) != null) {
-                    errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("error.ProductCategory.AlreadyExists"), codeCreate
-                    ));
+                if (readProductCategory(ProductCategory.NAME, name) != null) {
+                    errors.add("category.name", new SimpleError(
+                            getLocalizationKey("error.ProductCategory.AlreadyExists"), name));
                 }
             } catch (SQLException ex) {
                 getContext().getValidationErrors().addGlobalError(
@@ -86,5 +85,32 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
             }
         }
     }
-    
+
+    @ValidationMethod
+    public void validateCategoryCodeIsUnique(ValidationErrors errors) {
+        String code = getCategory().getCode();
+        if (code != null && !code.isEmpty()) {
+            try {
+                if (readProductCategory(ProductCategory.CODE, code) != null) {
+                    errors.add("category.code", new SimpleError(
+                            getLocalizationKey("error.ProductCategory.AlreadyExists"), code));
+                }
+            } catch (SQLException ex) {
+                getContext().getValidationErrors().addGlobalError(
+                        new SimpleError(ex.getMessage()));
+            }
+        }
+    }
+
+    public String getGenerateCode() {
+        String code = getCategory().getCode();
+        while (code.length() < 4) {
+            code = "0".concat(code);
+        }
+        if (code.matches("\\d\\d\\d\\d")) {
+            return code;
+        } else {
+            return "0000";
+        }
+    }
 }

@@ -36,6 +36,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     private static final String CATEGORY_EDIT = "/WEB-INF/jsp/category_edit.jsp";
 
     private String currentCode;
+    private String currentName;
 
     @DefaultHandler
     public Resolution form() throws SQLException {
@@ -52,7 +53,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
-                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+                    new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution(CategoryListActionBean.class);
@@ -68,7 +69,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
-                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+                    new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution(CategoryListActionBean.class);
@@ -85,14 +86,29 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     }
 
     @ValidationMethod(on = "update")
-    public void validateCategoryCodeIsUnique(ValidationErrors errors) {
-        String updateCode = getCategory().getCode();
-        if (updateCode != null && !updateCode.isEmpty() && !updateCode.equals(getCurrentCode())) {
+    public void validateCategoryNameIsUnique(ValidationErrors errors) {
+        String name = getCategory().getName();
+        if (name != null && !name.isEmpty() && !name.equals(getCurrentName())) {
             try {
-                if (readProductCategory(updateCode) != null) {
-                    errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("error.ProductCategory.AlreadyExists"), updateCode
-                    ));
+                if (readProductCategory(ProductCategory.NAME, name) != null) {
+                    errors.add("category.name", new SimpleError(
+                            getLocalizationKey("error.ProductCategory.AlreadyExists"), name));
+                }
+            } catch (SQLException ex) {
+                getContext().getValidationErrors().addGlobalError(
+                        new SimpleError(ex.getMessage()));
+            }
+        }
+    }
+
+    @ValidationMethod(on = "update")
+    public void validateCategoryCodeIsUnique(ValidationErrors errors) {
+        String code = getCategory().getCode();
+        if (code != null && !code.isEmpty() && !code.equals(getCurrentCode())) {
+            try {
+                if (readProductCategory(ProductCategory.CODE, code) != null) {
+                    errors.add("category.code", new SimpleError(
+                            getLocalizationKey("error.ProductCategory.AlreadyExists"), code));
                 }
             } catch (SQLException ex) {
                 getContext().getValidationErrors().addGlobalError(
@@ -135,6 +151,14 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     @Override
     public void setCategory(ProductCategory category) {
         super.setCategory(category);
+    }
+
+    public String getCurrentName() {
+        return currentName;
+    }
+
+    public void setCurrentName(String currentName) {
+        this.currentName = currentName;
     }
 
     public String getCurrentCode() {

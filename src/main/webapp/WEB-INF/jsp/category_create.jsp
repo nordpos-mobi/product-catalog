@@ -45,7 +45,7 @@
                     <stripes:label name="label.ProductCategory.code" for="categoryCode" />
                     <input name="category.code" id="categoryCode" type="text"
                            placeholder="${actionBean.getLocalizationKey("label.ProductCategory.code")}" 
-                           value="${actionBean.category.code}"
+                           value="${actionBean.generateCode}"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-body ui-body-b">

@@ -16,6 +16,7 @@
 package mobi.nordpos.catalog.action;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -48,12 +49,14 @@ public abstract class CategoryBaseActionBean extends BaseActionBean {
             }
         }
     }
-
-    protected ProductCategory readProductCategory(String code) throws SQLException {
+    
+    protected ProductCategory readProductCategory(String column, String value) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);
-            return productCategoryDao.read(code);
+            QueryBuilder qb = productCategoryDao.queryBuilder();
+            qb.where().like(column, value);
+            return (ProductCategory) qb.queryForFirst();
         } finally {
             if (connection != null) {
                 connection.close();
