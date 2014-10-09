@@ -40,6 +40,8 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
 
     private static final String PRODUCT_CREATE = "/WEB-INF/jsp/product_create.jsp";
 
+    String generateCode;
+
     @DefaultHandler
     public Resolution form() {
         return new ForwardResolution(PRODUCT_CREATE);
@@ -54,7 +56,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
             );
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
-                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+                    new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution(CategoryProductListActionBean.class)
@@ -107,15 +109,14 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         }
     }
 
-    @ValidationMethod
-    public void validateProductCodeIsUnique(ValidationErrors errors) {
-        String codeCreate = getProduct().getCode();
-        if (codeCreate != null && !codeCreate.isEmpty()) {
+    @ValidationMethod(on = {"add"})
+    public void validateProductNameIsUnique(ValidationErrors errors) {
+        String name = getProduct().getName();
+        if (name != null && !name.isEmpty()) {
             try {
-                if (readProduct(codeCreate) != null) {
-                    errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("error.Product.AlreadyExists"), codeCreate
-                    ));
+                if (readProduct(Product.NAME, name) != null) {
+                    errors.add("product.name", new SimpleError(
+                            getLocalizationKey("error.Product.AlreadyExists"), name));
                 }
             } catch (SQLException ex) {
                 getContext().getValidationErrors().addGlobalError(
@@ -124,28 +125,70 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         }
     }
 
-    public String getGenerateCode() throws SQLException, CheckDigitException {
+    @ValidationMethod(on = {"add"})
+    public void validateProductCodeIsUnique(ValidationErrors errors) {
+        String code = getProduct().getCode();
+        if (code != null && !code.isEmpty()) {
+            try {
+                if (readProduct(Product.CODE, code) != null) {
+                    errors.add("product.code", new SimpleError(
+                            getLocalizationKey("error.Product.AlreadyExists"), code));
+                }
+            } catch (SQLException ex) {
+                getContext().getValidationErrors().addGlobalError(
+                        new SimpleError(ex.getMessage()));
+            }
+        }
+    }
+
+    @ValidationMethod
+    public void validateProductBarcode(ValidationErrors errors) {
+
         String prefix = getBarcodePrefix();
 
         if (!prefix.matches("\\d\\d\\d")) {
             prefix = "200";
         }
 
-        String plu = getProduct().getProductCategory().getCode();
-        while (plu.length() < 4) {
-            plu = "0".concat(plu);
+        String plu = "0000";
+        try {
+            plu = readProductCategory(getProduct().getProductCategory().getId()).getCode();
+            if (plu != null) {
+                while (plu.length() < 4) {
+                    plu = "0".concat(plu);
+                }
+                if (!plu.matches("\\d\\d\\d\\d")) {
+                    plu = "0000";
+                }
+            } else {
+                plu = "0000";
+            }
+        } catch (SQLException ex) {
         }
-        if (!plu.matches("\\d\\d\\d\\d")) {
-            plu = "0000";
-        }
-        List<Product> list = listProductByCodePrefix(prefix.concat(plu));
-        String code = Integer.toString(list.size() + 1);
-        while (code.length() < 5) {
+
+        try {
+            List<Product> list = listProductByCodePrefix(prefix.concat(plu));
+            String code = Integer.toString(list.size() + 1);
+            while (code.length() < 5) {
             code = "0".concat(code);
+            }
+            String barcode = prefix.concat(plu).concat(code);
+            setGenerateCode(barcode.concat(new EAN13CheckDigit().calculate(barcode)));
+        } catch (CheckDigitException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
         }
-        String barcode = prefix.concat(plu).concat(code);        
-        barcode = barcode.concat(new EAN13CheckDigit().calculate(barcode));
-        return barcode;
+    }
+
+    public String getGenerateCode() {
+        return generateCode;
+    }
+
+    public void setGenerateCode(String generateCode) {
+        this.generateCode = generateCode;
     }
 
 }

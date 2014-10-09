@@ -37,7 +37,7 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
     public void setProduct(Product product) {
         this.product = product;
     }
-    
+
     protected Product readProduct(UUID uuid) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
@@ -49,32 +49,34 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
             }
         }
     }
-    
-    protected Product readProduct(String code) throws SQLException {
+
+    protected Product readProduct(String table, String value) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductPersist productDao = new ProductPersist(connection);
-            return productDao.read(code);
+            QueryBuilder qb = productDao.queryBuilder();
+            qb.where().like(table, value);
+            return (Product) qb.queryForFirst();
         } finally {
             if (connection != null) {
                 connection.close();
             }
         }
     }
-    
+
     protected List<Product> listProductByCodePrefix(String prefix) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductPersist productDao = new ProductPersist(connection);
             QueryBuilder qb = productDao.queryBuilder();
-            qb.where().like(Product.CODE, prefix.concat("%"));            
+            qb.where().like(Product.CODE, prefix.concat("%"));
             return qb.query();
         } finally {
             if (connection != null) {
                 connection.close();
             }
         }
-    }    
+    }
 
     protected Product createProduct(Product product) throws SQLException {
         try {

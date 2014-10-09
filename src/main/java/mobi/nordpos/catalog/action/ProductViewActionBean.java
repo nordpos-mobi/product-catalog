@@ -38,12 +38,13 @@ public class ProductViewActionBean extends ProductBaseActionBean {
         return new ForwardResolution(PRODUCT_VIEW);
     }
 
-
-    @ValidateNestedProperties({        
+    @ValidateNestedProperties({
         @Validate(field = "code",
                 required = true,
                 trim = true,
-                maxlength = 13)
+                minlength = 13,
+                maxlength = 13,
+                mask = "[0-9]+")
     })
     @Override
     public void setProduct(Product product) {
@@ -53,7 +54,7 @@ public class ProductViewActionBean extends ProductBaseActionBean {
     @ValidationMethod
     public void validateProductCodeIsAvalaible(ValidationErrors errors) {
         try {
-            Product product = readProduct(getProduct().getCode());
+            Product product = readProduct(Product.CODE, getProduct().getCode());
             if (product != null) {
                 setProduct(product);
             } else {

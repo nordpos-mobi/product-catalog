@@ -36,6 +36,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
 
     private static final String PRODUCT_EDIT = "/WEB-INF/jsp/product_edit.jsp";
 
+    private String currentName;
     private String currentCode;
 
     @DefaultHandler
@@ -53,7 +54,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
-                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+                    new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution(CategoryListActionBean.class);
@@ -69,21 +70,36 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
-                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+                    new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution(CategoryListActionBean.class);
     }
 
     @ValidationMethod(on = "update")
-    public void validateProductCodeIsUnique(ValidationErrors errors) {
-        String updateCode = getProduct().getCode();
-        if (updateCode != null && !updateCode.isEmpty() && !updateCode.equals(getCurrentCode())) {
+    public void validateProductNameIsUnique(ValidationErrors errors) {
+        String name = getProduct().getName();
+        if (name != null && !name.isEmpty() && !name.equals(getCurrentCode())) {
             try {
-                if (readProduct(updateCode) != null) {
-                    errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("error.Product.AlreadyExists"), updateCode
-                    ));
+                if (readProduct(Product.NAME, name) != null) {
+                    errors.add("product.name", new SimpleError(
+                            getLocalizationKey("error.Product.AlreadyExists"), name));
+                }
+            } catch (SQLException ex) {
+                getContext().getValidationErrors().addGlobalError(
+                        new SimpleError(ex.getMessage()));
+            }
+        }
+    }
+
+    @ValidationMethod(on = "update")
+    public void validateProductCodeIsUnique(ValidationErrors errors) {
+        String code = getProduct().getCode();
+        if (code != null && !code.isEmpty() && !code.equals(getCurrentCode())) {
+            try {
+                if (readProduct(Product.CODE, code) != null) {
+                    errors.add("product.code", new SimpleError(
+                            getLocalizationKey("error.Product.AlreadyExists"), code));
                 }
             } catch (SQLException ex) {
                 getContext().getValidationErrors().addGlobalError(
@@ -122,7 +138,9 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
                 field = "code",
                 required = true,
                 trim = true,
-                maxlength = 13),
+                minlength = 13,
+                maxlength = 13,
+                mask = "[0-9]+"),
         @Validate(on = {"update"},
                 field = "priceSell",
                 required = true,
@@ -141,11 +159,23 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         super.setProduct(product);
     }
 
+    public String getCurrentName() {
+        return currentName;
+    }
+
+    public void setCurrentName(String currentName) {
+        this.currentName = currentName;
+    }
+
     public String getCurrentCode() {
         return currentCode;
     }
 
     public void setCurrentCode(String currentCode) {
         this.currentCode = currentCode;
+    }
+
+    private Boolean getProductIsUnique(String column, String value) {
+        return null;
     }
 }

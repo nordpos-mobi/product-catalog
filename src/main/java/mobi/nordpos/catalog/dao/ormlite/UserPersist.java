@@ -24,13 +24,12 @@ import com.j256.ormlite.stmt.SelectArg;
 import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.UUID;
-import mobi.nordpos.catalog.dao.UserDAO;
 import mobi.nordpos.catalog.model.User;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
-public class UserPersist extends BaseDaoImpl<User, UUID> implements UserDAO {    
+public class UserPersist extends BaseDaoImpl<User, UUID> {    
 
     Dao<User, UUID> userDao;
 
@@ -38,7 +37,6 @@ public class UserPersist extends BaseDaoImpl<User, UUID> implements UserDAO {
         super(connectionSource, User.class);
     }    
 
-    @Override
     public User read(String userName) throws SQLException {
         userDao = DaoManager.createDao(connectionSource, User.class);        
         QueryBuilder<User, UUID> statementBuilder = userDao.queryBuilder();

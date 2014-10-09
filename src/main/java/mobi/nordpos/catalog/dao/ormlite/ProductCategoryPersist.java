@@ -29,7 +29,7 @@ import mobi.nordpos.catalog.model.ProductCategory;
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
-public class ProductCategoryPersist extends BaseDaoImpl<ProductCategory, UUID> implements ProductCategoryDAO {
+public class ProductCategoryPersist extends BaseDaoImpl<ProductCategory, UUID> {
 
     Dao<ProductCategory, UUID> productCategoryDao;
 
@@ -37,7 +37,6 @@ public class ProductCategoryPersist extends BaseDaoImpl<ProductCategory, UUID> i
         super(connectionSource, ProductCategory.class);
     }
 
-    @Override
     public List<ProductCategory> getList() throws SQLException {
         productCategoryDao = DaoManager.createDao(connectionSource, ProductCategory.class);
         QueryBuilder qb = productCategoryDao.queryBuilder().orderBy(ProductCategory.NAME, true);
