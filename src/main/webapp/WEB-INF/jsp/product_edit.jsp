@@ -40,13 +40,13 @@
              data-overlay-theme="b" data-theme="b" 
              data-dismissible="false" style="max-width:400px;">
             <div data-role="header" data-theme="a">
-                <h1><stripes:label name="label.dialog.ProductDelete" /></h1>
+                <h1><stripes:label name="label.dialog.delete" /></h1>
             </div>
             <div role="main" class="ui-content">
                 <h3 class="ui-title">
                     <c:out value="${actionBean.product.name}"/>
                 </h3>
-                <p><stripes:label name="label.ask.ProductDelete" /></p>
+                <p><stripes:label name="label.ask.delete" /></p>
                 <stripes:form action="/ProductChange.action?delete">
                     <div>
                         <stripes:hidden name="product.id" value="${actionBean.product.id}"/>

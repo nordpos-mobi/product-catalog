@@ -58,7 +58,7 @@ public class ProductViewActionBean extends ProductBaseActionBean {
                 setProduct(product);
             } else {
                 errors.add("product.code", new SimpleError(
-                        getLocalizationKey("label.error.CatalogNotInclude")));
+                        getLocalizationKey("error.CatalogNotInclude")));
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(

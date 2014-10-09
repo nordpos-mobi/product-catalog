@@ -70,7 +70,7 @@ public class CategoryProductListActionBean extends CategoryBaseActionBean {
                 setProductList(category.getProductList());
             } else {
                 errors.add("category.id", new SimpleError(
-                        getLocalizationKey("label.error.CatalogNotInclude")));
+                        getLocalizationKey("error.CatalogNotInclude")));
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(

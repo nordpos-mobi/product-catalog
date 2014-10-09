@@ -46,7 +46,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         Product product = getProduct();
         try {
             getContext().getMessages().add(
-                    new SimpleMessage(getLocalizationKey("label.message.Product.added"),
+                    new SimpleMessage(getLocalizationKey("message.Product.added"),
                             createProduct(product).getName(), product.getProductCategory().getName())
             );
         } catch (SQLException ex) {
@@ -94,7 +94,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                 getProduct().setProductCategory(category);
             } else {
                 errors.add("product.category.id", new SimpleError(
-                        getLocalizationKey("label.error.CatalogNotInclude")));
+                        getLocalizationKey("error.CatalogNotInclude")));
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
@@ -109,7 +109,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
             try {
                 if (readProduct(codeCreate) != null) {
                     errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("label.error.Product.AlreadyExists"), codeCreate
+                            getLocalizationKey("error.Product.AlreadyExists"), codeCreate
                     ));
                 }
             } catch (SQLException ex) {

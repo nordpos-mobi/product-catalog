@@ -45,7 +45,7 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         ProductCategory category = getCategory();
         try {
             getContext().getMessages().add(
-                    new SimpleMessage(getLocalizationKey("label.message.ProductCategory.added"),
+                    new SimpleMessage(getLocalizationKey("message.ProductCategory.added"),
                             createProductCategory(category).getName())
             );
         } catch (SQLException ex) {
@@ -77,7 +77,7 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
             try {
                 if (readProductCategory(codeCreate) != null) {
                     errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("label.error.ProductCategory.AlreadyExists"), codeCreate
+                            getLocalizationKey("error.ProductCategory.AlreadyExists"), codeCreate
                     ));
                 }
             } catch (SQLException ex) {

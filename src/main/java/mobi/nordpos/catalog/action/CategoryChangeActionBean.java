@@ -47,7 +47,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         try {
             if (updateProductCategory(category)) {
                 getContext().getMessages().add(
-                        new SimpleMessage(getLocalizationKey("label.message.ProductCategory.updated"),
+                        new SimpleMessage(getLocalizationKey("message.ProductCategory.updated"),
                                 category.getName()));
             }
         } catch (SQLException ex) {
@@ -63,7 +63,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         try {
             if (deleteProductCategory(category.getId())) {
                 getContext().getMessages().add(
-                        new SimpleMessage(getLocalizationKey("label.message.ProductCategory.deleted"),
+                        new SimpleMessage(getLocalizationKey("message.ProductCategory.deleted"),
                                 category.getName()));
             }
         } catch (SQLException ex) {
@@ -79,7 +79,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         setCategory(readProductCategory(getCategory().getId()));
         if (!getCategory().getProductCollection().isEmpty()) {
             errors.addGlobalError(new SimpleError(
-                    getLocalizationKey("label.error.ProductCategory.IncludeProducts"), getCategory().getName(), getCategory().getProductCollection().size()
+                    getLocalizationKey("error.ProductCategory.IncludeProducts"), getCategory().getName(), getCategory().getProductCollection().size()
             ));
         }
     }
@@ -91,7 +91,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
             try {
                 if (readProductCategory(updateCode) != null) {
                     errors.addGlobalError(new SimpleError(
-                            getLocalizationKey("label.error.ProductCategory.AlreadyExists"), updateCode
+                            getLocalizationKey("error.ProductCategory.AlreadyExists"), updateCode
                     ));
                 }
             } catch (SQLException ex) {
@@ -109,7 +109,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
                 setCategory(category);
             } else {
                 errors.add("category.id", new SimpleError(
-                        getLocalizationKey("label.error.CatalogNotInclude")));
+                        getLocalizationKey("error.CatalogNotInclude")));
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
