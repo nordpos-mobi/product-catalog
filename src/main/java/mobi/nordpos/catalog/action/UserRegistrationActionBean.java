@@ -30,6 +30,8 @@ import net.sourceforge.stripes.validation.BooleanTypeConverter;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -39,7 +41,7 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
 
     private static final String REG_FORM = "/WEB-INF/jsp/user_reg.jsp";
 
-    @Validate(required = true, minlength = 5, maxlength = 20, expression = "${'this' == 'this'.user.password}")
+    @Validate(required = true, minlength = 5, maxlength = 20, expression = "confirmPassword == user.password")
     private String confirmPassword;
 
     @DefaultHandler
@@ -89,6 +91,20 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
 
     public String getConfirmPassword() {
         return confirmPassword;
+    }
+
+    @ValidationMethod
+    public void validateProductIdIsAvalaible(ValidationErrors errors) {
+        try {
+            User user = readUser(getUser().getName());
+            if (user != null) {
+                errors.add("user.name", new SimpleError(
+                        getLocalizationKey("error.User.AlreadyExists"), user.getName()));
+            }
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
+        }
     }
 
 }
