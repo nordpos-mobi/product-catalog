@@ -29,24 +29,27 @@
                 <img src="<c:url value='/image/logo.png' />" alt="NORD POS mobi"/>
             </a>
             <stripes:errors />
-            <stripes:form action="/Authorization.action">
+            <stripes:form action="/UserAuthorization.action">
                 <div class="ui-field-contain">
                     <stripes:label name="label.login.name"
                                    for="loginName" />
                     <input type="text"
-                           name="loginName"
+                           name="user.name"
                            id="loginName"
                            data-clear-btn="true"
-                           placeholder="${actionBean.getLocalizationKey("label.LoginName.enter")}" />
+                           placeholder="${actionBean.getLocalizationKey("label.LoginName.enter")}"
+                           value=""
+                           />
                 </div>
                 <div class="ui-field-contain">
                     <stripes:label name="label.login.password"
                                    for="loginPassword" />
                     <input type="password"
-                           name="loginPassword"
+                           name="user.password"
                            id="loginPassword"
                            data-clear-btn="true"
-                           placeholder="${actionBean.getLocalizationKey("label.LoginPassword.enter")}" />
+                           placeholder="${actionBean.getLocalizationKey("label.LoginPassword.enter")}"
+                           value=""/>
                 </div>            
                 <stripes:hidden name="targetUrl" />
                 <stripes:submit name="login"/>

@@ -4,9 +4,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -28,6 +28,7 @@ import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationError;
 
 /**
@@ -44,41 +45,7 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
 
     private static final String LOGIN = "/WEB-INF/jsp/user_login.jsp";
 
-    @Validate(required = true)
-    private String loginName;
-
-    @Validate(required = true)
-    private String loginPassword;
-
     private String targetUrl;
-
-    /**
-     * The username of the user trying to log in.
-     */
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    /**
-     * The username of the user trying to log in.
-     */
-    public String getLoginName() {
-        return loginName;
-    }
-
-    /**
-     * The password of the user trying to log in.
-     */
-    public void setLoginPassword(String loginPassword) {
-        this.loginPassword = loginPassword;
-    }
-
-    /**
-     * The password of the user trying to log in.
-     */
-    public String getLoginPassword() {
-        return loginPassword;
-    }
 
     /**
      * The URL the user was trying to access (null if the login page was
@@ -103,14 +70,14 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
     }
 
     public Resolution login() throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
-        User loginUser = readUser(this.loginName);
+        User loginUser = readUser(getUser().getName());
 
         if (loginUser == null) {
-            ValidationError error = new LocalizableError("usernameDoesNotExist");
+            ValidationError error = new LocalizableError("error.User.usernameDoesNotExist", getUser().getName());
             getContext().getValidationErrors().add("loginName", error);
             return getContext().getSourcePageResolution();
-        } else if (!Hashcypher.authenticate(loginPassword, loginUser.getPassword())) {
-            ValidationError error = new LocalizableError("incorrectPassword");
+        } else if (!Hashcypher.authenticate(getUser().getPassword(), loginUser.getPassword())) {
+            ValidationError error = new LocalizableError("error.User.incorrectPassword");
             getContext().getValidationErrors().add("loginPassword", error);
             return getContext().getSourcePageResolution();
         } else {
@@ -121,6 +88,20 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
                 return new RedirectResolution(PresentationActionBean.class);
             }
         }
+    }
+
+    @ValidateNestedProperties({
+        @Validate(field = "name",
+                required = true,
+                minlength = 5,
+                maxlength = 20),
+        @Validate(field = "password",
+                required = true,
+                minlength = 5,
+                maxlength = 20)})
+    @Override
+    public void setUser(User user) {
+        super.setUser(user);
     }
 
 }

@@ -44,7 +44,7 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
         return new ForwardResolution(REG_FORM);
     }
 
-    public Resolution add() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public Resolution accept() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         User user = getUser();
         try {
             user.setPassword(Hashcypher.hashString(user.getPassword()));
@@ -62,7 +62,7 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
 
     @ValidateNestedProperties({
         @Validate(field = "name", required = true, minlength = 5, maxlength = 20),
-        @Validate(field = "password", required = true, minlength = 5, maxlength = 20),})
+        @Validate(field = "password", required = true, minlength = 5, maxlength = 20)})
     @Override
     public void setUser(User user) {
         super.setUser(user);
