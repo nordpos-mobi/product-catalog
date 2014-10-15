@@ -30,6 +30,7 @@
             </a>            
             <h2><stripes:label name="label.present" /></h2>
             <stripes:errors />
+            <stripes:messages />
             <stripes:form action="/CategoryList.action">                
                 <sdynattr:submit name="catalog" data-theme="a" />
             </stripes:form>
