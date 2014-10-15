@@ -41,12 +41,12 @@
         <div data-role="collapsible" data-collapsed="false">
             <h4><stripes:label name="label.Product"/></h4>
             <div class="ui-grid-a ui-responsive">                
-                <div class="ui-block-a">
+                <%--<div class="ui-block-a">
                     <div class="ui-body ui-body-d"><stripes:label name="label.Product.code" /></div>                    
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-body ui-body-d"><c:out value="${actionBean.product.code}"/></div>                    
-                </div>
+                </div>--%>
                 <div class="ui-block-a">
                     <div class="ui-body ui-body-d"><stripes:label name="label.Product.priceBuy" /></div>                    
                 </div>
@@ -71,6 +71,9 @@
                                           minFractionDigits="2"/>
                     </div>                    
                 </div>
+            </div>
+            <div>
+                <img src="${pageContext.servletContext.contextPath}/ProductBarcode.action?eventName=ean13&product.code=${actionBean.product.code}" />
             </div>
         </div>
     </stripes:layout-component>

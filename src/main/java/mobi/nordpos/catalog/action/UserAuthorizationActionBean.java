@@ -18,6 +18,8 @@ package mobi.nordpos.catalog.action;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.User;
 import mobi.nordpos.catalog.util.Hashcypher;
@@ -27,6 +29,7 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.LocalizableError;
+import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationError;
@@ -69,24 +72,30 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
         return new ForwardResolution(LOGIN);
     }
 
-    public Resolution login() throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
-        User loginUser = readUser(getUser().getName());
+    public Resolution login() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        try {
+            User loginUser = readUser(getUser().getName());
 
-        if (loginUser == null) {
-            ValidationError error = new LocalizableError("error.User.usernameDoesNotExist", getUser().getName());
-            getContext().getValidationErrors().add("loginName", error);
-            return getContext().getSourcePageResolution();
-        } else if (!Hashcypher.authenticate(getUser().getPassword(), loginUser.getPassword())) {
-            ValidationError error = new LocalizableError("error.User.incorrectPassword");
-            getContext().getValidationErrors().add("loginPassword", error);
-            return getContext().getSourcePageResolution();
-        } else {
-            getContext().setUser(loginUser);
-            if (this.targetUrl != null) {
-                return new RedirectResolution(this.targetUrl);
+            if (loginUser == null) {
+                ValidationError error = new LocalizableError("error.User.usernameDoesNotExist", getUser().getName());
+                getContext().getValidationErrors().add("loginName", error);
+                return getContext().getSourcePageResolution();
+            } else if (!Hashcypher.authenticate(getUser().getPassword(), loginUser.getPassword())) {
+                ValidationError error = new LocalizableError("error.User.incorrectPassword");
+                getContext().getValidationErrors().add("loginPassword", error);
+                return getContext().getSourcePageResolution();
             } else {
-                return new RedirectResolution(PresentationActionBean.class);
+                getContext().setUser(loginUser);
+                if (this.targetUrl != null) {
+                    return new RedirectResolution(this.targetUrl);
+                } else {
+                    return new RedirectResolution(PresentationActionBean.class);
+                }
             }
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+            return getContext().getSourcePageResolution();
         }
     }
 

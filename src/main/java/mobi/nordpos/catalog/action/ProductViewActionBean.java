@@ -16,6 +16,7 @@
 package mobi.nordpos.catalog.action;
 
 import java.sql.SQLException;
+import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.Product;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -29,6 +30,7 @@ import net.sourceforge.stripes.validation.ValidationMethod;
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
+@Public
 public class ProductViewActionBean extends ProductBaseActionBean {
 
     private static final String PRODUCT_VIEW = "/WEB-INF/jsp/product_view.jsp";
