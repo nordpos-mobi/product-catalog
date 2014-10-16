@@ -33,6 +33,12 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BaseActionBean implements ActionBean {
 
+    private static final String DB_URL = "db.URL";
+    private static final String DB_USER = "db.user";
+    private static final String DB_PASSWORD = "db.password";
+    private static final String DB_APP = "db.application.id";
+    private static final String BARCODE_PREFIX = "barcode.prefix";
+
     private MobileActionBeanContext context;
 
     Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -50,21 +56,25 @@ public abstract class BaseActionBean implements ActionBean {
     }
 
     public String getDataBaseURL() {
-        return getContext().getServletContext().getInitParameter("db.URL");
+        return getContext().getServletContext().getInitParameter(DB_URL);
     }
 
     public String getDataBaseUser() {
-        return getContext().getServletContext().getInitParameter("db.user");
+        return getContext().getServletContext().getInitParameter(DB_USER);
     }
 
     public String getDataBasePassword() {
-        return getContext().getServletContext().getInitParameter("db.password");
+        return getContext().getServletContext().getInitParameter(DB_PASSWORD);
+    }
+
+    public String getDataBaseApplication() {
+        return getContext().getServletContext().getInitParameter(DB_APP);
     }
 
     public String getBarcodePrefix() {
-        return getContext().getServletContext().getInitParameter("barcode.prefix");
+        return getContext().getServletContext().getInitParameter(BARCODE_PREFIX);
     }
-    
+
     public String getLocalizationKey(String key) {
         return StripesFilter.getConfiguration().getLocalizationBundleFactory()
                 .getFormFieldBundle(getContext().getLocale()).getString(key);

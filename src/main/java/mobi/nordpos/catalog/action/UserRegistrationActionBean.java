@@ -20,7 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.User;
-import mobi.nordpos.catalog.util.Hashcypher;
+import com.openbravo.pos.util.Hashcypher;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -63,7 +63,7 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
                     new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
-        return new ForwardResolution(PresentationActionBean.class);
+        return new ForwardResolution(ApplicationPresentActionBean.class);
     }
 
     @ValidateNestedProperties({

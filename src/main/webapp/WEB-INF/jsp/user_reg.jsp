@@ -11,7 +11,7 @@
                        pageid="UserRegistration">
 
     <stripes:layout-component name="button.return">
-        <sdynattr:link href="/Presentation.action"
+        <sdynattr:link href="/ApplicationPresent.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
             <stripes:label name="label.home" />
         </sdynattr:link>                 
@@ -30,7 +30,7 @@
         <stripes:form action="/UserRegistration.action?accept">
             <div>
                 <stripes:hidden name="user.role" value="3"/>
-                <stripes:hidden name="user.visible" value="true"/>
+                <stripes:hidden name="user.visible" value="false"/>
             </div>
             <ul data-role="listview" data-inset="true">                
                 <li class="ui-field-contain">

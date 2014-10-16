@@ -11,11 +11,11 @@
                        pageid="home">
 
     <stripes:layout-component name="header.title">
-        Project NORD POS mobi
+        <c:out value="${actionBean.application.toString()}"/>
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
-        <sdynattr:link href="/Presentation.action"
+        <sdynattr:link href="/ApplicationPresent.action"
                        event="info"
                        class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left"
                        role="button">

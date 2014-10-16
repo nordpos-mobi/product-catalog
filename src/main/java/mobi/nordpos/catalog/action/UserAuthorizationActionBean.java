@@ -22,12 +22,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.User;
-import mobi.nordpos.catalog.util.Hashcypher;
+import com.openbravo.pos.util.Hashcypher;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.SimpleMessage;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
@@ -86,10 +87,13 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
                 return getContext().getSourcePageResolution();
             } else {
                 getContext().setUser(loginUser);
+                getContext().getMessages().add(
+                    new SimpleMessage(getLocalizationKey("message.User.loged"), loginUser.getName())
+            );
                 if (this.targetUrl != null) {
                     return new RedirectResolution(this.targetUrl);
                 } else {
-                    return new RedirectResolution(PresentationActionBean.class);
+                    return new RedirectResolution(ApplicationPresentActionBean.class);
                 }
             }
         } catch (SQLException ex) {

@@ -15,20 +15,25 @@
  */
 package mobi.nordpos.catalog.action;
 
+import java.sql.SQLException;
+import mobi.nordpos.catalog.model.Application;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.validation.SimpleError;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
-public class PresentationActionBean extends BaseActionBean {
+public class ApplicationPresentActionBean extends ApplicationBaseActionBean {
 
     private static final String PRESENT = "/WEB-INF/jsp/present.jsp";
     private static final String INFO = "/WEB-INF/jsp/info.jsp";
 
     @DefaultHandler
-    public Resolution present() {
+    public Resolution title() {
         return new ForwardResolution(PRESENT);
     }
 
@@ -54,6 +59,22 @@ public class PresentationActionBean extends BaseActionBean {
 
     public String getOperationSystem() {
         return System.getProperty("os.name") + " " + System.getProperty("os.version") + " " + System.getProperty("os.arch");
+    }
+
+    @ValidationMethod
+    public void validateProductCodeIsAvalaible(ValidationErrors errors) {
+        try {
+            Application application = readApplication(getDataBaseApplication());
+            if (application != null) {
+                setApplication(application);
+            } else {
+                errors.add("application.id", new SimpleError(
+                        getLocalizationKey("error.DatabaseNotSupportApplication")));
+            }
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
+        }
     }
 
 }
