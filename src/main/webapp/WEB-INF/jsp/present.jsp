@@ -31,9 +31,11 @@
             <h2><stripes:label name="label.present" /></h2>
             <stripes:errors />
             <stripes:messages />
-            <stripes:form action="/CategoryList.action">                
-                <sdynattr:submit name="catalog" data-theme="a" />
-            </stripes:form>
+            <sdynattr:link href="/CategoryList.action"
+                           class="ui-btn ui-shadow ui-corner-all"
+                           role="button">
+                <stripes:label name="label.Catalog" />
+            </sdynattr:link>
         </div>
     </stripes:layout-component>
 

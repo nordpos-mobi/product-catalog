@@ -61,6 +61,11 @@ public class ApplicationPresentActionBean extends ApplicationBaseActionBean {
         return System.getProperty("os.name") + " " + System.getProperty("os.version") + " " + System.getProperty("os.arch");
     }
 
+    @Override
+    public void setApplication(Application application) {
+        super.setApplication(application);
+    }
+    
     @ValidationMethod
     public void validateProductCodeIsAvalaible(ValidationErrors errors) {
         try {
@@ -69,7 +74,7 @@ public class ApplicationPresentActionBean extends ApplicationBaseActionBean {
                 setApplication(application);
             } else {
                 errors.add("application.id", new SimpleError(
-                        getLocalizationKey("error.DatabaseNotSupportApplication")));
+                        getLocalizationKey("error.DatabaseNotSupportApplication"), getDataBaseApplication()));
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(

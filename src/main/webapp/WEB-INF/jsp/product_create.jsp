@@ -33,8 +33,7 @@
         <stripes:errors />
         <stripes:messages />
         <stripes:form action="/ProductCreate.action?add">
-            <div>
-                <stripes:hidden name="product.priceBuy" value="0.0"/>                
+            <div>                
                 <stripes:hidden name="product.productCategory.id" value="${actionBean.product.productCategory.id}"/>
                 <stripes:hidden name="product.productCategory.name" value="${actionBean.product.productCategory.name}"/>
             </div>
@@ -47,20 +46,56 @@
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
+                    <stripes:label name="label.Product.reference" for="productReference" />
+                    <input name="product.reference" id="productReference" type="text"
+                           placeholder="${actionBean.getLocalizationKey("label.ProductReference.enter")}"
+                           value="${actionBean.product.reference}"
+                           data-clear-btn="true">
+                </li>                
+                <li class="ui-field-contain">
                     <stripes:label name="label.Product.code" for="productCode" />
                     <input name="product.code" id="productCode" type="text"
                            placeholder="${actionBean.getLocalizationKey("label.ProductCode.enter")}"
-                           value="${actionBean.generateCode}"
+                           value="${actionBean.product.code}"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
-                    <stripes:label name="label.Product.price" for="productPrice"/>
-                    <input name="product.priceSell" id="productPrice" type="number"
+                    <stripes:label name="label.Product.priceBuy" for="productPriceBuy"/>
+                    <input name="product.priceBuy" id="productPriceBuy" type="number"
+                           placeholder="${actionBean.getLocalizationKey("label.ProductBuyPrice.enter")}"
+                           step="0.01"                           
+                           value="0.00"
+                           data-clear-btn="true">
+                </li>                
+                <li class="ui-field-contain">
+                    <stripes:label name="label.Product.priceSell" for="productPriceSell"/>
+                    <input name="product.priceSell" id="productPriceSell" type="number"
                            placeholder="${actionBean.getLocalizationKey("label.ProductSellPrice.enter")}"
                            step="0.01"                           
                            value="0.00"
                            data-clear-btn="true">
                 </li>
+                <li class="ui-field-contain">
+                    <stripes:label name="label.Product.taxCategory" for="productTaxCategory" class="select"/>
+                    <sdynattr:select name="product.taxCategory.id" id="productTaxCategory">
+                        <c:forEach items="${actionBean.taxCategoryList}" var="taxCategory">
+                            <stripes:option value="${taxCategory.id}">
+                                <c:out value="${taxCategory.name}"/>
+                            </stripes:option>
+                        </c:forEach>
+                    </sdynattr:select>
+                </li>
+                <li class="ui-field-contain">
+                    <stripes:label name="label.Product.taxInclude" for="productIsTaxInclude"/>
+                    <sdynattr:select name="isTaxInclude" id="productIsTaxInclude" data-role="slider">
+                        <stripes:option value="false">
+                            <stripes:label name="No" />
+                        </stripes:option>    
+                        <stripes:option value="true" selected="true">
+                            <stripes:label name="Yes" />
+                        </stripes:option> 
+                    </sdynattr:select>
+                </li>                
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">
                         <div class="ui-block-a">

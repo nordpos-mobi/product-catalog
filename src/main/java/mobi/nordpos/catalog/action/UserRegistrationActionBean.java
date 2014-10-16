@@ -60,7 +60,7 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
             );
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
-                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+                    new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
         return new ForwardResolution(ApplicationPresentActionBean.class);

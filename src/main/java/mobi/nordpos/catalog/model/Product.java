@@ -4,9 +4,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -29,18 +29,23 @@ public class Product {
     public static final String ID = "ID";
     public static final String NAME = "NAME";
     public static final String CODE = "CODE";
+    public static final String REFERENCE = "REFERENCE";
     public static final String PRICEBUY = "PRICEBUY";
     public static final String PRICESELL = "PRICESELL";
     public static final String CATEGORY = "CATEGORY";
+    public static final String TAXCAT = "TAXCAT";
 
     @DatabaseField(generatedId = true, columnName = ID)
     private UUID id;
 
     @DatabaseField(columnName = NAME, unique = true, canBeNull = false)
     private String name;
-    
+
     @DatabaseField(columnName = CODE, unique = true, canBeNull = false)
     private String code;
+
+    @DatabaseField(columnName = REFERENCE, unique = true, canBeNull = false)
+    private String reference;
 
     @DatabaseField(columnName = PRICEBUY, canBeNull = false)
     private BigDecimal pricebuy;
@@ -55,10 +60,19 @@ public class Product {
             canBeNull = false)
     private ProductCategory productCategory;
 
+    @DatabaseField(foreign = true, columnName = TAXCAT, canBeNull = false)
+    private TaxCategory taxCategory;
+
+    @DatabaseField(persisted = false)
+    private Tax tax;
+
+    @DatabaseField(persisted = false)
+    private Double taxRate;
+
     public UUID getId() {
         return id;
     }
-  
+
     public void setId(UUID id) {
         this.id = id;
     }
@@ -70,13 +84,21 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public BigDecimal getPriceBuy() {
@@ -101,6 +123,30 @@ public class Product {
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
+    }
+
+    public TaxCategory getTaxCategory() {
+        return taxCategory;
+    }
+
+    public void setTaxCategory(TaxCategory taxCategory) {
+        this.taxCategory = taxCategory;
+    }
+
+    public Tax getTax() {
+        return tax;
+    }
+
+    public void setTax(Tax tax) {
+        this.tax = tax;
+    }
+
+    public Double getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(Double taxRate) {
+        this.taxRate = taxRate;
     }
 
     @Override

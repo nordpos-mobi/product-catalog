@@ -17,11 +17,17 @@ package mobi.nordpos.catalog.action;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.openbravo.pos.sales.TaxesLogic;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import mobi.nordpos.catalog.dao.ormlite.ProductPersist;
+import mobi.nordpos.catalog.dao.ormlite.TaxCategoryPersist;
+import mobi.nordpos.catalog.dao.ormlite.TaxPersist;
 import mobi.nordpos.catalog.model.Product;
+import mobi.nordpos.catalog.model.Tax;
+import mobi.nordpos.catalog.model.TaxCategory;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -114,4 +120,29 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
         }
     }
 
+    protected Tax readTax(String taxCategoryId) throws SQLException {
+        try {
+            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
+            TaxPersist taxDao = new TaxPersist(connection);
+            TaxesLogic taxLogic = new TaxesLogic(taxDao.queryForAll());
+            return taxLogic.getTax(taxCategoryId, new Date());
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    protected List<TaxCategory> readTaxCategoryList() throws SQLException {
+        try {
+            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
+            TaxCategoryPersist taxCategoryDao = new TaxCategoryPersist(connection);
+            return taxCategoryDao.queryForAll();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+    
 }

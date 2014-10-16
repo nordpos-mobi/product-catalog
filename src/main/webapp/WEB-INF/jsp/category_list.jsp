@@ -18,7 +18,7 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.ProductCategory"/>
+        <stripes:label name="label.Categories"/>
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">

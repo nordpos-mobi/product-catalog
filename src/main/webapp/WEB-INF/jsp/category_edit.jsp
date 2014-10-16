@@ -16,8 +16,7 @@
             <stripes:label name="label.home" />
         </sdynattr:link>          
         <sdynattr:link href="/CategoryList.action"
-                       class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left"
-                       data-prefetch="true">
+                       class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
             <stripes:label name="label.categories" />
         </sdynattr:link>           
     </stripes:layout-component>

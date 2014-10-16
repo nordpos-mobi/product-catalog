@@ -98,7 +98,7 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
-                    new SimpleError("{2} {3}", ex.getErrorCode(), ex.getMessage()));
+                    new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
     }

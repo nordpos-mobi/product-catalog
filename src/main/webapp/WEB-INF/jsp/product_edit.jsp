@@ -16,8 +16,7 @@
             <stripes:label name="label.home" />
         </sdynattr:link>          
         <sdynattr:link href="/CategoryProductList.action"
-                       class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left"
-                       data-prefetch="true">
+                       class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
             <stripes:param name="category.id" value="${actionBean.product.productCategory.id}"/>
             <c:out value="${actionBean.product.productCategory.name}"/>
         </sdynattr:link>           

@@ -15,11 +15,15 @@
  */
 package mobi.nordpos.catalog.action;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.Product;
 import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.catalog.model.TaxCategory;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -40,7 +44,9 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
 
     private static final String PRODUCT_CREATE = "/WEB-INF/jsp/product_create.jsp";
 
-    String generateCode;
+    private static final String DEFAULT_BARCODE_PREFIX = "200";
+
+    Boolean isTaxInclude;
 
     @DefaultHandler
     public Resolution form() {
@@ -50,6 +56,14 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
     public Resolution add() {
         Product product = getProduct();
         try {
+            product.setTax(readTax(product.getTaxCategory().getId()));
+            BigDecimal taxRate = product.getTax().getRate();
+
+            if (getIsTaxInclude() && taxRate != BigDecimal.ZERO) {
+                BigDecimal bdTaxRateMultiply = taxRate.add(BigDecimal.ONE);
+                product.setPriceSell(product.getPriceSell().divide(bdTaxRateMultiply, MathContext.DECIMAL64));
+            }
+
             getContext().getMessages().add(
                     new SimpleMessage(getLocalizationKey("message.Product.added"),
                             createProduct(product).getName(), product.getProductCategory().getName())
@@ -76,6 +90,10 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                 minlength = 13,
                 maxlength = 13,
                 mask = "[0-9]+"),
+        @Validate(on = {"add"},
+                field = "reference",
+                required = true,
+                trim = true),
         @Validate(on = {"add"},
                 field = "priceSell",
                 required = true,
@@ -141,39 +159,20 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         }
     }
 
-    @ValidationMethod
+    @ValidationMethod(priority = 1)
     public void validateProductBarcode(ValidationErrors errors) {
 
         String prefix = getBarcodePrefix();
 
         if (!prefix.matches("\\d\\d\\d")) {
-            prefix = "200";
-        }
-
-        String plu = "0000";
-        try {
-            plu = readProductCategory(getProduct().getProductCategory().getId()).getCode();
-            if (plu != null) {
-                while (plu.length() < 4) {
-                    plu = "0".concat(plu);
-                }
-                if (!plu.matches("\\d\\d\\d\\d")) {
-                    plu = "0000";
-                }
-            } else {
-                plu = "0000";
-            }
-        } catch (SQLException ex) {
+            prefix = DEFAULT_BARCODE_PREFIX;
         }
 
         try {
-            List<Product> list = listProductByCodePrefix(prefix.concat(plu));
-            String code = Integer.toString(list.size() + 1);
-            while (code.length() < 5) {
-            code = "0".concat(code);
-            }
+            String plu = getPLU(getProduct().getProductCategory().getId());
+            String code = getShortCode();
             String barcode = prefix.concat(plu).concat(code);
-            setGenerateCode(barcode.concat(new EAN13CheckDigit().calculate(barcode)));
+            getProduct().setCode(barcode.concat(new EAN13CheckDigit().calculate(barcode)));
         } catch (CheckDigitException ex) {
             getContext().getValidationErrors().addGlobalError(
                     new SimpleError(ex.getMessage()));
@@ -183,12 +182,48 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         }
     }
 
-    public String getGenerateCode() {
-        return generateCode;
+    @ValidationMethod(priority = 1)
+    public void validateProductReferency(ValidationErrors errors) {
+        try {
+            String plu = getPLU(getProduct().getProductCategory().getId());
+            String code = getShortCode();
+            getProduct().setReference(plu.concat("-").concat(code));
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
+        }
     }
 
-    public void setGenerateCode(String generateCode) {
-        this.generateCode = generateCode;
+    private String getPLU(UUID categoryId) throws SQLException {
+        String plu = readProductCategory(categoryId).getCode();
+        if (plu != null && !plu.matches("\\d\\d\\d\\d")) {
+            while (plu.length() < 4) {
+                plu = "0".concat(plu);
+            }
+            return plu;
+        } else {
+            return "0000";
+        }
     }
 
+    private String getShortCode() {
+        Integer listSize = getProduct().getProductCategory().getProductList().size();
+        String code = Integer.toString(listSize + 1);
+        while (code.length() < 5) {
+            code = "0".concat(code);
+        }
+        return code;
+    }
+
+    public List<TaxCategory> getTaxCategoryList() throws SQLException {
+        return readTaxCategoryList();
+    }
+
+    public Boolean getIsTaxInclude() {
+        return isTaxInclude;
+    }
+
+    public void setIsTaxInclude(Boolean isTaxInclude) {
+        this.isTaxInclude = isTaxInclude;
+    }
 }

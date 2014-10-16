@@ -52,9 +52,9 @@
                     <stripes:layout-component name="content"/>
                 </div>
                 <div data-role="footer" class="ui-bar">
-                    <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                        <a href="tel:+00-000-000-00-00" class="ui-btn ui-corner-all ui-icon-phone ui-btn-icon-notext ui-state-disabled">+00-000-000-00-00</a>
+                    <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal" data-mini="true">                        
                         <a href="mailto:svininykh@gmail.com" class="ui-btn ui-corner-all ui-icon-mail ui-btn-icon-notext">svininykh@gmail.com</a>
+                        <a href="tel:+00-000-000-00-00" class="ui-btn ui-corner-all ui-icon-phone ui-btn-icon-notext ui-state-disabled">+00-000-000-00-00</a>
                     </div>
 
                     <h2>
