@@ -58,6 +58,7 @@ public class ProductViewActionBean extends ProductBaseActionBean {
         try {
             Product product = readProduct(Product.CODE, getProduct().getCode());
             if (product != null) {
+                product.setTax(readTax(product.getTaxCategory().getId()));
                 setProduct(product);
             } else {
                 errors.add("product.code", new SimpleError(

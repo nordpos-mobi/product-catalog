@@ -60,14 +60,15 @@ public class Product {
             canBeNull = false)
     private ProductCategory productCategory;
 
-    @DatabaseField(foreign = true, columnName = TAXCAT, canBeNull = false)
+    @DatabaseField(foreign = true,
+            columnName = TAXCAT,
+            foreignColumnName = TaxCategory.ID,
+            foreignAutoRefresh = true,
+            canBeNull = false)
     private TaxCategory taxCategory;
 
     @DatabaseField(persisted = false)
     private Tax tax;
-
-    @DatabaseField(persisted = false)
-    private Double taxRate;
 
     public UUID getId() {
         return id;
@@ -117,6 +118,10 @@ public class Product {
         this.pricesell = pricesell;
     }
 
+    public BigDecimal getTaxPriceSell() {
+        return pricesell.multiply(getTax().getRate().add(BigDecimal.ONE));
+    }
+
     public ProductCategory getProductCategory() {
         return productCategory;
     }
@@ -139,14 +144,6 @@ public class Product {
 
     public void setTax(Tax tax) {
         this.tax = tax;
-    }
-
-    public Double getTaxRate() {
-        return taxRate;
-    }
-
-    public void setTaxRate(Double taxRate) {
-        this.taxRate = taxRate;
     }
 
     @Override

@@ -169,7 +169,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         }
 
         try {
-            String plu = getPLU(getProduct().getProductCategory().getId());
+            String plu = getPLU(getProduct().getProductCategory().getCode());
             String code = getShortCode();
             String barcode = prefix.concat(plu).concat(code);
             getProduct().setCode(barcode.concat(new EAN13CheckDigit().calculate(barcode)));
@@ -185,7 +185,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
     @ValidationMethod(priority = 1)
     public void validateProductReferency(ValidationErrors errors) {
         try {
-            String plu = getPLU(getProduct().getProductCategory().getId());
+            String plu = getPLU(getProduct().getProductCategory().getCode());
             String code = getShortCode();
             getProduct().setReference(plu.concat("-").concat(code));
         } catch (SQLException ex) {
@@ -194,13 +194,16 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         }
     }
 
-    private String getPLU(UUID categoryId) throws SQLException {
-        String plu = readProductCategory(categoryId).getCode();
-        if (plu != null && !plu.matches("\\d\\d\\d\\d")) {
-            while (plu.length() < 4) {
-                plu = "0".concat(plu);
+    private String getPLU(String code) throws SQLException {
+        if (code != null) {
+            while (code.length() < 4) {
+                code = "0".concat(code);
             }
-            return plu;
+            if (code.matches("\\d\\d\\d\\d")) {
+                return code;
+            } else {
+                return "0000";
+            }
         } else {
             return "0000";
         }

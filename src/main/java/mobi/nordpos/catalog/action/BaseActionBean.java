@@ -17,11 +17,18 @@ package mobi.nordpos.catalog.action;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
+import com.openbravo.pos.sales.TaxesLogic;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import mobi.nordpos.catalog.dao.ormlite.ProductCategoryPersist;
+import mobi.nordpos.catalog.dao.ormlite.TaxCategoryPersist;
+import mobi.nordpos.catalog.dao.ormlite.TaxPersist;
 import mobi.nordpos.catalog.ext.MobileActionBeanContext;
 import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.catalog.model.Tax;
+import mobi.nordpos.catalog.model.TaxCategory;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.controller.StripesFilter;
@@ -85,6 +92,31 @@ public abstract class BaseActionBean implements ActionBean {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);
             return productCategoryDao.queryForId(uuid);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    protected Tax readTax(String taxCategoryId) throws SQLException {
+        try {
+            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
+            TaxPersist taxDao = new TaxPersist(connection);
+            TaxesLogic taxLogic = new TaxesLogic(taxDao.queryForAll());
+            return taxLogic.getTax(taxCategoryId, new Date());
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    protected List<TaxCategory> readTaxCategoryList() throws SQLException {
+        try {
+            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
+            TaxCategoryPersist taxCategoryDao = new TaxCategoryPersist(connection);
+            return taxCategoryDao.queryForAll();
         } finally {
             if (connection != null) {
                 connection.close();

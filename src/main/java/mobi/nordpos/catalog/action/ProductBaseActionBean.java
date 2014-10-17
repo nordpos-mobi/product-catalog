@@ -119,30 +119,5 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
             }
         }
     }
-
-    protected Tax readTax(String taxCategoryId) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            TaxPersist taxDao = new TaxPersist(connection);
-            TaxesLogic taxLogic = new TaxesLogic(taxDao.queryForAll());
-            return taxLogic.getTax(taxCategoryId, new Date());
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected List<TaxCategory> readTaxCategoryList() throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            TaxCategoryPersist taxCategoryDao = new TaxCategoryPersist(connection);
-            return taxCategoryDao.queryForAll();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
     
 }

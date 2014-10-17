@@ -20,6 +20,7 @@ import java.util.List;
 import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.Product;
 import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.catalog.model.TaxCategory;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -42,17 +43,17 @@ public class CategoryProductListActionBean extends CategoryBaseActionBean {
     public Resolution view() {
         return new ForwardResolution(PRODUCT_LIST);
     }
-           
+
     @ValidateNestedProperties({
         @Validate(field = "id",
                 required = true,
                 converter = UUIDTypeConverter.class)
-    })     
+    })
     @Override
     public void setCategory(ProductCategory category) {
         super.setCategory(category);
     }
-    
+
     public List<Product> getProductList() {
         return productList;
     }
@@ -65,9 +66,14 @@ public class CategoryProductListActionBean extends CategoryBaseActionBean {
     public void validateCategoryIdIsAvalaible(ValidationErrors errors) {
         try {
             ProductCategory category = readProductCategory(getCategory().getId());
+            List<TaxCategory> taxCategories = readTaxCategoryList();
             if (category != null) {
                 setCategory(category);
-                setProductList(category.getProductList());
+                List<Product> products = category.getProductList();
+                for (Product product : products) {
+                    product.setTax(readTax(product.getTaxCategory().getId()));
+                }
+                setProductList(products);
             } else {
                 errors.add("category.id", new SimpleError(
                         getLocalizationKey("error.CatalogNotInclude")));
@@ -76,5 +82,5 @@ public class CategoryProductListActionBean extends CategoryBaseActionBean {
             getContext().getValidationErrors().addGlobalError(
                     new SimpleError(ex.getMessage()));
         }
-    }    
+    }
 }

@@ -48,7 +48,7 @@
                         <c:out value="${product.name}"/>
                         <p class="ui-li-aside">
                             <strong>
-                                <fmt:formatNumber value="${product.priceSell}"
+                                <fmt:formatNumber value="${product.taxPriceSell}"
                                                   type="CURRENCY"
                                                   pattern="#0.00 ¤"                                                  
                                                   maxFractionDigits="2" 
