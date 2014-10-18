@@ -69,9 +69,13 @@
         <stripes:form action="/ProductChange.action?update">
             <div>
                 <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
+                <stripes:hidden name="product.taxCategory.id" value="${actionBean.product.taxCategory.id}"/>
+                <stripes:hidden name="product.tax.rate" value="${actionBean.product.tax.rate}"/>
                 <stripes:hidden name="product.productCategory.id" value="${actionBean.product.productCategory.id}"/>
                 <stripes:hidden name="product.productCategory.name" value="${actionBean.product.productCategory.name}"/>
-                <stripes:hidden name="currentCode" value="${actionBean.product.code}"/>
+                <stripes:hidden name="currentProduct.name" value="${actionBean.product.name}"/>
+                <stripes:hidden name="currentProduct.code" value="${actionBean.product.code}"/>
+                <stripes:hidden name="currentProduct.reference" value="${actionBean.product.reference}"/>
             </div>
             <ul data-role="listview" data-inset="true">  
                 <li class="ui-field-contain">
@@ -81,6 +85,13 @@
                            value="${actionBean.product.name}"
                            data-clear-btn="true">
                 </li>
+                <li class="ui-field-contain">
+                    <stripes:label name="label.Product.reference" for="productReference" />
+                    <input name="product.reference" id="productReference" type="text"
+                           placeholder="${actionBean.getLocalizationKey("label.ProductReference.enter")}"
+                           value="${actionBean.product.reference}"
+                           data-clear-btn="true">
+                </li>                
                 <li class="ui-field-contain">
                     <stripes:label name="label.Product.code" for="productCode" />
                     <input name="product.code" id="productCode" type="text"
@@ -97,11 +108,11 @@
                            data-clear-btn="true">
                 </li>                
                 <li class="ui-field-contain">
-                    <stripes:label name="label.Product.priceSell" for="productSellPrice"/>
-                    <input name="product.priceSell" id="productSellPrice" type="number"
+                    <stripes:label name="label.Product.taxPriceSell" for="productSellPrice"/>
+                    <input name="product.taxPriceSell" id="productSellPrice" type="number"
                            placeholder="${actionBean.getLocalizationKey("label.ProductSellPrice.enter")}"
                            step="0.01"
-                           value="${actionBean.product.priceSell}"
+                           value="${actionBean.product.taxPriceSell}"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-body ui-body-b">

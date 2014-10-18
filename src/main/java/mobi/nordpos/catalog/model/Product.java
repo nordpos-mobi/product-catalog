@@ -70,6 +70,9 @@ public class Product {
     @DatabaseField(persisted = false)
     private Tax tax;
 
+    @DatabaseField(persisted = false)
+    private BigDecimal taxPriceSell;
+
     public UUID getId() {
         return id;
     }
@@ -119,7 +122,15 @@ public class Product {
     }
 
     public BigDecimal getTaxPriceSell() {
-        return pricesell.multiply(getTax().getRate().add(BigDecimal.ONE));
+        if (taxPriceSell != null) {
+            return taxPriceSell;
+        } else {
+            return pricesell.multiply(getTax().getRate().add(BigDecimal.ONE));
+        }
+    }
+
+    public void setTaxPriceSell(BigDecimal taxPriceSell) {
+        this.taxPriceSell = taxPriceSell;
     }
 
     public ProductCategory getProductCategory() {

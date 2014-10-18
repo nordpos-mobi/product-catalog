@@ -11,6 +11,10 @@
                        pageid="User">
 
     <stripes:layout-component name="button.return">
+        <sdynattr:link href="/ApplicationPresent.action"
+                       class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
+            <stripes:label name="label.home" />
+        </sdynattr:link>        
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">

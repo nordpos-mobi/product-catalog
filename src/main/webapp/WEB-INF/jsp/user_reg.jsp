@@ -1,5 +1,5 @@
 <%--
-    Document   : product_create
+    Document   : user_reg
     Author     : Andrey Svininykh (svininykh@gmail.com)
     Copyright  : Nord Trading Network
     License    : Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)

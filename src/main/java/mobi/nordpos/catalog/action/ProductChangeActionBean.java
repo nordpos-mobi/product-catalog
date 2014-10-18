@@ -15,6 +15,8 @@
  */
 package mobi.nordpos.catalog.action;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.Product;
@@ -36,8 +38,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
 
     private static final String PRODUCT_EDIT = "/WEB-INF/jsp/product_edit.jsp";
 
-    private String currentName;
-    private String currentCode;
+    private Product currentProduct;
 
     @DefaultHandler
     public Resolution form() throws SQLException {
@@ -46,6 +47,10 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
 
     public Resolution update() {
         Product product = getProduct();
+        BigDecimal taxRate = product.getTax().getRate();
+        BigDecimal bdTaxRateMultiply = taxRate.add(BigDecimal.ONE);
+        product.setPriceSell(product.getTaxPriceSell().divide(bdTaxRateMultiply, MathContext.DECIMAL64));
+
         try {
             if (updateProduct(product)) {
                 getContext().getMessages().add(
@@ -79,7 +84,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
     @ValidationMethod(on = "update")
     public void validateProductNameIsUnique(ValidationErrors errors) {
         String name = getProduct().getName();
-        if (name != null && !name.isEmpty() && !name.equals(getCurrentCode())) {
+        if (name != null && !name.isEmpty() && !name.equals(getCurrentProduct().getName())) {
             try {
                 if (readProduct(Product.NAME, name) != null) {
                     errors.add("product.name", new SimpleError(
@@ -95,7 +100,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
     @ValidationMethod(on = "update")
     public void validateProductCodeIsUnique(ValidationErrors errors) {
         String code = getProduct().getCode();
-        if (code != null && !code.isEmpty() && !code.equals(getCurrentCode())) {
+        if (code != null && !code.isEmpty() && !code.equals(getCurrentProduct().getCode())) {
             try {
                 if (readProduct(Product.CODE, code) != null) {
                     errors.add("product.code", new SimpleError(
@@ -107,12 +112,29 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
             }
         }
     }
+    
+    @ValidationMethod(on = "update")
+    public void validateProductReferenceIsUnique(ValidationErrors errors) {
+        String reference = getProduct().getReference();
+        if (reference != null && !reference.isEmpty() && !reference.equals(getCurrentProduct().getReference())) {
+            try {
+                if (readProduct(Product.REFERENCE, reference) != null) {
+                    errors.add("product.reference", new SimpleError(
+                            getLocalizationKey("error.Product.AlreadyExists"), reference));
+                }
+            } catch (SQLException ex) {
+                getContext().getValidationErrors().addGlobalError(
+                        new SimpleError(ex.getMessage()));
+            }
+        }
+    }    
 
     @ValidationMethod(on = "form")
     public void validateProductIdIsAvalaible(ValidationErrors errors) {
         try {
             Product product = readProduct(getProduct().getId());
             if (product != null) {
+                product.setTax(readTax(product.getTaxCategory().getId()));
                 setProduct(product);
             } else {
                 errors.add("product.id", new SimpleError(
@@ -142,7 +164,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
                 maxlength = 13,
                 mask = "[0-9]+"),
         @Validate(on = {"update"},
-                field = "priceSell",
+                field = "taxPriceSell",
                 required = true,
                 converter = BigDecimalTypeConverter.class),
         @Validate(on = {"update"},
@@ -159,23 +181,12 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         super.setProduct(product);
     }
 
-    public String getCurrentName() {
-        return currentName;
+    public Product getCurrentProduct() {
+        return currentProduct;
     }
 
-    public void setCurrentName(String currentName) {
-        this.currentName = currentName;
+    public void setCurrentProduct(Product currentProduct) {
+        this.currentProduct = currentProduct;
     }
-
-    public String getCurrentCode() {
-        return currentCode;
-    }
-
-    public void setCurrentCode(String currentCode) {
-        this.currentCode = currentCode;
-    }
-
-    private Boolean getProductIsUnique(String column, String value) {
-        return null;
-    }
+    
 }

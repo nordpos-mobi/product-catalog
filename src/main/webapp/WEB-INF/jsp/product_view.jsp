@@ -14,7 +14,7 @@
         <sdynattr:link href="/ApplicationPresent.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
             <stripes:label name="label.home" />
-        </sdynattr:link>                  
+        </sdynattr:link>
         <sdynattr:link href="/CategoryProductList.action"
                        class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
             <stripes:param name="category.id" value="${actionBean.product.productCategory.id}"/>
@@ -39,7 +39,7 @@
         <stripes:errors />
         <stripes:messages />
         <div data-role="collapsible" data-collapsed="false">
-            <h4><stripes:label name="label.Product"/></h4>
+            <h4><stripes:label name="label.ProductGeneralInfo"/></h4>
             <div class="ui-grid-a ui-responsive">                
                 <div class="ui-block-a">
                     <div class="ui-body ui-body-d"><stripes:label name="label.Product.reference" /></div>                    

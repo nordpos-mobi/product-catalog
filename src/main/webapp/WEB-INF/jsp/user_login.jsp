@@ -1,7 +1,8 @@
 <%--
-    Document   : login
+    Document   : user_login
     Author     : Andrey Svininykh (svininykh@gmail.com)
-    Copyright  : Nord Trading Network.
+    Copyright  : Nord Trading Network
+    License    : Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)
 --%>
 
 <%@include file="/WEB-INF/jsp/common/taglibs.jsp"%>
@@ -10,6 +11,12 @@
                        pageid="home">
 
     <stripes:layout-component name="button.return">
+        <c:if test="${not empty user}">
+            <sdynattr:link href="/ApplicationPresent.action"
+                           class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
+                <stripes:label name="label.home" />
+            </sdynattr:link>
+        </c:if>
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
