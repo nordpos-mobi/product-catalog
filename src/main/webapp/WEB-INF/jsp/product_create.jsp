@@ -89,10 +89,10 @@
                     <stripes:label name="label.Product.taxInclude" for="productIsTaxInclude"/>
                     <sdynattr:select name="isTaxInclude" id="productIsTaxInclude" data-role="slider">
                         <stripes:option value="false">
-                            <stripes:label name="No" />
+                             <c:out value="${actionBean.getLocalizationKey('no')}"/>
                         </stripes:option>    
                         <stripes:option value="true" selected="true">
-                            <stripes:label name="Yes" />
+                            <c:out value="${actionBean.getLocalizationKey('yes')}"/>
                         </stripes:option> 
                     </sdynattr:select>
                 </li>                
