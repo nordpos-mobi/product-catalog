@@ -18,14 +18,20 @@ package mobi.nordpos.catalog.action;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.openbravo.pos.sales.TaxesLogic;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Formatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
 import mobi.nordpos.catalog.dao.ormlite.ProductCategoryPersist;
 import mobi.nordpos.catalog.dao.ormlite.TaxCategoryPersist;
 import mobi.nordpos.catalog.dao.ormlite.TaxPersist;
 import mobi.nordpos.catalog.ext.MobileActionBeanContext;
+import mobi.nordpos.catalog.ext.MyLocalePicker;
 import mobi.nordpos.catalog.model.ProductCategory;
 import mobi.nordpos.catalog.model.Tax;
 import mobi.nordpos.catalog.model.TaxCategory;
@@ -80,6 +86,44 @@ public abstract class BaseActionBean implements ActionBean {
 
     public String getBarcodePrefix() {
         return getContext().getServletContext().getInitParameter(BARCODE_PREFIX);
+    }
+
+    @SuppressWarnings("unchecked")
+    public String getLastUrl() {
+        HttpServletRequest req = getContext().getRequest();
+        StringBuilder sb = new StringBuilder();
+
+        // Start with the URI and the path
+        String uri = (String) req.getAttribute("javax.servlet.forward.request_uri");
+        String path = (String) req.getAttribute("javax.servlet.forward.path_info");
+        if (uri == null) {
+            uri = req.getRequestURI();
+            path = req.getPathInfo();
+        }
+        sb.append(uri);
+        if (path != null) {
+            sb.append(path);
+        }
+
+        // Now the request parameters
+        sb.append('?');
+        Map<String, String[]> map
+                = new HashMap<String, String[]>(req.getParameterMap());
+
+        // Remove previous locale parameter, if present.
+        map.remove(MyLocalePicker.LOCALE);
+
+        // Append the parameters to the URL
+        for (String key : map.keySet()) {
+            String[] values = map.get(key);
+            for (String value : values) {
+                sb.append(key).append('=').append(value).append('&');
+            }
+        }
+        // Remove the last '&'
+        sb.deleteCharAt(sb.length() - 1);
+
+        return sb.toString();
     }
 
     public String getLocalizationKey(String key) {

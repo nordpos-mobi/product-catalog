@@ -46,6 +46,13 @@
                                 </span>
                             </sdynattr:link>
                         </c:if>
+                        <fmt:message var="otherLocale" key="layout.otherLocale"/>
+                        <sdynattr:link href="${actionBean.lastUrl}"
+                                       class="ui-btn ui-corner-all"
+                                       role="button">
+                            <stripes:param name="locale" value="${otherLocale}"/>
+                            <fmt:message key="layout.currentLanguage"/>
+                        </sdynattr:link>
                     </div>
                 </div>
                 <div data-role="content" style="padding: 15px" align="center">

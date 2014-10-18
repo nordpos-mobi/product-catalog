@@ -36,14 +36,14 @@
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.name" for="categoryName" />
                     <input name="category.name" id="categoryName" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductCategory.name")}" 
+                           placeholder="${actionBean.getLocalizationKey("label.ProductCategoryName.enter")}" 
                            value=""
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.code" for="categoryCode" />
                     <input name="category.code" id="categoryCode" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductCategory.code")}" 
+                           placeholder="${actionBean.getLocalizationKey("label.ProductCategoryCode.enter")}" 
                            value="${actionBean.generateCode}"
                            data-clear-btn="true">
                 </li>
