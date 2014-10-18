@@ -15,6 +15,7 @@
  */
 package mobi.nordpos.catalog.action;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.Product;
@@ -56,7 +57,7 @@ public class ProductViewActionBean extends ProductBaseActionBean {
     @ValidationMethod
     public void validateProductCodeIsAvalaible(ValidationErrors errors) {
         try {
-            Product product = readProduct(Product.CODE, getProduct().getCode());
+            Product product = readProduct(Product.CODE, getProduct().getCode());            
             if (product != null) {
                 product.setTax(readTax(product.getTaxCategory().getId()));
                 setProduct(product);

@@ -38,7 +38,7 @@
     <stripes:layout-component name="content">
         <stripes:errors />
         <stripes:messages />
-        <div data-role="collapsible" data-collapsed="false">
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="false">
             <h4><stripes:label name="label.ProductGeneralInfo"/></h4>
             <div class="ui-grid-a ui-responsive">                
                 <div class="ui-block-a">
@@ -98,6 +98,45 @@
                 <img src="${pageContext.servletContext.contextPath}/ProductBarcode.action?eventName=ean13&product.code=${actionBean.product.code}" />
             </div>
         </div>
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var data = [
+                        {label: "${actionBean.getLocalizationKey('label.ProductPriceCost')}", data: ${actionBean.product.priceBuy}},
+                        {label: "${actionBean.getLocalizationKey('label.ProductPriceMargin')}", data: ${actionBean.product.priceSell.subtract(actionBean.product.priceBuy)}},
+                        {label: "${actionBean.getLocalizationKey('label.ProductPriceTax')}", data: ${actionBean.product.taxPriceSell.subtract(actionBean.product.priceSell)}}];
+
+                    var placeholder = $("#price_pie_chart");
+
+                    $.plot(placeholder, data, {
+                        series: {
+                            pie: {
+                                show: true
+                            }
+                        },
+                        legend: {
+                            show: false
+                        },
+                        grid: {
+                            hoverable: true,
+                            clickable: true
+                        }
+                    });
+
+                    placeholder.bind("plotclick", function (event, pos, obj) {
+                        if (!obj) {
+                            return;
+                        }
+                        var value = parseFloat(obj.series.data[0][1]).toFixed(2);
+                        alert("" + obj.series.label + " = " + value);
+                    });
+                });
+            </script>
+            <h2><stripes:label name="label.ProductPricePieChart" /></h2>
+            <div style="padding: 10px;">
+                <div id="price_pie_chart" style="width:256px;height:256px"></div>
+            </div>
+        </div>            
     </stripes:layout-component>
 
     <stripes:layout-component name="footer">
