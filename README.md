@@ -1,11 +1,13 @@
-Product Catalog for the Point of Sale Back-End
-==============================================
+Product Catalog for the Mobile POS Back-End
+===========================================
 Project: http://nordpos.mobi
 
 ## Installation guide
-Install servlet container
-Set context parameters
-Upgrade application database
+[Install servlet container](https://github.com/nordpos-mobi/product-catalog/wiki/Install-servlet-container)
+
+[Set context parameters](https://github.com/nordpos-mobi/product-catalog/wiki/Set-context-parameters)
+
+[Upgrade application database](https://github.com/nordpos-mobi/product-catalog/wiki/Upgrade-application-database)
 
 ## System requirements
 Java virtual machine: Java Oracle Corporation 1.7(**tested**)
