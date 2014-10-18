@@ -35,7 +35,7 @@
                            class="ui-btn ui-shadow ui-corner-all"
                            role="button">
                 <stripes:label name="label.Catalog" />
-            </sdynattr:link>
+            </sdynattr:link>            
         </div>
     </stripes:layout-component>
 
