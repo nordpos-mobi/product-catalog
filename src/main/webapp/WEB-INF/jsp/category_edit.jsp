@@ -17,7 +17,7 @@
         </sdynattr:link>          
         <sdynattr:link href="/CategoryList.action"
                        class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
-            <stripes:label name="label.categories" />
+            <stripes:label name="label.Categories" />
         </sdynattr:link>           
     </stripes:layout-component>
 
