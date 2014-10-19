@@ -125,7 +125,8 @@ public class Product {
         if (taxPriceSell != null) {
             return taxPriceSell;
         } else {
-            return pricesell.multiply(getTax().getRate().add(BigDecimal.ONE));
+            pricesell = pricesell.multiply(getTax().getRate().add(BigDecimal.ONE)).setScale(2, BigDecimal.ROUND_HALF_DOWN);
+            return pricesell;
         }
     }
 
