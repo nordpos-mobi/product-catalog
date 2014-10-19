@@ -22,6 +22,8 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
+        <stripes:errors />
+        <stripes:messages />
         <a href="#popupDialog" 
            data-rel="popup" 
            data-position-to="window" 
