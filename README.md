@@ -53,11 +53,13 @@ User password: demopassword
 ## Screenshots
 Samsung Galaxy Y GT-S5360 Android v.2.3.6
 
-![Login screen](https://cloud.githubusercontent.com/assets/1005780/4693219/7af6f184-578f-11e4-8c14-ecbbb973f5b9.png)![en-samsung-gt-s5360-android-2 3 6-2](https://cloud.githubusercontent.com/assets/1005780/4693231/e20dd630-578f-11e4-84b9-fb6660cc5d8b.png)![en-samsung-gt-s5360-android-2 3 6-3](https://cloud.githubusercontent.com/assets/1005780/4693232/ec48030a-578f-11e4-87ca-5d3c1bacf227.png)![en-samsung-gt-s5360-android-2 3 6-9](https://cloud.githubusercontent.com/assets/1005780/4693240/474cc7e0-5790-11e4-93ed-d6a94c5b597c.png)![en-samsung-gt-s5360-android-2 3 6-10](https://cloud.githubusercontent.com/assets/1005780/4693256/4e7e904c-5791-11e4-94c9-a23497b7f48f.png)![en-samsung-gt-s5360-android-2 3 6-11](https://cloud.githubusercontent.com/assets/1005780/4693257/4e83a2d0-5791-11e4-8dc7-73da1aa19ddb.png)
+![Login screen](https://cloud.githubusercontent.com/assets/1005780/4693219/7af6f184-578f-11e4-8c14-ecbbb973f5b9.png)![Product categories list](https://cloud.githubusercontent.com/assets/1005780/4693232/ec48030a-578f-11e4-87ca-5d3c1bacf227.png)![Edit product](https://cloud.githubusercontent.com/assets/1005780/4693240/474cc7e0-5790-11e4-93ed-d6a94c5b597c.png)
+
+![Product barcode](https://cloud.githubusercontent.com/assets/1005780/4693256/4e7e904c-5791-11e4-94c9-a23497b7f48f.png)![Price pie chart](https://cloud.githubusercontent.com/assets/1005780/4693257/4e83a2d0-5791-11e4-8dc7-73da1aa19ddb.png)
 
 Samsung Galaxy S4 mini Duos GT-I9192 Android v.4.2.2
 
-![en-samsung-gt-i9192-android-4 2 2-4](https://cloud.githubusercontent.com/assets/1005780/4693228/cbc74118-578f-11e4-80a7-f1c6fa296f46.png)
+![Poducts list](https://cloud.githubusercontent.com/assets/1005780/4693228/cbc74118-578f-11e4-80a7-f1c6fa296f46.png)
 
 ## License
 The Product Catalog for the Point of Sale Back-End is licensed under the Apache License, Version 2.0 ([ALv2](http://www.apache.org/licenses/LICENSE-2.0.html)).
