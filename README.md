@@ -19,6 +19,12 @@ Project: http://nordpos.mobi
   * implement localization filter;
   * create resources for English and Russian languages.
 
+## Download
+http://sourceforge.net/projects/nordpos/files/product-catalog/
+
+## Forum
+http://sourceforge.net/p/nordpos/discussion/product-catalog/
+
 ## Installation guide
 [Install servlet container](https://github.com/nordpos-mobi/product-catalog/wiki/Install-servlet-container)
 
@@ -53,9 +59,9 @@ User password: demopassword
 ## Screenshots
 Samsung Galaxy Y GT-S5360 Android v.2.3.6
 
-![Login screen](https://cloud.githubusercontent.com/assets/1005780/4693219/7af6f184-578f-11e4-8c14-ecbbb973f5b9.png)![Product categories list](https://cloud.githubusercontent.com/assets/1005780/4693232/ec48030a-578f-11e4-87ca-5d3c1bacf227.png)![Edit product](https://cloud.githubusercontent.com/assets/1005780/4693240/474cc7e0-5790-11e4-93ed-d6a94c5b597c.png)
+![Login screen](https://cloud.githubusercontent.com/assets/1005780/4693219/7af6f184-578f-11e4-8c14-ecbbb973f5b9.png) ![Product categories list](https://cloud.githubusercontent.com/assets/1005780/4693232/ec48030a-578f-11e4-87ca-5d3c1bacf227.png) ![Edit product](https://cloud.githubusercontent.com/assets/1005780/4693240/474cc7e0-5790-11e4-93ed-d6a94c5b597c.png)
 
-![Product barcode](https://cloud.githubusercontent.com/assets/1005780/4693256/4e7e904c-5791-11e4-94c9-a23497b7f48f.png)![Price pie chart](https://cloud.githubusercontent.com/assets/1005780/4693257/4e83a2d0-5791-11e4-8dc7-73da1aa19ddb.png)
+![Product barcode](https://cloud.githubusercontent.com/assets/1005780/4693256/4e7e904c-5791-11e4-94c9-a23497b7f48f.png) ![Price pie chart](https://cloud.githubusercontent.com/assets/1005780/4693257/4e83a2d0-5791-11e4-8dc7-73da1aa19ddb.png)
 
 Samsung Galaxy S4 mini Duos GT-I9192 Android v.4.2.2
 
