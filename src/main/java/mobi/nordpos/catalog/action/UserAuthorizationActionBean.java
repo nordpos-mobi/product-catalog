@@ -18,8 +18,6 @@ package mobi.nordpos.catalog.action;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.User;
 import com.openbravo.pos.util.Hashcypher;

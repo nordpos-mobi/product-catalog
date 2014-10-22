@@ -19,7 +19,6 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.UUID;
 import mobi.nordpos.catalog.dao.ormlite.ProductCategoryPersist;
 import mobi.nordpos.catalog.model.ProductCategory;
 
@@ -88,7 +87,7 @@ public abstract class CategoryBaseActionBean extends BaseActionBean {
         }
     }
 
-    protected Boolean deleteProductCategory(UUID id) throws SQLException {
+    protected Boolean deleteProductCategory(String id) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);

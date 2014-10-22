@@ -33,8 +33,8 @@ public class ProductCategory {
     public static final String NAME = "NAME";
     public static final String CODE = "CODE";
 
-    @DatabaseField(generatedId = true, columnName = ID)
-    private UUID id;
+    @DatabaseField(id = true, columnName = ID)
+    private String id;
 
     @DatabaseField(columnName = NAME, unique = true, canBeNull = false)
     private String name;
@@ -45,11 +45,11 @@ public class ProductCategory {
     @ForeignCollectionField(orderAscending = true, orderColumnName = Product.NAME)
     private ForeignCollection<Product> productCollection;
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

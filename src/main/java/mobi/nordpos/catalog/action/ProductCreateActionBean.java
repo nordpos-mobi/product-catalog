@@ -20,7 +20,6 @@ import java.math.MathContext;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
-import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.Product;
 import mobi.nordpos.catalog.model.ProductCategory;
 import mobi.nordpos.catalog.model.TaxCategory;
@@ -30,6 +29,7 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
 import net.sourceforge.stripes.validation.BigDecimalTypeConverter;
 import net.sourceforge.stripes.validation.SimpleError;
+import net.sourceforge.stripes.validation.StringTypeConverter;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -55,6 +55,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
 
     public Resolution add() {
         Product product = getProduct();
+        product.setId(UUID.randomUUID().toString());
         try {
             product.setTax(readTax(product.getTaxCategory().getId()));
             BigDecimal taxRate = product.getTax().getRate();
@@ -104,7 +105,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
                 converter = BigDecimalTypeConverter.class),
         @Validate(field = "productCategory.id",
                 required = true,
-                converter = UUIDTypeConverter.class)
+                converter = StringTypeConverter.class)
     })
     @Override
     public void setProduct(Product product) {

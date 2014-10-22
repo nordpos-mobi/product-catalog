@@ -9,7 +9,7 @@
        
     <context-param>
         <param-name>db.URL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/demo-database?useUnicode=yes&amp;characterEncoding=UTF-8</param-value>
+        <param-value>jdbc:mysql://localhost:3306/unicentaopos?useUnicode=yes&amp;characterEncoding=UTF-8</param-value>
     </context-param>
     
     <context-param>
@@ -24,7 +24,7 @@
 
     <context-param>
         <param-name>db.application.id</param-name>
-        <param-value>nordpos</param-value>
+        <param-value>unicentaopos</param-value>
     </context-param>
         
     <context-param>

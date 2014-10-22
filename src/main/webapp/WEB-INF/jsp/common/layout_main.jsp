@@ -58,7 +58,7 @@
                 <div data-role="content" style="padding: 15px" align="center">
                     <stripes:layout-component name="content"/>
                     <div class="ui-body">
-                        <a href="http://www.openbravo.com">
+                        <a href="http://unicenta.com/">
                             <img src="<c:url value='/image/poweredby.png' />" alt="Openbravo POS"/>
                         </a>
                     </div>

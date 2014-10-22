@@ -15,7 +15,6 @@
  */
 package mobi.nordpos.catalog.action;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.Product;
@@ -44,10 +43,7 @@ public class ProductViewActionBean extends ProductBaseActionBean {
     @ValidateNestedProperties({
         @Validate(field = "code",
                 required = true,
-                trim = true,
-                minlength = 13,
-                maxlength = 13,
-                mask = "[0-9]+")
+                trim = true)
     })
     @Override
     public void setProduct(Product product) {

@@ -35,8 +35,8 @@ public class Product {
     public static final String CATEGORY = "CATEGORY";
     public static final String TAXCAT = "TAXCAT";
 
-    @DatabaseField(generatedId = true, columnName = ID)
-    private UUID id;
+    @DatabaseField(id = true, columnName = ID)
+    private String id;
 
     @DatabaseField(columnName = NAME, unique = true, canBeNull = false)
     private String name;
@@ -73,11 +73,11 @@ public class Product {
     @DatabaseField(persisted = false)
     private BigDecimal taxPriceSell;
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

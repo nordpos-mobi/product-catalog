@@ -18,14 +18,11 @@ package mobi.nordpos.catalog.action;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.openbravo.pos.sales.TaxesLogic;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import mobi.nordpos.catalog.dao.ormlite.ProductCategoryPersist;
 import mobi.nordpos.catalog.dao.ormlite.TaxCategoryPersist;
@@ -131,11 +128,11 @@ public abstract class BaseActionBean implements ActionBean {
                 .getFormFieldBundle(getContext().getLocale()).getString(key);
     }
 
-    protected ProductCategory readProductCategory(UUID uuid) throws SQLException {
+    protected ProductCategory readProductCategory(String id) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);
-            return productCategoryDao.queryForId(uuid);
+            return productCategoryDao.queryForId(id);
         } finally {
             if (connection != null) {
                 connection.close();

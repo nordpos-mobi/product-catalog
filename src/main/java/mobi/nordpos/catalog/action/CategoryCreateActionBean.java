@@ -16,6 +16,7 @@
 package mobi.nordpos.catalog.action;
 
 import java.sql.SQLException;
+import java.util.UUID;
 import mobi.nordpos.catalog.model.ProductCategory;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -41,6 +42,7 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
 
     public Resolution add() {
         ProductCategory category = getCategory();
+        category.setId(UUID.randomUUID().toString());
         try {
             getContext().getMessages().add(
                     new SimpleMessage(getLocalizationKey("message.ProductCategory.added"),
