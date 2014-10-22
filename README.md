@@ -25,12 +25,8 @@ http://sourceforge.net/projects/nordpos/files/product-catalog/
 ## Forum
 http://sourceforge.net/p/nordpos/discussion/product-catalog/
 
-## Installation guide
-[Install servlet container](https://github.com/nordpos-mobi/product-catalog/wiki/Install-servlet-container)
-
-[Set context parameters](https://github.com/nordpos-mobi/product-catalog/wiki/Set-context-parameters)
-
-[Upgrade application database](https://github.com/nordpos-mobi/product-catalog/wiki/Upgrade-application-database)
+## Wiki 
+[Installation guide](https://github.com/nordpos-mobi/product-catalog/wiki)
 
 ## System requirements
 Java virtual machine: Java Oracle Corporation 1.7(**tested**)
@@ -53,7 +49,9 @@ Java servlet container: Apache Tomcat 8.0.3(**tested**) and Apache Tomcat 7.0.55
 
 ## Demo
 URL: http://nordpos.mobi/product-catalog/
+
 User name: DemoUser
+
 User password: demopassword
 
 ## Screenshots
