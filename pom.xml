@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>mobi.nordpos</groupId>
-    <artifactId>product-catalog</artifactId>
-    <version>1.0.0</version>
+    <artifactId>unicentaopos-product-catalog</artifactId>
+    <version>1.0.0.unicentaopos</version>
     <packaging>war</packaging>
 
-    <name>product-catalog</name>
+    <name>unicentaopos-product-catalog</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
