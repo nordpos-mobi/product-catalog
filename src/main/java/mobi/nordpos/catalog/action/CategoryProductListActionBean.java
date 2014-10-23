@@ -17,7 +17,6 @@ package mobi.nordpos.catalog.action;
 
 import java.sql.SQLException;
 import java.util.List;
-import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.Product;
 import mobi.nordpos.catalog.model.ProductCategory;
 import mobi.nordpos.catalog.model.TaxCategory;
@@ -25,6 +24,7 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.SimpleError;
+import net.sourceforge.stripes.validation.StringTypeConverter;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -47,7 +47,7 @@ public class CategoryProductListActionBean extends CategoryBaseActionBean {
     @ValidateNestedProperties({
         @Validate(field = "id",
                 required = true,
-                converter = UUIDTypeConverter.class)
+                converter = StringTypeConverter.class)
     })
     @Override
     public void setCategory(ProductCategory category) {

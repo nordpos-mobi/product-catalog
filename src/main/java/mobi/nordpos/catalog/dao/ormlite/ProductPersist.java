@@ -19,15 +19,14 @@ import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
-import java.util.UUID;
 import mobi.nordpos.catalog.model.Product;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
-public class ProductPersist extends BaseDaoImpl<Product, UUID> {
+public class ProductPersist extends BaseDaoImpl<Product, String> {
 
-    Dao<Product, UUID> productDao;
+    Dao<Product, String> productDao;
 
     public ProductPersist(ConnectionSource connectionSource) throws SQLException {
         super(connectionSource, Product.class);

@@ -17,17 +17,10 @@ package mobi.nordpos.catalog.action;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.openbravo.pos.sales.TaxesLogic;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import mobi.nordpos.catalog.dao.ormlite.ProductPersist;
-import mobi.nordpos.catalog.dao.ormlite.TaxCategoryPersist;
-import mobi.nordpos.catalog.dao.ormlite.TaxPersist;
 import mobi.nordpos.catalog.model.Product;
-import mobi.nordpos.catalog.model.Tax;
-import mobi.nordpos.catalog.model.TaxCategory;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -44,11 +37,11 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
         this.product = product;
     }
 
-    protected Product readProduct(UUID uuid) throws SQLException {
+    protected Product readProduct(String id) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductPersist productDao = new ProductPersist(connection);
-            return productDao.queryForId(uuid);
+            return productDao.queryForId(id);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -108,7 +101,7 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
         }
     }
 
-    protected Boolean deleteProduct(UUID id) throws SQLException {
+    protected Boolean deleteProduct(String id) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             ProductPersist productDao = new ProductPersist(connection);

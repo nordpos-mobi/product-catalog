@@ -23,15 +23,14 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
-import mobi.nordpos.catalog.dao.*;
 import mobi.nordpos.catalog.model.ProductCategory;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
-public class ProductCategoryPersist extends BaseDaoImpl<ProductCategory, UUID> {
+public class ProductCategoryPersist extends BaseDaoImpl<ProductCategory, String> {
 
-    Dao<ProductCategory, UUID> productCategoryDao;
+    Dao<ProductCategory, String> productCategoryDao;
 
     public ProductCategoryPersist(ConnectionSource connectionSource) throws SQLException {
         super(connectionSource, ProductCategory.class);

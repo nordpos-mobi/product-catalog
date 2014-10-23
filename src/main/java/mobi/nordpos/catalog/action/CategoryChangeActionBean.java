@@ -16,13 +16,13 @@
 package mobi.nordpos.catalog.action;
 
 import java.sql.SQLException;
-import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.ProductCategory;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
 import net.sourceforge.stripes.validation.SimpleError;
+import net.sourceforge.stripes.validation.StringTypeConverter;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -137,7 +137,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         @Validate(on = {"form", "update", "delete"},
                 field = "id",
                 required = true,
-                converter = UUIDTypeConverter.class),
+                converter = StringTypeConverter.class),
         @Validate(on = {"update"},
                 field = "name",
                 required = true,
