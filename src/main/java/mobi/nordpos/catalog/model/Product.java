@@ -18,7 +18,6 @@ package mobi.nordpos.catalog.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
