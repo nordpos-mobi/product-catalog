@@ -18,7 +18,6 @@ package mobi.nordpos.catalog.action;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.SQLException;
-import mobi.nordpos.catalog.ext.UUIDTypeConverter;
 import mobi.nordpos.catalog.model.Product;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -26,6 +25,7 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
 import net.sourceforge.stripes.validation.BigDecimalTypeConverter;
 import net.sourceforge.stripes.validation.SimpleError;
+import net.sourceforge.stripes.validation.StringTypeConverter;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -150,7 +150,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         @Validate(on = {"form", "update", "delete"},
                 field = "id",
                 required = true,
-                converter = UUIDTypeConverter.class),
+                converter = StringTypeConverter.class),
         @Validate(on = {"update"},
                 field = "name",
                 required = true,
@@ -174,7 +174,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         @Validate(on = {"update"},
                 field = "productCategory.id",
                 required = true,
-                converter = UUIDTypeConverter.class)
+                converter = StringTypeConverter.class)
     })
     @Override
     public void setProduct(Product product) {
