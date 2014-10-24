@@ -16,7 +16,6 @@
 package mobi.nordpos.catalog.action;
 
 import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
@@ -28,7 +27,6 @@ public class UserViewActionBean extends UserBaseActionBean {
     private static final String USER_VIEW = "/WEB-INF/jsp/user_view.jsp";
 
     @DefaultHandler
-    @DontValidate
     public Resolution form() {
         return new ForwardResolution(USER_VIEW);
     }

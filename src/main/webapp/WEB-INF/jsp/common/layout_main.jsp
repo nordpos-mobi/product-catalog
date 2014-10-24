@@ -58,11 +58,9 @@
                 </div>
                 <div data-role="content" style="padding: 15px" align="center">
                     <stripes:layout-component name="content"/>
-                    <div class="ui-body">
-                        <a href="http://www.openbravo.com">
-                            <img src="<c:url value='/image/poweredby.png' />" alt="Openbravo POS"/>
-                        </a>
-                    </div>
+                    <a href="${actionBean.application.projectURL}">
+                        <img src="<c:url value='/image/poweredby-${actionBean.application.id}.png' />" alt="${actionBean.application.toString()}"/>
+                    </a>
                 </div>
                 <div data-role="footer" class="ui-bar">
                     <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal" data-mini="true">                        

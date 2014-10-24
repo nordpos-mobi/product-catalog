@@ -24,17 +24,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import mobi.nordpos.catalog.dao.ormlite.ApplicationPersist;
 import mobi.nordpos.catalog.dao.ormlite.ProductCategoryPersist;
 import mobi.nordpos.catalog.dao.ormlite.TaxCategoryPersist;
 import mobi.nordpos.catalog.dao.ormlite.TaxPersist;
 import mobi.nordpos.catalog.ext.MobileActionBeanContext;
 import mobi.nordpos.catalog.ext.MyLocalePicker;
+import mobi.nordpos.catalog.model.Application;
 import mobi.nordpos.catalog.model.ProductCategory;
 import mobi.nordpos.catalog.model.Tax;
 import mobi.nordpos.catalog.model.TaxCategory;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.controller.StripesFilter;
+import net.sourceforge.stripes.validation.SimpleError;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +55,7 @@ public abstract class BaseActionBean implements ActionBean {
     private static final String BARCODE_PREFIX = "barcode.prefix";
 
     private MobileActionBeanContext context;
+    private Application application;
 
     Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
@@ -63,6 +69,24 @@ public abstract class BaseActionBean implements ActionBean {
     @Override
     public void setContext(ActionBeanContext actionBeanContext) {
         this.context = (MobileActionBeanContext) actionBeanContext;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    @ValidationMethod
+    public void validateApplicationAvalaible(ValidationErrors errors) {
+        try {
+            application = readApplication(getDataBaseApplication());
+            if (application == null) {
+                errors.add("application.id", new SimpleError(
+                        getLocalizationKey("error.DatabaseNotSupportApplication"), getDataBaseApplication()));
+            }
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
+        }
     }
 
     public String getDataBaseURL() {
@@ -158,6 +182,18 @@ public abstract class BaseActionBean implements ActionBean {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
             TaxCategoryPersist taxCategoryDao = new TaxCategoryPersist(connection);
             return taxCategoryDao.queryForAll();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    protected Application readApplication(String id) throws SQLException {
+        try {
+            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
+            ApplicationPersist applicationDao = new ApplicationPersist(connection);
+            return applicationDao.queryForId(id);
         } finally {
             if (connection != null) {
                 connection.close();

@@ -24,6 +24,24 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "APPLICATIONS")
 public class Application {
 
+    public enum ApplicationProjectURL {
+
+        NORDPOS("http://github.com/nordpos/nordpos"),
+        OPENBRAVOPOS("http://sourceforge.net/projects/openbravopos/"),
+        UNICENTAOPOS("http://sourceforge.net/projects/unicentaopos/");
+
+        private final String url;
+
+        private ApplicationProjectURL(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public String toString() {
+            return url;
+        }
+    }
+
     public static final String ID = "ID";
     public static final String NAME = "NAME";
     public static final String VERSION = "VERSION";
@@ -59,6 +77,10 @@ public class Application {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getProjectURL() {
+        return ApplicationProjectURL.valueOf(id.toUpperCase()).toString();
     }
 
     @Override

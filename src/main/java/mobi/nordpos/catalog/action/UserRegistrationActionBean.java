@@ -22,7 +22,6 @@ import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.User;
 import com.openbravo.pos.util.Hashcypher;
 import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
@@ -41,11 +40,14 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
 
     private static final String REG_FORM = "/WEB-INF/jsp/user_reg.jsp";
 
-    @Validate(required = true, minlength = 5, maxlength = 20, expression = "confirmPassword == user.password")
+    @Validate(on = {"accept"},
+            required = true,
+            minlength = 5,
+            maxlength = 20,
+            expression = "confirmPassword == user.password")
     private String confirmPassword;
 
     @DefaultHandler
-    @DontValidate
     public Resolution form() {
         return new ForwardResolution(REG_FORM);
     }
@@ -63,22 +65,26 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
                     new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
-        return new ForwardResolution(ApplicationPresentActionBean.class);
+        return new ForwardResolution(WelcomeActionBean.class);
     }
 
     @ValidateNestedProperties({
-        @Validate(field = "name",
+        @Validate(on = {"accept"},
+                field = "name",
                 required = true,
                 minlength = 5,
                 maxlength = 20),
-        @Validate(field = "password",
+        @Validate(on = {"accept"},
+                field = "password",
                 required = true,
                 minlength = 5,
                 maxlength = 20),
-        @Validate(field = "visible",
+        @Validate(on = {"accept"},
+                field = "visible",
                 required = true,
                 converter = BooleanTypeConverter.class),
-        @Validate(field = "role",
+        @Validate(on = {"accept"},
+                field = "role",
                 required = true)})
     @Override
     public void setUser(User user) {
@@ -93,8 +99,8 @@ public class UserRegistrationActionBean extends UserBaseActionBean {
         return confirmPassword;
     }
 
-    @ValidationMethod
-    public void validateProductIdIsAvalaible(ValidationErrors errors) {
+    @ValidationMethod(on = {"accept"})
+    public void validateUserNameIsAvalaible(ValidationErrors errors) {
         try {
             User user = readUser(getUser().getName());
             if (user != null) {

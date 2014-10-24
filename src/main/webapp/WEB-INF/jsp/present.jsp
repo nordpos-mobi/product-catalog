@@ -11,11 +11,11 @@
                        pageid="home">
 
     <stripes:layout-component name="header.title">
-        <c:out value="${actionBean.application.toString()}"/>
+        <stripes:label name="label.welcome" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
-        <sdynattr:link href="/ApplicationPresent.action"
+        <sdynattr:link href="/Welcome.action"
                        event="info"
                        class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left"
                        role="button">

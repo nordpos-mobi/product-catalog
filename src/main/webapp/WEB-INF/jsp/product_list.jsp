@@ -11,7 +11,7 @@
                        pageid="ProductCategoryView">
 
     <stripes:layout-component name="button.return">
-        <sdynattr:link href="/ApplicationPresent.action"
+        <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext">            
             <stripes:label name="label.home" />
         </sdynattr:link>    

@@ -15,19 +15,14 @@
  */
 package mobi.nordpos.catalog.action;
 
-import java.sql.SQLException;
-import mobi.nordpos.catalog.model.Application;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.validation.SimpleError;
-import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationMethod;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
-public class ApplicationPresentActionBean extends ApplicationBaseActionBean {
+public class WelcomeActionBean extends BaseActionBean {
 
     private static final String PRESENT = "/WEB-INF/jsp/present.jsp";
     private static final String INFO = "/WEB-INF/jsp/info.jsp";
@@ -59,27 +54,6 @@ public class ApplicationPresentActionBean extends ApplicationBaseActionBean {
 
     public String getOperationSystem() {
         return System.getProperty("os.name") + " " + System.getProperty("os.version") + " " + System.getProperty("os.arch");
-    }
-
-    @Override
-    public void setApplication(Application application) {
-        super.setApplication(application);
-    }
-    
-    @ValidationMethod
-    public void validateProductCodeIsAvalaible(ValidationErrors errors) {
-        try {
-            Application application = readApplication(getDataBaseApplication());
-            if (application != null) {
-                setApplication(application);
-            } else {
-                errors.add("application.id", new SimpleError(
-                        getLocalizationKey("error.DatabaseNotSupportApplication"), getDataBaseApplication()));
-            }
-        } catch (SQLException ex) {
-            getContext().getValidationErrors().addGlobalError(
-                    new SimpleError(ex.getMessage()));
-        }
     }
 
 }

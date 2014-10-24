@@ -22,7 +22,6 @@ import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.User;
 import com.openbravo.pos.util.Hashcypher;
 import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -66,7 +65,6 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
     }
 
     @DefaultHandler
-    @DontValidate
     public Resolution view() {
         return new ForwardResolution(LOGIN);
     }
@@ -91,7 +89,7 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
                 if (this.targetUrl != null) {
                     return new RedirectResolution(this.targetUrl);
                 } else {
-                    return new RedirectResolution(ApplicationPresentActionBean.class);
+                    return new RedirectResolution(WelcomeActionBean.class);
                 }
             }
         } catch (SQLException ex) {
@@ -101,18 +99,19 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
         }
     }
 
-    @DontValidate
     public Resolution logout() throws SQLException {
         getContext().logout();
         return new RedirectResolution(this.getClass());
     }
 
     @ValidateNestedProperties({
-        @Validate(field = "name",
+        @Validate(on={"login"},
+                field = "name",
                 required = true,
                 minlength = 5,
                 maxlength = 20),
-        @Validate(field = "password",
+        @Validate(on={"login"},
+                field = "password",
                 required = true,
                 minlength = 5,
                 maxlength = 20)})

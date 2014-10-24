@@ -12,7 +12,7 @@
 
     <stripes:layout-component name="button.return">
         <c:if test="${not empty user}">
-            <sdynattr:link href="/ApplicationPresent.action"
+            <sdynattr:link href="/Welcome.action"
                            class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
                 <stripes:label name="label.home" />
             </sdynattr:link>
