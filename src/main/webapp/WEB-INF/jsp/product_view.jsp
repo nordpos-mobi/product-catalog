@@ -94,8 +94,11 @@
                     </div>                    
                 </div>                    
             </div>
-            <div>
-                <img src="${pageContext.servletContext.contextPath}/ProductBarcode.action?eventName=ean13&product.code=${actionBean.product.code}" />
+            <div>                
+                <canvas id="ean" width="256" height="128"></canvas>  
+                <script type="text/javascript">
+                    $("#ean").EAN13("${actionBean.product.code}");
+                </script>
             </div>
         </div>
         <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
