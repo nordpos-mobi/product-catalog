@@ -14,20 +14,20 @@
         <c:if test="${not empty user}">
             <sdynattr:link href="/Welcome.action"
                            class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
-                <stripes:label name="label.home" />
+                <fmt:message key="label.home" />
             </sdynattr:link>
         </c:if>
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.UserAuthorization" />
+        <fmt:message key="label.UserAuthorization" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
         <sdynattr:link href="/UserRegistration.action"
                        class="ui-btn ui-corner-all ui-icon-lock ui-btn-icon-left"
                        role="button">
-            <stripes:label name="label.register" />
+            <fmt:message key="label.register" />
         </sdynattr:link>
     </stripes:layout-component>
 
@@ -46,7 +46,7 @@
                            name="user.name"
                            id="loginName"
                            data-clear-btn="true"
-                           placeholder="${actionBean.getLocalizationKey("label.LoginName.enter")}"
+                           placeholder="<fmt:message key='label.LoginName.enter' />"
                            value=""/>
                 </div>
                 <div class="ui-field-contain">
@@ -56,7 +56,7 @@
                            name="user.password"
                            id="loginPassword"
                            data-clear-btn="true"
-                           placeholder="${actionBean.getLocalizationKey("label.LoginPassword.enter")}"
+                           placeholder="<fmt:message key='label.LoginPassword.enter' />"
                            value=""/>
                 </div>            
                 <stripes:hidden name="targetUrl" />

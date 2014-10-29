@@ -13,11 +13,11 @@
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext">            
-            <stripes:label name="label.home" />
+            <fmt:message key="label.home" />
         </sdynattr:link>    
         <sdynattr:link href="/CategoryList.action"
                        class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
-            <stripes:label name="label.Categories" />
+            <fmt:message key="label.Categories" />
         </sdynattr:link>         
     </stripes:layout-component>
 
@@ -29,7 +29,7 @@
         <sdynattr:link href="/ProductCreate.action"
                        class="ui-btn ui-shadow ui-corner-all ui-icon-action ui-btn-icon-left">            
             <stripes:param name="product.productCategory.id" value="${actionBean.category.id}"/>
-            <stripes:label name="label.create" />
+            <fmt:message key="label.create" />
         </sdynattr:link>          
     </stripes:layout-component>
 
@@ -38,7 +38,7 @@
         <stripes:messages/>
         <ul data-role="listview" 
             data-filter="true" 
-            data-filter-placeholder="${actionBean.getLocalizationKey("label.Product.search")}"
+            data-filter-placeholder="<fmt:message key='label.Product.search' />"
             data-inset="true">
             <c:forEach items="${actionBean.productList}" var="product">                
                 <li>

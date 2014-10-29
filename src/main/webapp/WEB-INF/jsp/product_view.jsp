@@ -13,7 +13,7 @@
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
-            <stripes:label name="label.home" />
+            <fmt:message key="label.home" />
         </sdynattr:link>
         <sdynattr:link href="/CategoryProductList.action"
                        class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
@@ -31,7 +31,7 @@
                        class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-left"
                        role="button">
             <stripes:param name="product.id" value="${actionBean.product.id}"/>
-            <stripes:label name="label.edit" />
+            <fmt:message key="label.edit" />
         </sdynattr:link>        
     </stripes:layout-component>
 
@@ -39,10 +39,12 @@
         <stripes:errors />
         <stripes:messages />
         <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="false">
-            <h4><stripes:label name="label.ProductGeneralInfo"/></h4>
+            <h4><fmt:message key="label.ProductGeneralInfo"/></h4>
             <div class="ui-grid-a ui-responsive">                
                 <div class="ui-block-a">
-                    <div class="ui-body ui-body-d"><stripes:label name="label.Product.reference" /></div>                    
+                    <div class="ui-body ui-body-d">
+                        <fmt:message key="label.Product.reference" />
+                    </div>                    
                 </div>                    
                 <div class="ui-block-b">
                     <div class="ui-body ui-body-d">
@@ -50,7 +52,9 @@
                     </div>                    
                 </div>
                 <div class="ui-block-a">
-                    <div class="ui-body ui-body-d"><stripes:label name="label.Product.priceBuy" /></div>                    
+                    <div class="ui-body ui-body-d">
+                        <fmt:message key="label.Product.priceBuy" />
+                    </div>                    
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-body ui-body-d">
@@ -62,7 +66,9 @@
                     </div>                    
                 </div>                
                 <div class="ui-block-a">
-                    <div class="ui-body ui-body-d"><stripes:label name="label.Product.priceSell" /></div>                    
+                    <div class="ui-body ui-body-d">
+                        <fmt:message key="label.Product.priceSell" />
+                    </div>                    
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-body ui-body-d">
@@ -74,7 +80,9 @@
                     </div>                    
                 </div>
                 <div class="ui-block-a">
-                    <div class="ui-body ui-body-d"><stripes:label name="label.Product.taxCategory" /></div>                    
+                    <div class="ui-body ui-body-d">
+                        <fmt:message key="label.Product.taxCategory" />
+                    </div>                    
                 </div>                    
                 <div class="ui-block-b">
                     <div class="ui-body ui-body-d">
@@ -82,7 +90,9 @@
                     </div>                    
                 </div>                 
                 <div class="ui-block-a">
-                    <div class="ui-body ui-body-d"><stripes:label name="label.Product.taxPriceSell" /></div>                    
+                    <div class="ui-body ui-body-d">
+                        <fmt:message key="label.Product.taxPriceSell" />
+                    </div>                    
                 </div>                    
                 <div class="ui-block-b">
                     <div class="ui-body ui-body-d">
@@ -135,7 +145,7 @@
                     });
                 });
             </script>
-            <h2><stripes:label name="label.ProductPricePieChart" /></h2>
+            <h2><fmt:message key="label.ProductPricePieChart" /></h2>
             <div style="padding: 10px;">
                 <div id="price_pie_chart" style="width:256px;height:256px"></div>
             </div>

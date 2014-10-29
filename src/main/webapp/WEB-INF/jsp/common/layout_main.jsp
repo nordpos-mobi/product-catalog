@@ -19,7 +19,6 @@
             <link rel="stylesheet" href="<c:url value='/css/jquery.mobile-1.4.4.min.css'/>" />
             <link rel="stylesheet" href="<c:url value='/css/jquery.mobile.icons-1.4.4.min.css'/>" />
             <link rel="stylesheet" href="<c:url value='/css/icon-pack-custom.css'/>" />
-            <link rel="stylesheet" href="<c:url value='/css/stripes.mobile.css'/>" />          
             <link rel="icon" type="image/png" href="<c:url value='/icon.png' />" />
             <script src="<c:url value='/js/jquery-2.1.1.min.js'/>" type="text/javascript"></script>
             <script src="<c:url value='/js/jquery.mobile-1.4.4.min.js'/>" type="text/javascript"></script>

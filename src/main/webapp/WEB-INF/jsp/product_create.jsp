@@ -13,7 +13,7 @@
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
-            <stripes:label name="label.home" />
+            <fmt:message key="label.home" />
         </sdynattr:link>                  
         <sdynattr:link href="/CategoryProductList.action"
                        class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
@@ -23,7 +23,7 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.ProductCreate"/>
+        <fmt:message key="label.ProductCreate" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
@@ -41,28 +41,28 @@
                 <li class="ui-field-contain">
                     <stripes:label name="label.Product.name" for="productName" />
                     <input name="product.name" id="productName" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductName.enter")}" 
+                           placeholder="<fmt:message key='label.ProductName.enter' />" 
                            value=""
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
                     <stripes:label name="label.Product.reference" for="productReference" />
                     <input name="product.reference" id="productReference" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductReference.enter")}"
+                           placeholder="<fmt:message key='label.ProductReference.enter' />"
                            value="${actionBean.product.reference}"
                            data-clear-btn="true">
                 </li>                
                 <li class="ui-field-contain">
                     <stripes:label name="label.Product.code" for="productCode" />
                     <input name="product.code" id="productCode" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductCode.enter")}"
+                           placeholder="<fmt:message key='label.ProductCode.enter' />"
                            value="${actionBean.product.code}"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
                     <stripes:label name="label.Product.priceBuy" for="productPriceBuy"/>
                     <input name="product.priceBuy" id="productPriceBuy" type="number"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductBuyPrice.enter")}"
+                           placeholder="<fmt:message key='label.ProductBuyPrice.enter' />"
                            step="0.01"                           
                            value="0.00"
                            data-clear-btn="true">
@@ -70,7 +70,7 @@
                 <li class="ui-field-contain">
                     <stripes:label name="label.Product.priceSell" for="productPriceSell"/>
                     <input name="product.priceSell" id="productPriceSell" type="number"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductSellPrice.enter")}"
+                           placeholder="<fmt:message key='label.ProductSellPrice.enter' />"
                            step="0.01"                           
                            value="0.00"
                            data-clear-btn="true">

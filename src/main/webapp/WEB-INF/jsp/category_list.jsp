@@ -13,19 +13,19 @@
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext">            
-            <stripes:label name="label.home" />
+            <fmt:message key="label.home" />
         </sdynattr:link>          
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.Categories"/>
+        <fmt:message key="label.Categories"/>
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
         <sdynattr:link href="/CategoryCreate.action"                       
                        class="ui-btn ui-shadow ui-corner-all ui-icon-action ui-btn-icon-left">
             <stripes:param name="category.code" value="${actionBean.categoryList.size() + 1}"/>
-            <stripes:label name="label.create" />
+            <fmt:message key="label.create" />
         </sdynattr:link>          
     </stripes:layout-component>
 
@@ -37,7 +37,7 @@
         <stripes:messages />
         <%-- Listview include search by the name of elements --%>
         <ul data-role="listview" data-filter="true"
-            data-filter-placeholder="${actionBean.getLocalizationKey("label.ProductCategory.search")}"
+            data-filter-placeholder="<fmt:message key='label.ProductCategory.search' />"
             data-inset="true" data-split-icon="edit" data-split-theme="a">
             <%-- Create dynamic listview. --%>
             <c:forEach items="${actionBean.categoryList}" var="category">                
@@ -58,7 +58,7 @@
                         <%-- Key parameter for changes of the current list item --%>
                         <stripes:param name="category.id" value="${category.id}"/>
                         <%-- Description of the action by the current list item --%>
-                        <stripes:label name="label.edit" />
+                        <fmt:message key="label.edit" />
                     </sdynattr:link>
                 </li>
             </c:forEach>

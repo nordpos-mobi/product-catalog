@@ -13,12 +13,12 @@
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
-            <stripes:label name="label.home" />
+            <fmt:message key="label.home" />
         </sdynattr:link>                 
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.UserRegistration"/>
+        <fmt:message key="label.UserRegistration" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
@@ -36,19 +36,19 @@
                 <li class="ui-field-contain">
                     <stripes:label name="label.User.name" for="userName" />
                     <input name="user.name" id="userName" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.UserName.enter")}"
+                           placeholder="<fmt:message key='label.UserName.enter' />"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
                     <stripes:label name="label.User.password" for="userPassword" />
                     <input name="user.password" id="userPassword" type="password"
-                           placeholder="${actionBean.getLocalizationKey("label.UserPassword.enter")}"
+                           placeholder="<fmt:message key='label.UserPassword.enter' />"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
                     <stripes:label name="label.User.confirmPassword" for="userConfirmPassword" />
                     <input name="confirmPassword" id="userConfirmPassword" type="password"
-                           placeholder="${actionBean.getLocalizationKey("label.UserPassword.confirm")}"
+                           placeholder="<fmt:message key='label.UserPassword.confirm' />"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-body ui-body-b">

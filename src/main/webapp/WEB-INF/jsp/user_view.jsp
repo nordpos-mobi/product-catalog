@@ -13,12 +13,12 @@
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
-            <stripes:label name="label.home" />
+            <fmt:message key="label.home" />
         </sdynattr:link>        
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.UserLogIn" />
+        <fmt:message key="label.UserLogIn" />
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
@@ -29,24 +29,24 @@
            data-position-to="window" 
            data-transition="pop" 
            class="ui-btn-center ui-btn ui-btn-b ui-shadow ui-corner-all">
-            <stripes:label name="label.UserLogOut" />
+            <fmt:message key="label.UserLogOut" />
         </a>
         <div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
             <div data-role="header" data-theme="a">
-                <h1><stripes:label name="label.dialog.UserLogOut" /></h1>
+                <h1><fmt:message key="label.dialog.UserLogOut" /></h1>
             </div>
             <div role="main" class="ui-content">
-                <h3 class="ui-title"><stripes:label name="label.ask.UserLogOut" /></h3>
+                <h3 class="ui-title"><fmt:message key="label.ask.UserLogOut" /></h3>
                 <sdynattr:link href="/UserAuthorization.action"
                                event="logout"
                                class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-left ui-btn-a ui-shadow">
-                    <stripes:label name="Yes" />
+                    <fmt:message key="yes" />
                 </sdynattr:link>
                 <a href="#" 
                    class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left ui-btn-b ui-shadow" 
                    data-rel="back" 
                    data-transition="flow">
-                    <stripes:label name="No" />
+                    <fmt:message key="no" />
                 </a>
             </div>
         </div>                

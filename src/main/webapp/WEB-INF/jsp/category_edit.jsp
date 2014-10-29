@@ -13,16 +13,16 @@
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
-            <stripes:label name="label.home" />
+            <fmt:message key="label.home" />
         </sdynattr:link>          
         <sdynattr:link href="/CategoryList.action"
                        class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
-            <stripes:label name="label.Categories" />
+            <fmt:message key="label.Categories" />
         </sdynattr:link>           
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.ProductCategoryEdit" />
+        <fmt:message key="label.ProductCategoryEdit" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
@@ -32,20 +32,20 @@
            data-position-to="window" 
            data-transition="pop" 
            class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left ui-btn-b ui-shadow">
-            <stripes:label name="label.delete" />
+            <fmt:message key="label.delete" />
         </a>
         <div data-role="popup" 
              id="delete_category" 
              data-overlay-theme="b" data-theme="b" 
              data-dismissible="false" style="max-width:400px;">
             <div data-role="header" data-theme="a">
-                <h1><stripes:label name="label.dialog.delete" /></h1>
+                <h1><fmt:message key="label.dialog.delete" /></h1>
             </div>
             <div role="main" class="ui-content">
                 <h3 class="ui-title">
                     <c:out value="${actionBean.category.name}"/>
                 </h3>
-                <p><stripes:label name="label.ask.delete" /></p>
+                <p><fmt:message key="label.ask.delete" /></p>
                 <stripes:form action="/CategoryChange.action?delete">
                     <div>
                         <stripes:hidden name="category.id" value="${actionBean.category.id}"/>                    
@@ -56,7 +56,7 @@
                    class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left ui-btn-b ui-shadow" 
                    data-rel="back" 
                    data-transition="flow">
-                    <stripes:label name="no" />
+                    <fmt:message key="no" />
                 </a>                
             </div>
         </div>        
@@ -76,14 +76,14 @@
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.name" for="categoryName" />
                     <input name="category.name" id="categoryName" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductCategory.name")}" 
+                           placeholder="<fmt:message key='label.ProductCategoryName.enter' />" 
                            value="${actionBean.category.name}"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.code" for="categoryCode" />
                     <input name="category.code" id="categoryCode" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductCategory.code")}" 
+                           placeholder="<fmt:message key='label.ProductCategoryCode.enter' />" 
                            value="${actionBean.category.code}"
                            data-clear-btn="true">
                 </li>

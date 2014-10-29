@@ -11,7 +11,7 @@
                        pageid="Welcome">
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.welcome" />
+        <fmt:message key="label.welcome" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
@@ -19,7 +19,7 @@
                        event="info"
                        class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left"
                        role="button">
-            <stripes:label name="label.info" />
+            <fmt:message key="label.info" />
         </sdynattr:link>
     </stripes:layout-component> 
 
@@ -28,13 +28,13 @@
             <a href="http://www.nordpos.mobi">
                 <img src="<c:url value='/image/logo.png' />" alt="NORD POS mobi"/>
             </a>            
-            <h2><stripes:label name="label.present" /></h2>
+            <p><fmt:message key="label.present" /></p>
             <stripes:errors />
             <stripes:messages />
             <sdynattr:link href="/CategoryList.action"
                            class="ui-btn ui-shadow ui-corner-all"
                            role="button">
-                <stripes:label name="label.Catalog" />
+                <fmt:message key="label.Catalog" />
             </sdynattr:link>            
         </div>
     </stripes:layout-component>

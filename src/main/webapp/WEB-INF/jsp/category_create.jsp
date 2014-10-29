@@ -13,16 +13,16 @@
     <stripes:layout-component name="button.return">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext">
-            <stripes:label name="label.home" />
+            <fmt:message key="label.home" />
         </sdynattr:link>          
         <sdynattr:link href="/CategoryList.action"
                        class="ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left">
-            <stripes:label name="label.Categories" />
+            <fmt:message key="label.Categories" />
         </sdynattr:link>           
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
-        <stripes:label name="label.ProductCategoryCreate"/>
+        <fmt:message key="label.ProductCategoryCreate" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
@@ -36,14 +36,14 @@
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.name" for="categoryName" />
                     <input name="category.name" id="categoryName" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductCategoryName.enter")}" 
+                           placeholder="<fmt:message key='label.ProductCategoryName.enter' />" 
                            value=""
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.code" for="categoryCode" />
                     <input name="category.code" id="categoryCode" type="text"
-                           placeholder="${actionBean.getLocalizationKey("label.ProductCategoryCode.enter")}" 
+                           placeholder="<fmt:message key='label.ProductCategoryCode.enter' />" 
                            value="${actionBean.generateCode}"
                            data-clear-btn="true">
                 </li>
