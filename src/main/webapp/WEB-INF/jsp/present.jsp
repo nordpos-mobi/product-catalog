@@ -7,8 +7,8 @@
 
 <%@include file="/WEB-INF/jsp/common/taglibs.jsp"%>
 <stripes:layout-render name="/WEB-INF/jsp/common/layout_main.jsp"
-                       title="Home"
-                       pageid="home">
+                       title="Welcome"
+                       pageid="Welcome">
 
     <stripes:layout-component name="header.title">
         <stripes:label name="label.welcome" />

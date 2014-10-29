@@ -7,8 +7,8 @@
 
 <%@include file="/WEB-INF/jsp/common/taglibs.jsp"%>
 <stripes:layout-render name="/WEB-INF/jsp/common/layout_main.jsp"
-                       title="Home"
-                       pageid="home">
+                       title="User Authorization"
+                       pageid="UserAuthorization">
 
     <stripes:layout-component name="button.return">
         <c:if test="${not empty user}">
@@ -20,6 +20,7 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="header.title">
+        <stripes:label name="label.UserAuthorization" />
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
