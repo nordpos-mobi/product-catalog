@@ -63,12 +63,12 @@
                 </div>
                 <div data-role="footer" class="ui-bar">
                     <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal" data-mini="true">                        
-                        <a href="mailto:svininykh@gmail.com" class="ui-btn ui-corner-all ui-icon-mail ui-btn-icon-notext">svininykh@gmail.com</a>
-                        <a href="tel:+00-000-000-00-00" class="ui-btn ui-corner-all ui-icon-phone ui-btn-icon-notext ui-state-disabled">+00-000-000-00-00</a>
+                        <a href="mailto:<fmt:message key='mailto.address' />" class="ui-btn ui-corner-all ui-icon-mail ui-btn-icon-notext"><fmt:message key='mailto.address' /></a>
+                        <a href="tel:<fmt:message key='tel.number' />" class="ui-btn ui-corner-all ui-icon-phone ui-btn-icon-notext"><fmt:message key='tel.number' /></a>
                     </div>
 
                     <h2>
-                        <span>&copy;2012-2014 Nord Trading Network. <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License, v.2.0</a></span>
+                        <span><fmt:message key="label.Copyright" /></span>
                     </h2>
 
                     <div class="ui-btn-right" data-role="controlgroup" data-type="horizontal" data-mini="true">
