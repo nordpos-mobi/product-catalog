@@ -48,7 +48,7 @@ public abstract class CategoryBaseActionBean extends BaseActionBean {
             }
         }
     }
-    
+
     protected ProductCategory readProductCategory(String column, String value) throws SQLException {
         try {
             connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());

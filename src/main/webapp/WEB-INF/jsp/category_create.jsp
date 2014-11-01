@@ -31,7 +31,7 @@
     <stripes:layout-component name="content">        
         <stripes:errors />
         <stripes:messages />
-        <stripes:form action="/CategoryCreate.action?add">            
+        <sdynattr:form action="/CategoryCreate.action?add" data-ajax="false">            
             <ul data-role="listview" data-inset="true">                
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.name" for="categoryName" />
@@ -47,6 +47,10 @@
                            value="${actionBean.generateCode}"
                            data-clear-btn="true">
                 </li>
+                <li class="ui-field-contain">
+                    <stripes:label name="label.ProductCategoryImage.file" for="imageFile" />                    
+                    <stripes:file name="imageFile" id="imageFile" /> 
+                </li>
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">
                         <div class="ui-block-a">
@@ -58,7 +62,7 @@
                     </fieldset>
                 </li>
             </ul>
-        </stripes:form>
+        </sdynattr:form>
 
 
     </stripes:layout-component>

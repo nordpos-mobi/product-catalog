@@ -16,6 +16,7 @@
 package mobi.nordpos.catalog.model;
 
 import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -31,6 +32,7 @@ public class ProductCategory {
     public static final String ID = "ID";
     public static final String NAME = "NAME";
     public static final String CODE = "CODE";
+    public static final String IMAGE = "IMAGE";
 
     @DatabaseField(id = true, columnName = ID)
     private String id;
@@ -38,8 +40,11 @@ public class ProductCategory {
     @DatabaseField(columnName = NAME, unique = true, canBeNull = false)
     private String name;
 
-    @DatabaseField(columnName = CODE)
+    @DatabaseField(columnName = CODE, canBeNull = true)
     private String code;
+
+    @DatabaseField(columnName = IMAGE, dataType = DataType.BYTE_ARRAY, canBeNull = true)
+    private byte[] image;
 
     @ForeignCollectionField(orderAscending = true, orderColumnName = Product.NAME)
     private ForeignCollection<Product> productCollection;
@@ -67,6 +72,14 @@ public class ProductCategory {
     public void setCode(String code) {
         this.code = code;
     }
+    
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }    
 
     public ForeignCollection<Product> getProductCollection() {
         return this.productCollection;

@@ -47,8 +47,10 @@
                                    data-transition="slide">
                         <%-- Key parameter for search child elements --%>
                         <stripes:param name="category.id" value="${category.id}"/>
+                        <image src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${category.id}&thumbnailSize=80" />
                         <%-- Name of the list item --%>
-                        <c:out value="${category.name}"/>
+                        <h2><c:out value="${category.name}"/></h2>
+                        <p><c:out value="${category.code}"/></p>
                         <%-- Addional information about number of child elements --%>
                         <span class="ui-li-count"><c:out value="${category.productList.size()}"/></span>
                     </sdynattr:link>

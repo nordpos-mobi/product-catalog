@@ -64,9 +64,18 @@
     </stripes:layout-component>
 
 
-    <stripes:layout-component name="content">
+    <stripes:layout-component name="content">        
         <stripes:errors />
-        <stripes:form action="/CategoryChange.action?update">
+        <stripes:messages />
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="true">
+            <h2><fmt:message key="label.ProductCategoryImage"/></h2>
+            <div class="ui-grid-solo">
+                <div class="ui-block-a">
+                    <image src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${actionBean.category.id}" />
+                </div>
+            </div>
+        </div>            
+        <sdynattr:form action="/CategoryChange.action?update" data-ajax="false">
             <div>
                 <stripes:hidden name="category.id" value="${actionBean.category.id}"/>
                 <stripes:hidden name="currentName" value="${actionBean.category.name}"/>
@@ -87,6 +96,10 @@
                            value="${actionBean.category.code}"
                            data-clear-btn="true">
                 </li>
+                <li class="ui-field-contain">
+                    <stripes:label name="label.ProductCategoryImage.file" for="imageFile" />                    
+                    <stripes:file name="imageFile" id="imageFile" /> 
+                </li>
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">
                         <div class="ui-block-a">
@@ -98,9 +111,7 @@
                     </fieldset>
                 </li>
             </ul>
-        </stripes:form>
-
-
+        </sdynattr:form>
     </stripes:layout-component>
 
     <stripes:layout-component name="footer">

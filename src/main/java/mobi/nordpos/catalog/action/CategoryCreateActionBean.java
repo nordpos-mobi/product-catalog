@@ -15,10 +15,13 @@
  */
 package mobi.nordpos.catalog.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
 import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.catalog.util.ImagePreview;
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
@@ -34,6 +37,8 @@ import net.sourceforge.stripes.validation.ValidationMethod;
 public class CategoryCreateActionBean extends CategoryBaseActionBean {
 
     private static final String CATEGORY_CREATE = "/WEB-INF/jsp/category_create.jsp";
+
+    private FileBean imageFile;
 
     @DefaultHandler
     public Resolution form() {
@@ -73,7 +78,15 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         super.setCategory(category);
     }
 
-    @ValidationMethod
+    public FileBean getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(FileBean imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    @ValidationMethod(on = "add")
     public void validateCategoryNameIsUnique(ValidationErrors errors) {
         String name = getCategory().getName();
         if (name != null && !name.isEmpty()) {
@@ -89,7 +102,7 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         }
     }
 
-    @ValidationMethod
+    @ValidationMethod(on = "add")
     public void validateCategoryCodeIsUnique(ValidationErrors errors) {
         String code = getCategory().getCode();
         if (code != null && !code.isEmpty()) {
@@ -101,6 +114,23 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
             } catch (SQLException ex) {
                 getContext().getValidationErrors().addGlobalError(
                         new SimpleError(ex.getMessage()));
+            }
+        }
+    }
+
+    @ValidationMethod(on = "add")
+    public void validateCategoryImageUpload(ValidationErrors errors) {
+        if (imageFile != null) {
+            if (imageFile.getContentType().startsWith("image")) {
+                try {
+                    getCategory().setImage(ImagePreview.createThumbnail(imageFile.getInputStream(), 256));
+                } catch (IOException ex) {
+                    errors.add("category.image", new SimpleError(
+                            getLocalizationKey("error.ProductCategory.FileNotUpload"), imageFile.getFileName()));
+                }
+            } else {
+                errors.add("category.image", new SimpleError(
+                        getLocalizationKey("error.ProductCategory.FileNotImage"), imageFile.getFileName()));
             }
         }
     }

@@ -15,9 +15,12 @@
  */
 package mobi.nordpos.catalog.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.catalog.util.ImagePreview;
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
@@ -37,6 +40,8 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
 
     private String currentCode;
     private String currentName;
+
+    private FileBean imageFile;
 
     @DefaultHandler
     public Resolution form() throws SQLException {
@@ -117,6 +122,30 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         }
     }
 
+    @ValidationMethod(on = "update")
+    public void validateCategoryImageUpload(ValidationErrors errors) {
+        try {
+            if (imageFile != null) {
+                if (imageFile.getContentType().startsWith("image")) {
+                    try {
+                        getCategory().setImage(ImagePreview.createThumbnail(imageFile.getInputStream(), 256));
+                    } catch (IOException ex) {
+                        errors.add("category.image", new SimpleError(
+                            getLocalizationKey("error.ProductCategory.FileNotUpload"), imageFile.getFileName()));
+                    }
+                } else {
+                    errors.add("category.image", new SimpleError(
+                            getLocalizationKey("error.ProductCategory.FileNotImage"), imageFile.getFileName()));
+                }
+            } else {
+                getCategory().setImage(readProductCategory(getCategory().getId()).getImage());
+            }
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
+        }
+    }
+
     @ValidationMethod(on = "form")
     public void validateCategoryIdIsAvalaible(ValidationErrors errors) {
         try {
@@ -167,5 +196,13 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
 
     public void setCurrentCode(String currentCode) {
         this.currentCode = currentCode;
+    }
+
+    public FileBean getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(FileBean imageFile) {
+        this.imageFile = imageFile;
     }
 }
