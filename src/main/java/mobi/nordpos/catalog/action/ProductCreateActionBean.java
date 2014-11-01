@@ -15,6 +15,7 @@
  */
 package mobi.nordpos.catalog.action;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.SQLException;
@@ -23,7 +24,9 @@ import java.util.UUID;
 import mobi.nordpos.catalog.model.Product;
 import mobi.nordpos.catalog.model.ProductCategory;
 import mobi.nordpos.catalog.model.TaxCategory;
+import mobi.nordpos.catalog.util.ImagePreview;
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
@@ -46,7 +49,8 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
 
     private static final String DEFAULT_BARCODE_PREFIX = "200";
 
-    Boolean isTaxInclude;
+    private Boolean isTaxInclude;
+    private FileBean imageFile;
 
     @DefaultHandler
     public Resolution form() {
@@ -113,7 +117,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
     }
 
     @ValidationMethod
-    public void validateProductCategoryIdIsAvalaible(ValidationErrors errors) {
+    public void validateProductIdIsAvalaible(ValidationErrors errors) {
         try {
             ProductCategory category = readProductCategory(getProduct().getProductCategory().getId());
             if (category != null) {
@@ -156,6 +160,23 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
             } catch (SQLException ex) {
                 getContext().getValidationErrors().addGlobalError(
                         new SimpleError(ex.getMessage()));
+            }
+        }
+    }
+
+    @ValidationMethod(on = "add")
+    public void validateProductImageUpload(ValidationErrors errors) {
+        if (imageFile != null) {
+            if (imageFile.getContentType().startsWith("image")) {
+                try {
+                    getProduct().setImage(ImagePreview.createThumbnail(imageFile.getInputStream(), 256));
+                } catch (IOException ex) {
+                    errors.add("product.image", new SimpleError(
+                            getLocalizationKey("error.FileNotUpload"), imageFile.getFileName()));
+                }
+            } else {
+                errors.add("product.image", new SimpleError(
+                        getLocalizationKey("error.FileNotImage"), imageFile.getFileName()));
             }
         }
     }
@@ -229,5 +250,13 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
 
     public void setIsTaxInclude(Boolean isTaxInclude) {
         this.isTaxInclude = isTaxInclude;
+    }
+
+    public FileBean getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(FileBean imageFile) {
+        this.imageFile = imageFile;
     }
 }

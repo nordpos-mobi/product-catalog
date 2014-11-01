@@ -15,9 +15,11 @@
  */
 package mobi.nordpos.catalog.model;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.math.BigDecimal;
+import static mobi.nordpos.catalog.model.ProductCategory.IMAGE;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -33,6 +35,7 @@ public class Product {
     public static final String PRICESELL = "PRICESELL";
     public static final String CATEGORY = "CATEGORY";
     public static final String TAXCAT = "TAXCAT";
+    public static final String IMAGE = "IMAGE";
 
     @DatabaseField(id = true, columnName = ID)
     private String id;
@@ -51,6 +54,9 @@ public class Product {
 
     @DatabaseField(columnName = PRICESELL, canBeNull = false)
     private BigDecimal pricesell;
+
+    @DatabaseField(columnName = IMAGE, dataType = DataType.BYTE_ARRAY, canBeNull = true)
+    private byte[] image;
 
     @DatabaseField(foreign = true,
             columnName = CATEGORY,
@@ -118,6 +124,14 @@ public class Product {
 
     public void setPriceSell(BigDecimal pricesell) {
         this.pricesell = pricesell;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public BigDecimal getTaxPriceSell() {

@@ -15,11 +15,14 @@
  */
 package mobi.nordpos.catalog.action;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.model.Product;
+import mobi.nordpos.catalog.util.ImagePreview;
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SimpleMessage;
@@ -39,6 +42,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
     private static final String PRODUCT_EDIT = "/WEB-INF/jsp/product_edit.jsp";
 
     private Product currentProduct;
+    private FileBean imageFile;
 
     @DefaultHandler
     public Resolution form() throws SQLException {
@@ -62,7 +66,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
                     new SimpleError(ex.getMessage()));
             return getContext().getSourcePageResolution();
         }
-        return new ForwardResolution(CategoryListActionBean.class);
+        return new ForwardResolution(ProductViewActionBean.class);
     }
 
     public Resolution delete() throws SQLException {
@@ -112,7 +116,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
             }
         }
     }
-    
+
     @ValidationMethod(on = "update")
     public void validateProductReferenceIsUnique(ValidationErrors errors) {
         String reference = getProduct().getReference();
@@ -126,6 +130,30 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
                 getContext().getValidationErrors().addGlobalError(
                         new SimpleError(ex.getMessage()));
             }
+        }
+    }
+    
+    @ValidationMethod(on = "update")
+    public void validateProductImageUpload(ValidationErrors errors) {
+        try {
+            if (imageFile != null) {
+                if (imageFile.getContentType().startsWith("image")) {
+                    try {
+                        getProduct().setImage(ImagePreview.createThumbnail(imageFile.getInputStream(), 256));
+                    } catch (IOException ex) {
+                        errors.add("product.image", new SimpleError(
+                            getLocalizationKey("error.FileNotUpload"), imageFile.getFileName()));
+                    }
+                } else {
+                    errors.add("product.image", new SimpleError(
+                            getLocalizationKey("error.FileNotImage"), imageFile.getFileName()));
+                }
+            } else {
+                getProduct().setImage(readProductCategory(getProduct().getId()).getImage());
+            }
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
         }
     }    
 
@@ -188,5 +216,13 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
     public void setCurrentProduct(Product currentProduct) {
         this.currentProduct = currentProduct;
     }
-    
+
+    public FileBean getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(FileBean imageFile) {
+        this.imageFile = imageFile;
+    }
+
 }

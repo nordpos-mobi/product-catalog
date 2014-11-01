@@ -32,7 +32,7 @@
     <stripes:layout-component name="content">
         <stripes:errors />
         <stripes:messages />
-        <stripes:form action="/ProductCreate.action?add">
+        <sdynattr:form action="/ProductCreate.action?add" data-ajax="false">
             <div>                
                 <stripes:hidden name="product.productCategory.id" value="${actionBean.product.productCategory.id}"/>
                 <stripes:hidden name="product.productCategory.name" value="${actionBean.product.productCategory.name}"/>
@@ -89,13 +89,17 @@
                     <stripes:label name="label.Product.taxInclude" for="productIsTaxInclude"/>
                     <sdynattr:select name="isTaxInclude" id="productIsTaxInclude" data-role="slider">
                         <stripes:option value="false">
-                             <c:out value="${actionBean.getLocalizationKey('no')}"/>
+                            <fmt:message key="no"/>
                         </stripes:option>    
                         <stripes:option value="true" selected="true">
-                            <c:out value="${actionBean.getLocalizationKey('yes')}"/>
+                            <fmt:message key="yes"/>
                         </stripes:option> 
                     </sdynattr:select>
-                </li>                
+                </li>
+                <li class="ui-field-contain">
+                    <stripes:label name="label.ProductImage.file" for="productImageFile" />                    
+                    <stripes:file name="imageFile" id="productImageFile" /> 
+                </li>
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">
                         <div class="ui-block-a">
@@ -107,7 +111,7 @@
                     </fieldset>
                 </li>
             </ul>        
-        </stripes:form>
+        </sdynattr:form>
     </stripes:layout-component>
 
     <stripes:layout-component name="footer">

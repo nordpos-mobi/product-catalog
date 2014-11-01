@@ -66,7 +66,16 @@
     <stripes:layout-component name="content">
         <stripes:errors />
         <stripes:messages />
-        <stripes:form action="/ProductChange.action?update">
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="true">
+            <h2><fmt:message key="label.ProductImage"/></h2>
+            <div class="ui-grid-solo">
+                <div class="ui-block-a">
+                    <image src="${pageContext.servletContext.contextPath}/ProductImage.action?preview&product.id=${actionBean.product.id}"
+                           alt="${actionBean.product.name}"/>
+                </div>
+            </div>
+        </div>
+        <sdynattr:form action="/ProductChange.action?update" data-ajax="false">
             <div>
                 <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
                 <stripes:hidden name="product.taxCategory.id" value="${actionBean.product.taxCategory.id}"/>
@@ -115,6 +124,10 @@
                            value="${actionBean.product.taxPriceSell}"
                            data-clear-btn="true">
                 </li>
+                <li class="ui-field-contain">
+                    <stripes:label name="label.ProductImage.file" for="productImageFile" />                    
+                    <stripes:file name="imageFile" id="productImageFile" /> 
+                </li>
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">
                         <div class="ui-block-a">
@@ -126,7 +139,7 @@
                     </fieldset>
                 </li>
             </ul>
-        </stripes:form>
+        </sdynattr:form>
 
     </stripes:layout-component>
 
