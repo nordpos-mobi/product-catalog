@@ -47,8 +47,8 @@
                                    data-transition="slide">
                         <%-- Key parameter for search child elements --%>
                         <stripes:param name="category.id" value="${category.id}"/>
-                        <image src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${category.id}&thumbnailSize=80"
-                               alt="${actionBean.category.name}"/>
+                        <img src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${category.id}&thumbnailSize=80"
+                             alt="${actionBean.category.name}"/>
                         <%-- Name of the list item --%>
                         <h2><c:out value="${category.name}"/></h2>
                         <p><c:out value="${category.code}"/></p>

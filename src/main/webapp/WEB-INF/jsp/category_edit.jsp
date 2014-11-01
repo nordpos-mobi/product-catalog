@@ -71,8 +71,8 @@
             <h2><fmt:message key="label.ProductCategoryImage"/></h2>
             <div class="ui-grid-solo">
                 <div class="ui-block-a">
-                    <image src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${actionBean.category.id}"
-                           alt="${actionBean.category.name}" />
+                    <img src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${actionBean.category.id}"
+                         alt="${actionBean.category.name}" />
                 </div>
             </div>
         </div>            

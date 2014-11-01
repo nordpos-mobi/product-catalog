@@ -70,8 +70,8 @@
             <h2><fmt:message key="label.ProductImage"/></h2>
             <div class="ui-grid-solo">
                 <div class="ui-block-a">
-                    <image src="${pageContext.servletContext.contextPath}/ProductImage.action?preview&product.id=${actionBean.product.id}"
-                           alt="${actionBean.product.name}"/>
+                    <img src="${pageContext.servletContext.contextPath}/ProductImage.action?preview&product.id=${actionBean.product.id}"
+                         alt="${actionBean.product.name}"/>
                 </div>
             </div>
         </div>
