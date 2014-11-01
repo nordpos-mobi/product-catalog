@@ -78,14 +78,6 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         super.setCategory(category);
     }
 
-    public FileBean getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(FileBean imageFile) {
-        this.imageFile = imageFile;
-    }
-
     @ValidationMethod(on = "add")
     public void validateCategoryNameIsUnique(ValidationErrors errors) {
         String name = getCategory().getName();
@@ -126,11 +118,11 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
                     getCategory().setImage(ImagePreview.createThumbnail(imageFile.getInputStream(), 256));
                 } catch (IOException ex) {
                     errors.add("category.image", new SimpleError(
-                            getLocalizationKey("error.ProductCategory.FileNotUpload"), imageFile.getFileName()));
+                            getLocalizationKey("error.FileNotUpload"), imageFile.getFileName()));
                 }
             } else {
                 errors.add("category.image", new SimpleError(
-                        getLocalizationKey("error.ProductCategory.FileNotImage"), imageFile.getFileName()));
+                        getLocalizationKey("error.FileNotImage"), imageFile.getFileName()));
             }
         }
     }
@@ -145,5 +137,13 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         } else {
             return "0000";
         }
+    }
+
+    public FileBean getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(FileBean imageFile) {
+        this.imageFile = imageFile;
     }
 }

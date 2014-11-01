@@ -71,15 +71,16 @@
             <h2><fmt:message key="label.ProductCategoryImage"/></h2>
             <div class="ui-grid-solo">
                 <div class="ui-block-a">
-                    <image src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${actionBean.category.id}" />
+                    <image src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${actionBean.category.id}"
+                           alt="${actionBean.category.name}" />
                 </div>
             </div>
         </div>            
         <sdynattr:form action="/CategoryChange.action?update" data-ajax="false">
             <div>
                 <stripes:hidden name="category.id" value="${actionBean.category.id}"/>
-                <stripes:hidden name="currentName" value="${actionBean.category.name}"/>
-                <stripes:hidden name="currentCode" value="${actionBean.category.code}"/>
+                <stripes:hidden name="currentCategory.name" value="${actionBean.category.name}"/>
+                <stripes:hidden name="currentCategory.code" value="${actionBean.category.code}"/>
             </div>
             <ul data-role="listview" data-inset="true">  
                 <li class="ui-field-contain">
@@ -97,8 +98,8 @@
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
-                    <stripes:label name="label.ProductCategoryImage.file" for="imageFile" />                    
-                    <stripes:file name="imageFile" id="imageFile" /> 
+                    <stripes:label name="label.ProductCategoryImage.file" for="categoryImageFile" />                    
+                    <stripes:file name="imageFile" id="categoryImageFile" /> 
                 </li>
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">

@@ -149,7 +149,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
                             getLocalizationKey("error.FileNotImage"), imageFile.getFileName()));
                 }
             } else {
-                getProduct().setImage(readProductCategory(getProduct().getId()).getImage());
+                getProduct().setImage(readProduct(getProduct().getId()).getImage());
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(

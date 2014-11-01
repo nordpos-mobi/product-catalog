@@ -38,8 +38,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
 
     private static final String CATEGORY_EDIT = "/WEB-INF/jsp/category_edit.jsp";
 
-    private String currentCode;
-    private String currentName;
+    private ProductCategory currentCategory;
 
     private FileBean imageFile;
 
@@ -93,7 +92,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     @ValidationMethod(on = "update")
     public void validateCategoryNameIsUnique(ValidationErrors errors) {
         String name = getCategory().getName();
-        if (name != null && !name.isEmpty() && !name.equals(getCurrentName())) {
+        if (name != null && !name.isEmpty() && !name.equals(currentCategory.getName())) {
             try {
                 if (readProductCategory(ProductCategory.NAME, name) != null) {
                     errors.add("category.name", new SimpleError(
@@ -109,7 +108,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     @ValidationMethod(on = "update")
     public void validateCategoryCodeIsUnique(ValidationErrors errors) {
         String code = getCategory().getCode();
-        if (code != null && !code.isEmpty() && !code.equals(getCurrentCode())) {
+        if (code != null && !code.isEmpty() && !code.equals(currentCategory.getCode())) {
             try {
                 if (readProductCategory(ProductCategory.CODE, code) != null) {
                     errors.add("category.code", new SimpleError(
@@ -182,20 +181,12 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         super.setCategory(category);
     }
 
-    public String getCurrentName() {
-        return currentName;
+    public ProductCategory getCurrentCategory() {
+        return currentCategory;
     }
 
-    public void setCurrentName(String currentName) {
-        this.currentName = currentName;
-    }
-
-    public String getCurrentCode() {
-        return currentCode;
-    }
-
-    public void setCurrentCode(String currentCode) {
-        this.currentCode = currentCode;
+    public void setCurrentCategory(ProductCategory currentCategory) {
+        this.currentCategory = currentCategory;
     }
 
     public FileBean getImageFile() {

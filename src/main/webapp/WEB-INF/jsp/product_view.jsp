@@ -39,8 +39,28 @@
         <stripes:errors />
         <stripes:messages />
         <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="false">
-            <h4><fmt:message key="label.ProductGeneralInfo"/></h4>
-            <div class="ui-grid-a ui-responsive">                
+            <h2><fmt:message key="label.ProductImage"/></h2>
+            <div class="ui-grid-solo">
+                <div class="ui-block-a">
+                    <image src="${pageContext.servletContext.contextPath}/ProductImage.action?preview&product.id=${actionBean.product.id}"
+                           alt="${actionBean.product.name}" />
+                </div>
+            </div>
+        </div>
+
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="true">
+            <h2><fmt:message key="label.ProductGeneralInfo"/></h2>
+            <div class="ui-grid-a ui-responsive">  
+                <div class="ui-block-a">
+                    <div class="ui-body ui-body-d">
+                        <fmt:message key="label.Product.name" />
+                    </div>                    
+                </div>                    
+                <div class="ui-block-b">
+                    <div class="ui-body ui-body-d">
+                        <c:out value="${actionBean.product.name}"/>
+                    </div>                    
+                </div>
                 <div class="ui-block-a">
                     <div class="ui-body ui-body-d">
                         <fmt:message key="label.Product.reference" />
