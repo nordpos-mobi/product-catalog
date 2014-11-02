@@ -70,7 +70,7 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
-        <sdynattr:form action="/ProductChange.action?update" data-ajax="false">
+        <sdynattr:form action="/ProductChange.action" data-ajax="false">
             <div>
                 <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
                 <stripes:hidden name="product.taxCategory.id" value="${actionBean.product.taxCategory.id}"/>

@@ -30,11 +30,7 @@
     </stripes:layout-component>
 
     <%-- Main content of the page implementation to the template for view --%>
-    <stripes:layout-component name="content">        
-        <%-- Errors after run action --%>
-        <stripes:errors />
-        <%-- Messages about completed action --%>
-        <stripes:messages />
+    <stripes:layout-component name="content">
         <%-- Listview include search by the name of elements --%>
         <ul data-role="listview" data-filter="true"
             data-filter-placeholder="<fmt:message key='label.ProductCategory.search' />"

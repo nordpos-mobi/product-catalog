@@ -22,9 +22,6 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
-        <stripes:errors />
-        <stripes:messages />
-
         <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="true">
             <h4><fmt:message key="label.servlet.environments" /></h4>
             <div class="ui-grid-a ui-responsive">
@@ -106,9 +103,7 @@
                 </div>    
 
             </div>
-        </div>                    
-
-
+        </div>
     </stripes:layout-component>
 
     <stripes:layout-component name="footer">

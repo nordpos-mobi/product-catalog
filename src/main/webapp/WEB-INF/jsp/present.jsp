@@ -29,8 +29,6 @@
                 <img src="<c:url value='/image/logo.png' />" alt="NORD POS mobi"/>
             </a>            
             <p><fmt:message key="label.present" /></p>
-            <stripes:errors />
-            <stripes:messages />
             <sdynattr:link href="/CategoryList.action"
                            class="ui-btn ui-shadow ui-corner-all"
                            role="button">

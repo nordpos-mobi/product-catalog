@@ -27,12 +27,11 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="button.action">
+        
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
-        <stripes:errors />
-        <stripes:messages />
-        <sdynattr:form action="/ProductCreate.action?add" data-ajax="false">
+        <sdynattr:form action="/ProductCreate.action" data-ajax="false">
             <div>                
                 <stripes:hidden name="product.productCategory.id" value="${actionBean.product.productCategory.id}"/>
                 <stripes:hidden name="product.productCategory.name" value="${actionBean.product.productCategory.name}"/>

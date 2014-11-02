@@ -34,8 +34,6 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
-        <stripes:errors/>
-        <stripes:messages/>
         <ul data-role="listview" 
             data-filter="true" 
             data-filter-placeholder="<fmt:message key='label.Product.search' />"

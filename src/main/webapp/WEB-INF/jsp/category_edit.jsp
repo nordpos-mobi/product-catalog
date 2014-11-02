@@ -71,9 +71,7 @@
 
 
     <stripes:layout-component name="content">        
-        <stripes:errors />
-        <stripes:messages />           
-        <sdynattr:form action="/CategoryChange.action?update" data-ajax="false">
+        <sdynattr:form action="/CategoryChange.action" data-ajax="false">
             <div>
                 <stripes:hidden name="category.id" value="${actionBean.category.id}"/>
                 <stripes:hidden name="currentCategory.name" value="${actionBean.category.name}"/>

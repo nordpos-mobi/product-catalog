@@ -25,7 +25,6 @@
             <script src="<c:url value='/js/jquery.flot.min.js'/>" type="text/javascript"></script>
             <script src="<c:url value='/js/jquery.flot.pie.min.js'/>" type="text/javascript"></script>
             <script src="<c:url value='/js/jquery-ean13.min.js'/>" type="text/javascript"></script>
-
         </head>
         <body>
             <div data-role="page" id="${pageid}">
@@ -56,6 +55,8 @@
                     </div>
                 </div>
                 <div data-role="content" style="padding: 15px" align="center">
+                    <stripes:errors />
+                    <stripes:messages />
                     <stripes:layout-component name="content"/>
                     <a href="${actionBean.application.projectURL}">
                         <img src="<c:url value='/image/poweredby-${actionBean.application.id}.png' />" alt="${actionBean.application.toString()}"/>

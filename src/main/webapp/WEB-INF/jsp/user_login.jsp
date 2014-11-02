@@ -36,8 +36,6 @@
             <a href="http://www.nordpos.mobi">
                 <img src="<c:url value='/image/logo.png' />" alt="NORD POS mobi"/>
             </a>
-            <stripes:errors />
-            <stripes:messages />
             <stripes:form action="/UserAuthorization.action">
                 <div class="ui-field-contain">
                     <stripes:label name="label.login.name"

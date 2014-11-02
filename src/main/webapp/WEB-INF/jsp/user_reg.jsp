@@ -25,9 +25,7 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
-        <stripes:errors />
-        <stripes:messages />
-        <stripes:form action="/UserRegistration.action?accept">
+        <stripes:form action="/UserRegistration.action">
             <div>
                 <stripes:hidden name="user.role" value="3"/>
                 <stripes:hidden name="user.visible" value="false"/>

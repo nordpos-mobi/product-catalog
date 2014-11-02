@@ -28,10 +28,8 @@
     <stripes:layout-component name="button.action">
     </stripes:layout-component>
 
-    <stripes:layout-component name="content">        
-        <stripes:errors />
-        <stripes:messages />
-        <sdynattr:form action="/CategoryCreate.action?add" data-ajax="false">            
+    <stripes:layout-component name="content">
+        <sdynattr:form action="/CategoryCreate.action" data-ajax="false">            
             <ul data-role="listview" data-inset="true">                
                 <li class="ui-field-contain">
                     <stripes:label name="label.ProductCategory.name" for="categoryName" />
@@ -63,7 +61,6 @@
                 </li>
             </ul>
         </sdynattr:form>
-
 
     </stripes:layout-component>
 

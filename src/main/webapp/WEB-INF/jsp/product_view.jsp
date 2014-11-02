@@ -36,8 +36,6 @@
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
-        <stripes:errors />
-        <stripes:messages />
         <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="false">
             <h2><fmt:message key="label.ProductImage"/></h2>
             <div class="ui-grid-solo">
