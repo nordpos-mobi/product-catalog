@@ -25,6 +25,7 @@
             <script src="<c:url value='/js/jquery.flot.min.js'/>" type="text/javascript"></script>
             <script src="<c:url value='/js/jquery.flot.pie.min.js'/>" type="text/javascript"></script>
             <script src="<c:url value='/js/jquery-ean13.min.js'/>" type="text/javascript"></script>
+
         </head>
         <body>
             <div data-role="page" id="${pageid}">
@@ -58,9 +59,11 @@
                     <stripes:errors />
                     <stripes:messages />
                     <stripes:layout-component name="content"/>
-                    <a href="${actionBean.application.projectURL}">
-                        <img src="<c:url value='/image/poweredby-${actionBean.application.id}.png' />" alt="${actionBean.application.toString()}"/>
-                    </a>
+                    <div class="ui-body ui-body-d">
+                        <a href="${actionBean.application.projectURL}">
+                            <img src="<c:url value='/image/poweredby-${actionBean.application.id}.png' />" alt="${actionBean.application.toString()}"/>
+                        </a>
+                    </div>
                 </div>
                 <div data-role="footer" class="ui-bar">
                     <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal" data-mini="true">                        

@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.util.List;
 import mobi.nordpos.catalog.model.Product;
 import mobi.nordpos.catalog.model.ProductCategory;
-import mobi.nordpos.catalog.model.TaxCategory;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -66,7 +65,6 @@ public class CategoryProductListActionBean extends CategoryBaseActionBean {
     public void validateCategoryIdIsAvalaible(ValidationErrors errors) {
         try {
             ProductCategory category = readProductCategory(getCategory().getId());
-            List<TaxCategory> taxCategories = readTaxCategoryList();
             if (category != null) {
                 setCategory(category);
                 List<Product> products = category.getProductList();
