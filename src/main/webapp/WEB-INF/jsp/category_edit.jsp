@@ -46,18 +46,24 @@
                     <c:out value="${actionBean.category.name}"/>
                 </h3>
                 <p><fmt:message key="label.ask.delete" /></p>
-                <stripes:form action="/CategoryChange.action?delete">
-                    <div>
-                        <stripes:hidden name="category.id" value="${actionBean.category.id}"/>                    
+                <fieldset class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a href="#" 
+                           class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left ui-btn-b ui-shadow" 
+                           data-rel="back" 
+                           data-transition="flow">
+                            <fmt:message key="no" />
+                        </a>  
                     </div>
-                    <sdynattr:submit name="yes" data-theme="a" data-icon="check"/>                    
-                </stripes:form>
-                <a href="#" 
-                   class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left ui-btn-b ui-shadow" 
-                   data-rel="back" 
-                   data-transition="flow">
-                    <fmt:message key="no" />
-                </a>                
+                    <div class="ui-block-b">
+                        <stripes:form action="/CategoryChange.action?delete">
+                            <div>
+                                <stripes:hidden name="category.id" value="${actionBean.category.id}"/>                    
+                            </div>
+                            <sdynattr:submit name="yes" data-theme="a" data-icon="check"/>                    
+                        </stripes:form>
+                    </div>
+                </fieldset>
             </div>
         </div>        
 
@@ -66,16 +72,7 @@
 
     <stripes:layout-component name="content">        
         <stripes:errors />
-        <stripes:messages />
-        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="true">
-            <h2><fmt:message key="label.ProductCategoryImage"/></h2>
-            <div class="ui-grid-solo">
-                <div class="ui-block-a">
-                    <img src="${pageContext.servletContext.contextPath}/CategoryImage.action?preview&category.id=${actionBean.category.id}"
-                         alt="${actionBean.category.name}" />
-                </div>
-            </div>
-        </div>            
+        <stripes:messages />           
         <sdynattr:form action="/CategoryChange.action?update" data-ajax="false">
             <div>
                 <stripes:hidden name="category.id" value="${actionBean.category.id}"/>
@@ -104,10 +101,10 @@
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">
                         <div class="ui-block-a">
-                            <sdynattr:submit name="update" data-theme="a"/>
+                            <sdynattr:reset name="clear" data-theme="b"/>
                         </div>
                         <div class="ui-block-b">
-                            <sdynattr:reset name="clear" data-theme="b"/>
+                            <sdynattr:submit name="update" data-theme="a"/>
                         </div>
                     </fieldset>
                 </li>

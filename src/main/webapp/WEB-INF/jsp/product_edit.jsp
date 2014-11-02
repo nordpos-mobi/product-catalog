@@ -46,35 +46,30 @@
                     <c:out value="${actionBean.product.name}"/>
                 </h3>
                 <p><fmt:message key="label.ask.delete" /></p>
-                <stripes:form action="/ProductChange.action?delete">
-                    <div>
-                        <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
-                        <stripes:hidden name="product.name" value="${actionBean.product.name}"/>
+                <fieldset class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a href="#" 
+                           class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left ui-btn-b ui-shadow" 
+                           data-rel="back" 
+                           data-transition="flow">
+                            <fmt:message key="no" />
+                        </a>   
                     </div>
-                    <sdynattr:submit name="yes" data-theme="a" data-icon="check"/>                    
-                </stripes:form>
-                <a href="#" 
-                   class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left ui-btn-b ui-shadow" 
-                   data-rel="back" 
-                   data-transition="flow">
-                    <fmt:message key="no" />
-                </a>                
+                    <div class="ui-block-b">
+                        <stripes:form action="/ProductChange.action?delete">
+                            <div>
+                                <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
+                                <stripes:hidden name="product.name" value="${actionBean.product.name}"/>
+                            </div>
+                            <sdynattr:submit name="yes" data-theme="a" data-icon="check"/>                    
+                        </stripes:form>
+                    </div>
+                </fieldset>
             </div>
         </div>        
     </stripes:layout-component>
 
     <stripes:layout-component name="content">
-        <stripes:errors />
-        <stripes:messages />
-        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-collapsed="true">
-            <h2><fmt:message key="label.ProductImage"/></h2>
-            <div class="ui-grid-solo">
-                <div class="ui-block-a">
-                    <img src="${pageContext.servletContext.contextPath}/ProductImage.action?preview&product.id=${actionBean.product.id}"
-                         alt="${actionBean.product.name}"/>
-                </div>
-            </div>
-        </div>
         <sdynattr:form action="/ProductChange.action?update" data-ajax="false">
             <div>
                 <stripes:hidden name="product.id" value="${actionBean.product.id}"/>
@@ -131,10 +126,10 @@
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">
                         <div class="ui-block-a">
-                            <sdynattr:submit name="update" data-theme="a"/>
+                            <sdynattr:reset name="clear" data-theme="b"/>                            
                         </div>
                         <div class="ui-block-b">
-                            <sdynattr:reset name="clear" data-theme="b"/>
+                            <sdynattr:submit name="update" data-theme="a"/>
                         </div>
                     </fieldset>
                 </li>

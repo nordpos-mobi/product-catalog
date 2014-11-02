@@ -127,20 +127,17 @@
             <div>                
                 <canvas id="ean" width="256" height="128"></canvas>  
                 <script type="text/javascript">
-                    $("#ean").EAN13("${actionBean.product.code}");
-                </script>
+                    $("#ean").EAN13("${actionBean.product.code}");</script>
             </div>
         </div>
         <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
             <script type="text/javascript">
                 $(document).ready(function () {
                     var data = [
-                        {label: "${actionBean.getLocalizationKey('label.ProductPriceCost')}", data: ${actionBean.product.priceBuy}},
-                        {label: "${actionBean.getLocalizationKey('label.ProductPriceMargin')}", data: ${actionBean.product.priceSell.subtract(actionBean.product.priceBuy)}},
-                        {label: "${actionBean.getLocalizationKey('label.ProductPriceTax')}", data: ${actionBean.product.taxPriceSell.subtract(actionBean.product.priceSell)}}];
-
+                        {label: "<fmt:message key='label.ProductPriceCost'/>", data: ${actionBean.product.priceBuy}},
+                        {label: "<fmt:message key='label.ProductPriceMargin'/>", data: ${actionBean.product.priceSell.subtract(actionBean.product.priceBuy)}},
+                        {label: "<fmt:message key='label.ProductPriceTax'/>", data: ${actionBean.product.taxPriceSell.subtract(actionBean.product.priceSell)}}];
                     var placeholder = $("#price_pie_chart");
-
                     $.plot(placeholder, data, {
                         series: {
                             pie: {
@@ -155,7 +152,6 @@
                             clickable: true
                         }
                     });
-
                     placeholder.bind("plotclick", function (event, pos, obj) {
                         if (!obj) {
                             return;

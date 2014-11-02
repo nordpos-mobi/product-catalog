@@ -37,17 +37,23 @@
             </div>
             <div role="main" class="ui-content">
                 <h3 class="ui-title"><fmt:message key="label.ask.UserLogOut" /></h3>
-                <sdynattr:link href="/UserAuthorization.action"
-                               event="logout"
-                               class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-left ui-btn-a ui-shadow">
-                    <fmt:message key="yes" />
-                </sdynattr:link>
-                <a href="#" 
-                   class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left ui-btn-b ui-shadow" 
-                   data-rel="back" 
-                   data-transition="flow">
-                    <fmt:message key="no" />
-                </a>
+                <fieldset class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a href="#" 
+                           class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left ui-btn-b ui-shadow" 
+                           data-rel="back" 
+                           data-transition="flow">
+                            <fmt:message key="no" />
+                        </a>
+                    </div>
+                    <div class="ui-block-b">
+                        <sdynattr:link href="/UserAuthorization.action"
+                                       event="logout"
+                                       class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-left ui-btn-a ui-shadow">
+                            <fmt:message key="yes" />
+                        </sdynattr:link>
+                    </div>
+                </fieldset>
             </div>
         </div>                
     </stripes:layout-component>

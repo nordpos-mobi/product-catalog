@@ -54,10 +54,10 @@
                 <li class="ui-body ui-body-b">
                     <fieldset class="ui-grid-a">
                         <div class="ui-block-a">
-                            <sdynattr:submit name="accept" data-theme="a"/>
+                            <sdynattr:reset name="clear" data-theme="b"/>
                         </div>
                         <div class="ui-block-b">
-                            <sdynattr:reset name="clear" data-theme="b"/>
+                            <sdynattr:submit name="accept" data-theme="a"/>
                         </div>
                     </fieldset>
                 </li>
