@@ -17,6 +17,7 @@ package mobi.nordpos.catalog.action;
 
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletResponse;
+import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.Product;
 import mobi.nordpos.catalog.util.ImagePreview;
 import net.sourceforge.stripes.action.StreamingResolution;
@@ -27,6 +28,7 @@ import net.sourceforge.stripes.validation.ValidationMethod;
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
+@Public
 public class ProductImageActionBean extends ProductBaseActionBean {
 
     private int thumbnailSize = 256;

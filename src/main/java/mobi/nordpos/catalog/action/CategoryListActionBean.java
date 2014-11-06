@@ -17,6 +17,7 @@ package mobi.nordpos.catalog.action;
 
 import java.sql.SQLException;
 import java.util.List;
+import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.catalog.model.ProductCategory;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -28,6 +29,7 @@ import net.sourceforge.stripes.validation.ValidationMethod;
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
  */
+@Public
 public class CategoryListActionBean extends CategoryBaseActionBean {
 
     private static final String CATEGORY_LIST = "/WEB-INF/jsp/category_list.jsp";
