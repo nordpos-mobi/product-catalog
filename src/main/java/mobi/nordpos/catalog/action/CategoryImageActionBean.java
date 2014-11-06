@@ -38,7 +38,7 @@ public class CategoryImageActionBean extends CategoryBaseActionBean {
                 response.getOutputStream().write(ImagePreview.createThumbnail(getCategory().getImage(), thumbnailSize));
                 response.flushBuffer();
             }
-        }.setFilename("category-".concat(getCategory().getCode()).concat(".jpeg")).setAttachment(true);
+        }.setFilename("category-".concat(getCategory().getCode() != null ? getCategory().getCode() : "0000" ).concat(".jpeg")).setAttachment(true);
     }
 
     @ValidationMethod(on = "preview")
