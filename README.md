@@ -3,7 +3,14 @@ Product Catalog for the Mobile POS Back-End
 Project: http://nordpos.mobi
 
 ## Release features
-* [1.0.0](https://github.com/nordpos-mobi/product-catalog/releases/tag/1.0.0):  
+* [1.1.0](https://github.com/nordpos-mobi/product-catalog/releases/tag/1.1.0):
+  * upload images for the icons of product categories;
+  * upload and preview images of the product;
+  * one source code of a Java servlete for [NORD POS](http://github.com/nordpos/nordpos), [Openbravo POS](http://sourceforge.net/projects/openbravopos/), [uniCenta oPOS](http://sourceforge.net/projects/unicentaopos/) and [Wanda POS](https://sourceforge.net/projects/wandaposdapos/) applications;
+  * replace Java library barcode4j to jQuery plug-in for render EAN-13 barcode;
+  * expanded scope of the public pages;
+  * mailto.address and tel.number button links of footer set in the localization resources.
+* [1.0.0](https://github.com/nordpos-mobi/product-catalog/releases/tag/1.0.0):
   * create a Maven web application project based on Stripes Framework version 1.5.8;
   * implement version 1.4.4 of jQuery Mobile for UI;
   * persist all data from the database by jdbc from ORMLite library version 4.48;
@@ -45,21 +52,18 @@ Java servlet container: Apache Tomcat 8.0.3(**tested**) and Apache Tomcat 7.0.55
 [JavaEE 6](http://www.oracle.com/technetwork/java/javaee/tech/javaee6technologies-1955512.html) Web Specification APIs.
 
 ## Powered by
-[Openbravo Java POS](https://code.openbravo.com/pos/devel/main/)(**tested**)
+[NORD POS](http://github.com/nordpos/nordpos)(**tested**) [Openbravo Java POS](http://sourceforge.net/projects/openbravopos/)(**tested**) [uniCenta oPOS](http://sourceforge.net/projects/unicentaopos/)(**tested**) [Wanda POS](http://sourceforge.net/projects/wandaposdapos/)(**tested**)
 
 ## Demo
 URL: http://nordpos.mobi/product-catalog/
-
-User name: DemoUser
-
-User password: demopassword
+Name: **DemoUser** Password: **demopassword**
 
 ## Screenshots
 Samsung Galaxy Y GT-S5360 Android v.2.3.6
 
-![Login screen](https://cloud.githubusercontent.com/assets/1005780/4693219/7af6f184-578f-11e4-8c14-ecbbb973f5b9.png) ![Product categories list](https://cloud.githubusercontent.com/assets/1005780/4693232/ec48030a-578f-11e4-87ca-5d3c1bacf227.png) ![Edit product](https://cloud.githubusercontent.com/assets/1005780/4693240/474cc7e0-5790-11e4-93ed-d6a94c5b597c.png)
+![Login screen](https://cloud.githubusercontent.com/assets/1005780/4693219/7af6f184-578f-11e4-8c14-ecbbb973f5b9.png) ![Product categories](https://cloud.githubusercontent.com/assets/1005780/4978221/f6c3e136-68ed-11e4-81e0-19a35ffd018e.png) ![Product image preview](https://cloud.githubusercontent.com/assets/1005780/4978222/f6cd5360-68ed-11e4-9fd7-d9eb077af408.png)
 
-![Product barcode](https://cloud.githubusercontent.com/assets/1005780/4693256/4e7e904c-5791-11e4-94c9-a23497b7f48f.png) ![Price pie chart](https://cloud.githubusercontent.com/assets/1005780/4693257/4e83a2d0-5791-11e4-8dc7-73da1aa19ddb.png)
+![Edit product](https://cloud.githubusercontent.com/assets/1005780/4693240/474cc7e0-5790-11e4-93ed-d6a94c5b597c.png) ![Product barcode](https://cloud.githubusercontent.com/assets/1005780/4693256/4e7e904c-5791-11e4-94c9-a23497b7f48f.png) ![Price pie chart](https://cloud.githubusercontent.com/assets/1005780/4693257/4e83a2d0-5791-11e4-8dc7-73da1aa19ddb.png)
 
 Samsung Galaxy S4 mini Duos GT-I9192 Android v.4.2.2
 
