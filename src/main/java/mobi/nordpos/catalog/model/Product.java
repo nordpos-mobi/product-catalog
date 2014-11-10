@@ -35,6 +35,7 @@ public class Product {
     public static final String CATEGORY = "CATEGORY";
     public static final String TAXCAT = "TAXCAT";
     public static final String IMAGE = "IMAGE";
+    public static final String ISCOM = "ISCOM";
 
     @DatabaseField(id = true, columnName = ID)
     private String id;
@@ -56,6 +57,9 @@ public class Product {
 
     @DatabaseField(columnName = IMAGE, dataType = DataType.BYTE_ARRAY, canBeNull = true)
     private byte[] image;
+
+    @DatabaseField(columnName = ISCOM, defaultValue = "false")
+    private Boolean com;
 
     @DatabaseField(foreign = true,
             columnName = CATEGORY,
@@ -131,6 +135,14 @@ public class Product {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public Boolean getCom() {
+        return com;
+    }
+
+    public void setCom(Boolean com) {
+        this.com = com;
     }
 
     public BigDecimal getTaxPriceSell() {
