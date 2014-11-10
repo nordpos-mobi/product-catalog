@@ -40,7 +40,7 @@ public class ProductImageActionBean extends ProductBaseActionBean {
                 response.getOutputStream().write(ImagePreview.createThumbnail(getProduct().getImage(), thumbnailSize));
                 response.flushBuffer();
             }
-        }.setFilename("product-".concat(getProduct().getCode()).concat(".jpeg")).setAttachment(true);
+        }.setFilename("product-".concat(getProduct().getCode()).concat(".jpeg"));
     }
 
     @ValidationMethod(on = "preview")

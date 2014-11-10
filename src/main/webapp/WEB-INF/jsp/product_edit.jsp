@@ -85,7 +85,7 @@
                 <li class="ui-field-contain">
                     <stripes:label name="label.Product.name" for="productName" />
                     <input name="product.name" id="productName" type="text"
-                           placeholder="<fmt:message key='"label.ProductName.enter' />" 
+                           placeholder="<fmt:message key='label.ProductName.enter' />" 
                            value="${actionBean.product.name}"
                            data-clear-btn="true">
                 </li>
@@ -108,7 +108,11 @@
                     <input name="product.priceBuy" id="productBuyPrice" type="number"
                            placeholder="<fmt:message key='label.ProductBuyPrice.enter' />"
                            step="0.01"
-                           value="${actionBean.product.priceBuy}"
+                           value="<fmt:formatNumber value="${actionBean.product.priceBuy}"
+                                          type="NUMBER"
+                                          pattern="#0.00"
+                                          maxFractionDigits="2" 
+                                          minFractionDigits="2"/>"
                            data-clear-btn="true">
                 </li>                
                 <li class="ui-field-contain">
@@ -116,7 +120,11 @@
                     <input name="product.taxPriceSell" id="productSellPrice" type="number"
                            placeholder="<fmt:message key='label.ProductSellPrice.enter' />"
                            step="0.01"
-                           value="${actionBean.product.taxPriceSell}"
+                           value="<fmt:formatNumber value="${actionBean.product.taxPriceSell}"
+                                          type="NUMBER"
+                                          pattern="#0.00"
+                                          maxFractionDigits="2" 
+                                          minFractionDigits="2"/>"
                            data-clear-btn="true">
                 </li>
                 <li class="ui-field-contain">
