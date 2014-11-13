@@ -37,10 +37,12 @@ public class CategoryImageActionBean extends CategoryBaseActionBean {
         return new StreamingResolution("image/jpeg") {
             @Override
             public void stream(HttpServletResponse response) throws Exception {
-                response.getOutputStream().write(ImagePreview.createThumbnail(getCategory().getImage(), thumbnailSize));
-                response.flushBuffer();
+                if (getCategory().getImage() != null) {
+                    response.getOutputStream().write(ImagePreview.createThumbnail(getCategory().getImage(), thumbnailSize));
+                    response.flushBuffer();
+                }
             }
-        }.setFilename("category-".concat(getCategory().getCode() != null ? getCategory().getCode() : "0000" ).concat(".jpeg"));
+        }.setFilename("category-".concat(getCategory().getCode() != null ? getCategory().getCode() : "0000").concat(".jpeg"));
     }
 
     @ValidationMethod(on = "preview")

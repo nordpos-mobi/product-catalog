@@ -37,8 +37,10 @@ public class ProductImageActionBean extends ProductBaseActionBean {
         return new StreamingResolution("image/jpeg") {
             @Override
             public void stream(HttpServletResponse response) throws Exception {
-                response.getOutputStream().write(ImagePreview.createThumbnail(getProduct().getImage(), thumbnailSize));
-                response.flushBuffer();
+                if (getProduct().getImage() != null) {
+                    response.getOutputStream().write(ImagePreview.createThumbnail(getProduct().getImage(), thumbnailSize));
+                    response.flushBuffer();
+                }
             }
         }.setFilename("product-".concat(getProduct().getCode()).concat(".jpeg"));
     }
