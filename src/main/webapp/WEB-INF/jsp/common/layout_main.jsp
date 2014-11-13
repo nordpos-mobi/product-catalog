@@ -25,19 +25,18 @@
             <script src="<c:url value='/js/jquery.flot.min.js'/>" type="text/javascript"></script>
             <script src="<c:url value='/js/jquery.flot.pie.min.js'/>" type="text/javascript"></script>
             <script src="<c:url value='/js/jquery-ean13.min.js'/>" type="text/javascript"></script>
-
         </head>
         <body>
             <div data-role="page" id="${pageid}">
-                <div data-role="header" role="banner"> 
+                <div data-role="header" role="banner">
                     <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                        <stripes:layout-component name="button.return"/>
+                        <stripes:layout-component name="buttons_left"/>
                     </div>
                     <h2>
-                        <stripes:layout-component name="header.title"/>
+                        <stripes:layout-component name="title"/>
                     </h2>
                     <div class="ui-btn-right" data-role="controlgroup" data-type="horizontal" data-mini="true">
-                        <stripes:layout-component name="button.action"/>
+                        <stripes:layout-component name="buttons_right"/>
                         <c:if test="${not empty user}">
                             <sdynattr:link href="/UserView.action"
                                            class="ui-btn ui-corner-all ui-btn-icon-left ui-icon-user">

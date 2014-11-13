@@ -10,18 +10,18 @@
                        title="Product Category"
                        pageid="ProductCategory">
 
-    <stripes:layout-component name="button.return">
+    <stripes:layout-component name="buttons_left">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext">            
             <fmt:message key="label.home" />
         </sdynattr:link>          
     </stripes:layout-component>
 
-    <stripes:layout-component name="header.title">
+    <stripes:layout-component name="title">
         <fmt:message key="label.Categories"/>
     </stripes:layout-component>
 
-    <stripes:layout-component name="button.action">
+    <stripes:layout-component name="buttons_right">
         <sdynattr:link href="/CategoryCreate.action"                       
                        class="ui-btn ui-shadow ui-corner-all ui-icon-action ui-btn-icon-left">
             <stripes:param name="category.code" value="${actionBean.categoryList.size() + 1}"/>

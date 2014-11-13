@@ -10,7 +10,7 @@
                        title="Product Category View"
                        pageid="ProductCategoryView">
 
-    <stripes:layout-component name="button.return">
+    <stripes:layout-component name="buttons_left">
         <sdynattr:link href="/Welcome.action"
                        class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext">            
             <fmt:message key="label.home" />
@@ -21,11 +21,11 @@
         </sdynattr:link>         
     </stripes:layout-component>
 
-    <stripes:layout-component name="header.title">
+    <stripes:layout-component name="title">
         <c:out value="${actionBean.category.name}"/>
     </stripes:layout-component>
 
-    <stripes:layout-component name="button.action">
+    <stripes:layout-component name="buttons_right">
         <sdynattr:link href="/ProductCreate.action"
                        class="ui-btn ui-shadow ui-corner-all ui-icon-action ui-btn-icon-left">            
             <stripes:param name="product.productCategory.id" value="${actionBean.category.id}"/>
