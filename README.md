@@ -3,6 +3,10 @@ Product Catalog for the Mobile POS Back-End
 Project: http://nordpos.mobi
 
 ## Release features
+* [1.1.1](https://github.com/nordpos-mobi/product-catalog/releases/tag/1.1.1):
+  * check the image of the product and category, that it is not null;
+  * remove a dot in the values of the layout component name;
+  * update the dependencies and resource properties for enable slf4j logger.
 * [1.1.0](https://github.com/nordpos-mobi/product-catalog/releases/tag/1.1.0):
   * upload images for the icons of product categories;
   * upload and preview images of the product;
