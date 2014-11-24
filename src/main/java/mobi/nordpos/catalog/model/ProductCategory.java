@@ -100,6 +100,10 @@ public class ProductCategory {
         this.productList = productList;
     }    
 
+    public int getProductListSize() {
+        return productList == null ? 0 : productList.size();
+    }
+    
     @Override
     public int hashCode() {
         return name.hashCode();

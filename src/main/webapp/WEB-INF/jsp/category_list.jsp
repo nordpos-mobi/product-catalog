@@ -49,7 +49,7 @@
                         <h2><c:out value="${category.name}"/></h2>
                         <p><c:out value="${category.code}"/></p>
                         <%-- Addional information about number of child elements --%>
-                        <span class="ui-li-count"><c:out value="${category.productList.size()}"/></span>
+                        <span class="ui-li-count"><c:out value="${category.productListSize}"/></span>
                     </sdynattr:link>
                     <%-- Link to change the current list item --%>
                     <sdynattr:link href="/CategoryChange.action"
