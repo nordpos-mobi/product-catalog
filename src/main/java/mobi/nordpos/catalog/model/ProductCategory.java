@@ -95,15 +95,15 @@ public class ProductCategory {
             return productList;
         }
     }
-    
+
     public void setProductList(List<Product> productList) {
         this.productList = productList;
-    }    
+    }
 
     public int getProductListSize() {
-        return productList == null ? 0 : productList.size();
+        return this.getProductCollection().size();
     }
-    
+
     @Override
     public int hashCode() {
         return name.hashCode();
