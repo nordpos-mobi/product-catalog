@@ -18,8 +18,11 @@ package mobi.nordpos.catalog.action;
 import java.sql.SQLException;
 import java.util.List;
 import mobi.nordpos.catalog.ext.Public;
-import mobi.nordpos.catalog.model.Product;
-import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.dao.model.Product;
+import mobi.nordpos.dao.model.ProductCategory;
+import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
+import mobi.nordpos.dao.ormlite.ProductPersist;
+import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -64,14 +67,18 @@ public class CategoryProductListActionBean extends CategoryBaseActionBean {
     }
 
     @ValidationMethod
-    public void validateCategoryIdIsAvalaible(ValidationErrors errors) {
+    public void validateCategoryProductListIsAvalaible(ValidationErrors errors) {
         try {
-            ProductCategory category = readProductCategory(getCategory().getId());
+            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            TaxPersist taxPersist = new TaxPersist(getDataBaseConnection());
+            ProductCategory category = pcPersist.read(getCategory().getId());
             if (category != null) {
                 setCategory(category);
-                List<Product> products = category.getProductList();
-                for (Product product : products) {
-                    product.setTax(readTax(product.getTaxCategory().getId()));
+                List<Product> products = pcPersist.readProductList(category);
+                for (int j = 0; j < products.size(); j++) {
+                    Product product = products.get(j);
+                    product.setTax(taxPersist.read(product.getTaxCategory().getId()));
+                    products.set(j, product);
                 }
                 setProductList(products);
             } else {

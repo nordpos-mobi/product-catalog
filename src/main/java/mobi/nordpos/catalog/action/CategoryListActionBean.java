@@ -18,7 +18,9 @@ package mobi.nordpos.catalog.action;
 import java.sql.SQLException;
 import java.util.List;
 import mobi.nordpos.catalog.ext.Public;
-import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.dao.model.Product;
+import mobi.nordpos.dao.model.ProductCategory;
+import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -52,7 +54,15 @@ public class CategoryListActionBean extends CategoryBaseActionBean {
     @ValidationMethod
     public void validateCategoryListIsAvalaible(ValidationErrors errors) {
         try {
-            setCategoryList(readCategoryList());
+            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());           
+            List<ProductCategory> categories = pcPersist.readList();
+            for (int i = 0; i < categories.size(); i++) {
+                ProductCategory category = categories.get(i);
+                List<Product> products = pcPersist.readProductList(category);
+                category.setProductList(products);
+                categories.set(i, category);
+            }
+            setCategoryList(categories);
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
                     new SimpleError(ex.getMessage()));

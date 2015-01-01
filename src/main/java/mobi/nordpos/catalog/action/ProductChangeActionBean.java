@@ -19,8 +19,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.SQLException;
-import mobi.nordpos.catalog.model.Product;
+import mobi.nordpos.dao.model.Product;
 import mobi.nordpos.catalog.util.ImagePreview;
+import mobi.nordpos.dao.ormlite.ProductPersist;
+import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -56,7 +58,8 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         product.setPriceSell(product.getTaxPriceSell().divide(bdTaxRateMultiply, MathContext.DECIMAL64));
 
         try {
-            if (updateProduct(product)) {
+            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            if (productPersist.change(product)) {
                 getContext().getMessages().add(
                         new SimpleMessage(getLocalizationKey("message.Product.updated"),
                                 product.getName()));
@@ -72,7 +75,8 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
     public Resolution delete() throws SQLException {
         Product product = getProduct();
         try {
-            if (deleteProduct(product.getId())) {
+            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            if (productPersist.delete(product.getId())) {
                 getContext().getMessages().add(
                         new SimpleMessage(getLocalizationKey("message.Product.deleted"),
                                 product.getName()));
@@ -90,7 +94,8 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         String name = getProduct().getName();
         if (name != null && !name.isEmpty() && !name.equals(getCurrentProduct().getName())) {
             try {
-                if (readProduct(Product.NAME, name) != null) {
+                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                if (productPersist.find(Product.NAME, name) != null) {
                     errors.add("product.name", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), name));
                 }
@@ -106,7 +111,8 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         String code = getProduct().getCode();
         if (code != null && !code.isEmpty() && !code.equals(getCurrentProduct().getCode())) {
             try {
-                if (readProduct(Product.CODE, code) != null) {
+                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                if (productPersist.find(Product.CODE, code) != null) {
                     errors.add("product.code", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), code));
                 }
@@ -122,7 +128,8 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         String reference = getProduct().getReference();
         if (reference != null && !reference.isEmpty() && !reference.equals(getCurrentProduct().getReference())) {
             try {
-                if (readProduct(Product.REFERENCE, reference) != null) {
+                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                if (productPersist.find(Product.REFERENCE, reference) != null) {
                     errors.add("product.reference", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), reference));
                 }
@@ -132,37 +139,40 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
             }
         }
     }
-    
+
     @ValidationMethod(on = "update")
     public void validateProductImageUpload(ValidationErrors errors) {
         try {
+            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
             if (imageFile != null) {
                 if (imageFile.getContentType().startsWith("image")) {
                     try {
                         getProduct().setImage(ImagePreview.createThumbnail(imageFile.getInputStream(), 256));
                     } catch (IOException ex) {
                         errors.add("product.image", new SimpleError(
-                            getLocalizationKey("error.FileNotUpload"), imageFile.getFileName()));
+                                getLocalizationKey("error.FileNotUpload"), imageFile.getFileName()));
                     }
                 } else {
                     errors.add("product.image", new SimpleError(
                             getLocalizationKey("error.FileNotImage"), imageFile.getFileName()));
                 }
             } else {
-                getProduct().setImage(readProduct(getProduct().getId()).getImage());
+                getProduct().setImage(productPersist.read(getProduct().getId()).getImage());
             }
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
                     new SimpleError(ex.getMessage()));
         }
-    }    
+    }
 
     @ValidationMethod(on = "form")
     public void validateProductIdIsAvalaible(ValidationErrors errors) {
         try {
-            Product product = readProduct(getProduct().getId());
+            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            TaxPersist taxPersist = new TaxPersist(getDataBaseConnection());
+            Product product = productPersist.read(getProduct().getId());
             if (product != null) {
-                product.setTax(readTax(product.getTaxCategory().getId()));
+                product.setTax(taxPersist.read(product.getTaxCategory().getId()));
                 setProduct(product);
             } else {
                 errors.add("product.id", new SimpleError(

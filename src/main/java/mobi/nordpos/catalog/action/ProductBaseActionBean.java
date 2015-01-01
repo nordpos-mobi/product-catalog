@@ -19,8 +19,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 import java.util.List;
-import mobi.nordpos.catalog.dao.ormlite.ProductPersist;
-import mobi.nordpos.catalog.model.Product;
+import mobi.nordpos.dao.model.Product;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -35,82 +34,6 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    protected Product readProduct(String id) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductPersist productDao = new ProductPersist(connection);
-            return productDao.queryForId(id);
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected Product readProduct(String table, String value) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductPersist productDao = new ProductPersist(connection);
-            QueryBuilder qb = productDao.queryBuilder();
-            qb.where().like(table, value);
-            return (Product) qb.queryForFirst();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected List<Product> listProductByCodePrefix(String prefix) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductPersist productDao = new ProductPersist(connection);
-            QueryBuilder qb = productDao.queryBuilder();
-            qb.where().like(Product.CODE, prefix.concat("%"));
-            return qb.query();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected Product createProduct(Product product) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductPersist productDao = new ProductPersist(connection);
-            return productDao.createIfNotExists(product);
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected Boolean updateProduct(Product product) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductPersist productDao = new ProductPersist(connection);
-            return productDao.update(product) > 0;
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected Boolean deleteProduct(String id) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductPersist productDao = new ProductPersist(connection);
-            return productDao.deleteById(id) > 0;
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
     }
     
 }

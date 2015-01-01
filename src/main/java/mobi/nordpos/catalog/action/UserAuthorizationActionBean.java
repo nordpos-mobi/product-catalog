@@ -19,8 +19,9 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.Public;
-import mobi.nordpos.catalog.model.User;
+import mobi.nordpos.dao.model.User;
 import com.openbravo.pos.util.Hashcypher;
+import mobi.nordpos.dao.ormlite.UserPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
@@ -71,7 +72,8 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
 
     public Resolution login() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         try {
-            User loginUser = readUser(getUser().getName());
+            UserPersist userPersist = new UserPersist(getDataBaseConnection());
+            User loginUser = userPersist.read(getUser().getName());
 
             if (loginUser == null) {
                 ValidationError error = new LocalizableError("error.User.usernameDoesNotExist", getUser().getName());
@@ -101,7 +103,7 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
 
     public Resolution logout() throws SQLException {
         getContext().logout();
-        return new RedirectResolution(this.getClass());
+        return new RedirectResolution(WelcomeActionBean.class);
     }
 
     @ValidateNestedProperties({

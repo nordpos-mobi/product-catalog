@@ -17,7 +17,9 @@ package mobi.nordpos.catalog.action;
 
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.Public;
-import mobi.nordpos.catalog.model.Product;
+import mobi.nordpos.dao.model.Product;
+import mobi.nordpos.dao.ormlite.ProductPersist;
+import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
@@ -53,9 +55,11 @@ public class ProductViewActionBean extends ProductBaseActionBean {
     @ValidationMethod
     public void validateProductCodeIsAvalaible(ValidationErrors errors) {
         try {
-            Product product = readProduct(Product.CODE, getProduct().getCode());            
+            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            TaxPersist taxPersist = new TaxPersist(getDataBaseConnection());
+            Product product = productPersist.find(Product.CODE, getProduct().getCode());
             if (product != null) {
-                product.setTax(readTax(product.getTaxCategory().getId()));
+                product.setTax(taxPersist.read(product.getTaxCategory().getId()));
                 setProduct(product);
             } else {
                 errors.add("product.code", new SimpleError(

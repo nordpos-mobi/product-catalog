@@ -15,7 +15,7 @@
  */
 package mobi.nordpos.catalog.ext;
 
-import mobi.nordpos.catalog.model.User;
+import mobi.nordpos.dao.model.User;
 import net.sourceforge.stripes.action.ActionBeanContext;
 
 /**

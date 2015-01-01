@@ -18,8 +18,9 @@ package mobi.nordpos.catalog.action;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletResponse;
 import mobi.nordpos.catalog.ext.Public;
-import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.dao.model.ProductCategory;
 import mobi.nordpos.catalog.util.ImagePreview;
+import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -48,7 +49,8 @@ public class CategoryImageActionBean extends CategoryBaseActionBean {
     @ValidationMethod(on = "preview")
     public void validateCategoryIdIsAvalaible(ValidationErrors errors) {
         try {
-            ProductCategory category = readProductCategory(getCategory().getId());
+            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            ProductCategory category = pcPersist.read(getCategory().getId());
             if (category != null) {
                 setCategory(category);
             }

@@ -18,8 +18,9 @@ package mobi.nordpos.catalog.action;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletResponse;
 import mobi.nordpos.catalog.ext.Public;
-import mobi.nordpos.catalog.model.Product;
+import mobi.nordpos.dao.model.Product;
 import mobi.nordpos.catalog.util.ImagePreview;
+import mobi.nordpos.dao.ormlite.ProductPersist;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -48,7 +49,8 @@ public class ProductImageActionBean extends ProductBaseActionBean {
     @ValidationMethod(on = "preview")
     public void validateProductIdIsAvalaible(ValidationErrors errors) {
         try {
-            Product product = readProduct(getProduct().getId());
+            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            Product product = productPersist.read(getProduct().getId());
             if (product != null) {
                 setProduct(product);
             }

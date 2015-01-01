@@ -15,12 +15,7 @@
  */
 package mobi.nordpos.catalog.action;
 
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.stmt.QueryBuilder;
-import java.sql.SQLException;
-import java.util.List;
-import mobi.nordpos.catalog.dao.ormlite.ProductCategoryPersist;
-import mobi.nordpos.catalog.model.ProductCategory;
+import mobi.nordpos.dao.model.ProductCategory;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -35,68 +30,6 @@ public abstract class CategoryBaseActionBean extends BaseActionBean {
 
     public void setCategory(ProductCategory category) {
         this.category = category;
-    }
-
-    protected List<ProductCategory> readCategoryList() throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);
-            return productCategoryDao.getList();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected ProductCategory readProductCategory(String column, String value) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);
-            QueryBuilder qb = productCategoryDao.queryBuilder();
-            qb.where().like(column, value);
-            return (ProductCategory) qb.queryForFirst();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected ProductCategory createProductCategory(ProductCategory category) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);
-            return productCategoryDao.createIfNotExists(category);
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected Boolean updateProductCategory(ProductCategory category) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);
-            return productCategoryDao.update(category) > 0;
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    protected Boolean deleteProductCategory(String id) throws SQLException {
-        try {
-            connection = new JdbcConnectionSource(getDataBaseURL(), getDataBaseUser(), getDataBasePassword());
-            ProductCategoryPersist productCategoryDao = new ProductCategoryPersist(connection);
-            return productCategoryDao.deleteById(id) > 0;
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
     }
 
 }

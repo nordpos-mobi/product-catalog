@@ -21,10 +21,14 @@ import java.math.MathContext;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
-import mobi.nordpos.catalog.model.Product;
-import mobi.nordpos.catalog.model.ProductCategory;
-import mobi.nordpos.catalog.model.TaxCategory;
+import mobi.nordpos.dao.model.Product;
+import mobi.nordpos.dao.model.ProductCategory;
+import mobi.nordpos.dao.model.TaxCategory;
 import mobi.nordpos.catalog.util.ImagePreview;
+import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
+import mobi.nordpos.dao.ormlite.ProductPersist;
+import mobi.nordpos.dao.ormlite.TaxCategoryPersist;
+import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -61,7 +65,9 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         Product product = getProduct();
         product.setId(UUID.randomUUID().toString());
         try {
-            product.setTax(readTax(product.getTaxCategory().getId()));
+            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            TaxPersist taxPersist = new TaxPersist(getDataBaseConnection());
+            product.setTax(taxPersist.read(product.getTaxCategory().getId()));
             BigDecimal taxRate = product.getTax().getRate();
 
             if (getIsTaxInclude() && taxRate != BigDecimal.ZERO) {
@@ -71,7 +77,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
 
             getContext().getMessages().add(
                     new SimpleMessage(getLocalizationKey("message.Product.added"),
-                            createProduct(product).getName(), product.getProductCategory().getName())
+                            productPersist.add(product).getName(), product.getProductCategory().getName())
             );
         } catch (SQLException ex) {
             getContext().getValidationErrors().addGlobalError(
@@ -119,7 +125,8 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
     @ValidationMethod
     public void validateProductIdIsAvalaible(ValidationErrors errors) {
         try {
-            ProductCategory category = readProductCategory(getProduct().getProductCategory().getId());
+            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            ProductCategory category = pcPersist.read(getProduct().getProductCategory().getId());
             if (category != null) {
                 getProduct().setProductCategory(category);
             } else {
@@ -137,7 +144,8 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         String name = getProduct().getName();
         if (name != null && !name.isEmpty()) {
             try {
-                if (readProduct(Product.NAME, name) != null) {
+                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                if (productPersist.find(Product.NAME, name) != null) {
                     errors.add("product.name", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), name));
                 }
@@ -153,7 +161,8 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         String code = getProduct().getCode();
         if (code != null && !code.isEmpty()) {
             try {
-                if (readProduct(Product.CODE, code) != null) {
+                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                if (productPersist.find(Product.CODE, code) != null) {
                     errors.add("product.code", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), code));
                 }
@@ -232,7 +241,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
     }
 
     private String getShortCode() {
-        Integer listSize = getProduct().getProductCategory().getProductList().size();
+        Integer listSize = getProduct().getProductCategory().getProductCollection().size();
         String code = Integer.toString(listSize + 1);
         while (code.length() < 5) {
             code = "0".concat(code);
@@ -241,7 +250,8 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
     }
 
     public List<TaxCategory> getTaxCategoryList() throws SQLException {
-        return readTaxCategoryList();
+        TaxCategoryPersist tcPersist = new TaxCategoryPersist(getDataBaseConnection());
+        return tcPersist.readList();
     }
 
     public Boolean getIsTaxInclude() {
