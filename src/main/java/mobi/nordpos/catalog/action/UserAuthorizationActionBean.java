@@ -20,7 +20,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.dao.model.User;
-import mobi.nordpos.dao.ormlite.UserPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
@@ -49,11 +48,11 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
     private String targetUrl;
 
     @Validate(on = {"login"},
-                required = true,
-                minlength = 5,
-                maxlength = 20)
+            required = true,
+            minlength = 5,
+            maxlength = 20)
     private String enterPassword;
-    
+
     /**
      * The URL the user was trying to access (null if the login page was
      * accessed directly).
@@ -77,7 +76,7 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
     public void setEnterPassword(String enterPassword) {
         this.enterPassword = enterPassword;
     }
-    
+
     @DefaultHandler
     public Resolution view() {
         return new ForwardResolution(LOGIN);
@@ -85,9 +84,8 @@ public class UserAuthorizationActionBean extends UserBaseActionBean {
 
     public Resolution login() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         try {
-            UserPersist userPersist = new UserPersist(getDataBaseConnection());
-            User loginUser = userPersist.read(getUser().getName());
-
+            userPersist.init(getDataBaseConnection());
+            User loginUser = userPersist.find(User.NAME, getUser().getName());
             if (loginUser == null) {
                 ValidationError error = new LocalizableError("error.User.usernameDoesNotExist", getUser().getName());
                 getContext().getValidationErrors().add("loginName", error);

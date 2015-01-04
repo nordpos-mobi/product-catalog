@@ -20,7 +20,6 @@ import java.sql.SQLException;
 import java.util.UUID;
 import mobi.nordpos.dao.model.ProductCategory;
 import mobi.nordpos.catalog.util.ImagePreview;
-import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -50,7 +49,7 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         ProductCategory category = getCategory();
         category.setId(UUID.randomUUID().toString());
         try {
-            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            pcPersist.init(getDataBaseConnection());
             getContext().getMessages().add(
                     new SimpleMessage(getLocalizationKey("message.ProductCategory.added"),
                             pcPersist.add(category).getName())
@@ -85,7 +84,7 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         String name = getCategory().getName();
         if (name != null && !name.isEmpty()) {
             try {
-                ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+                pcPersist.init(getDataBaseConnection());
                 if (pcPersist.find(ProductCategory.NAME, name) != null) {
                     errors.add("category.name", new SimpleError(
                             getLocalizationKey("error.ProductCategory.AlreadyExists"), name));
@@ -102,7 +101,7 @@ public class CategoryCreateActionBean extends CategoryBaseActionBean {
         String code = getCategory().getCode();
         if (code != null && !code.isEmpty()) {
             try {
-                ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());                
+                pcPersist.init(getDataBaseConnection());
                 if (pcPersist.find(ProductCategory.CODE, code) != null) {
                     errors.add("category.code", new SimpleError(
                             getLocalizationKey("error.ProductCategory.AlreadyExists"), code));

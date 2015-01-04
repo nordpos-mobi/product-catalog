@@ -16,6 +16,7 @@
 package mobi.nordpos.catalog.action;
 
 import mobi.nordpos.dao.model.ProductCategory;
+import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -23,6 +24,12 @@ import mobi.nordpos.dao.model.ProductCategory;
 public abstract class CategoryBaseActionBean extends BaseActionBean {
 
     private ProductCategory category;
+
+    public final ProductCategoryPersist pcPersist;
+
+    public CategoryBaseActionBean() {
+        pcPersist = new ProductCategoryPersist();
+    }
 
     public ProductCategory getCategory() {
         return category;

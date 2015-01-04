@@ -15,11 +15,9 @@
  */
 package mobi.nordpos.catalog.action;
 
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.stmt.QueryBuilder;
-import java.sql.SQLException;
-import java.util.List;
 import mobi.nordpos.dao.model.Product;
+import mobi.nordpos.dao.ormlite.ProductPersist;
+import mobi.nordpos.dao.ormlite.TaxPersist;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>
@@ -28,6 +26,14 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
 
     private Product product;
 
+    public final ProductPersist productPersist;
+    public final TaxPersist taxPersist;
+
+    public ProductBaseActionBean() {
+        productPersist = new ProductPersist();
+        taxPersist = new TaxPersist();
+    }
+
     public Product getProduct() {
         return product;
     }
@@ -35,5 +41,5 @@ public abstract class ProductBaseActionBean extends BaseActionBean {
     public void setProduct(Product product) {
         this.product = product;
     }
-    
+
 }

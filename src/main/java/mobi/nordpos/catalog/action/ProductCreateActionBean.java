@@ -26,7 +26,6 @@ import mobi.nordpos.dao.model.ProductCategory;
 import mobi.nordpos.dao.model.TaxCategory;
 import mobi.nordpos.catalog.util.ImagePreview;
 import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
-import mobi.nordpos.dao.ormlite.ProductPersist;
 import mobi.nordpos.dao.ormlite.TaxCategoryPersist;
 import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -65,8 +64,8 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         Product product = getProduct();
         product.setId(UUID.randomUUID().toString());
         try {
-            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
-            TaxPersist taxPersist = new TaxPersist(getDataBaseConnection());
+            productPersist.init(getDataBaseConnection());
+            taxPersist.init(getDataBaseConnection());
             product.setTax(taxPersist.read(product.getTaxCategory().getId()));
             BigDecimal taxRate = product.getTax().getRate();
 
@@ -123,9 +122,10 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
     }
 
     @ValidationMethod
-    public void validateProductIdIsAvalaible(ValidationErrors errors) {
+    public void validateProductCategoryIdIsAvalaible(ValidationErrors errors) {
         try {
-            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            ProductCategoryPersist pcPersist = new ProductCategoryPersist();
+            pcPersist.init(getDataBaseConnection());
             ProductCategory category = pcPersist.read(getProduct().getProductCategory().getId());
             if (category != null) {
                 getProduct().setProductCategory(category);
@@ -144,7 +144,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         String name = getProduct().getName();
         if (name != null && !name.isEmpty()) {
             try {
-                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                productPersist.init(getDataBaseConnection());
                 if (productPersist.find(Product.NAME, name) != null) {
                     errors.add("product.name", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), name));
@@ -161,7 +161,7 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
         String code = getProduct().getCode();
         if (code != null && !code.isEmpty()) {
             try {
-                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                productPersist.init(getDataBaseConnection());
                 if (productPersist.find(Product.CODE, code) != null) {
                     errors.add("product.code", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), code));
@@ -250,7 +250,8 @@ public class ProductCreateActionBean extends ProductBaseActionBean {
     }
 
     public List<TaxCategory> getTaxCategoryList() throws SQLException {
-        TaxCategoryPersist tcPersist = new TaxCategoryPersist(getDataBaseConnection());
+        TaxCategoryPersist tcPersist = new TaxCategoryPersist();
+        tcPersist.init(getDataBaseConnection());
         return tcPersist.readList();
     }
 

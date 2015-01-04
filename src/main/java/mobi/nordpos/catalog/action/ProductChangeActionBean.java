@@ -21,7 +21,6 @@ import java.math.MathContext;
 import java.sql.SQLException;
 import mobi.nordpos.dao.model.Product;
 import mobi.nordpos.catalog.util.ImagePreview;
-import mobi.nordpos.dao.ormlite.ProductPersist;
 import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.FileBean;
@@ -45,7 +44,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
 
     private Product currentProduct;
     private FileBean imageFile;
-
+   
     @DefaultHandler
     public Resolution form() throws SQLException {
         return new ForwardResolution(PRODUCT_EDIT);
@@ -58,7 +57,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         product.setPriceSell(product.getTaxPriceSell().divide(bdTaxRateMultiply, MathContext.DECIMAL64));
 
         try {
-            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            productPersist.init(getDataBaseConnection());
             if (productPersist.change(product)) {
                 getContext().getMessages().add(
                         new SimpleMessage(getLocalizationKey("message.Product.updated"),
@@ -75,7 +74,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
     public Resolution delete() throws SQLException {
         Product product = getProduct();
         try {
-            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            productPersist.init(getDataBaseConnection());
             if (productPersist.delete(product.getId())) {
                 getContext().getMessages().add(
                         new SimpleMessage(getLocalizationKey("message.Product.deleted"),
@@ -94,7 +93,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         String name = getProduct().getName();
         if (name != null && !name.isEmpty() && !name.equals(getCurrentProduct().getName())) {
             try {
-                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                productPersist.init(getDataBaseConnection());
                 if (productPersist.find(Product.NAME, name) != null) {
                     errors.add("product.name", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), name));
@@ -111,7 +110,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         String code = getProduct().getCode();
         if (code != null && !code.isEmpty() && !code.equals(getCurrentProduct().getCode())) {
             try {
-                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                productPersist.init(getDataBaseConnection());
                 if (productPersist.find(Product.CODE, code) != null) {
                     errors.add("product.code", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), code));
@@ -128,7 +127,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
         String reference = getProduct().getReference();
         if (reference != null && !reference.isEmpty() && !reference.equals(getCurrentProduct().getReference())) {
             try {
-                ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+                productPersist.init(getDataBaseConnection());
                 if (productPersist.find(Product.REFERENCE, reference) != null) {
                     errors.add("product.reference", new SimpleError(
                             getLocalizationKey("error.Product.AlreadyExists"), reference));
@@ -143,7 +142,7 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
     @ValidationMethod(on = "update")
     public void validateProductImageUpload(ValidationErrors errors) {
         try {
-            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
+            productPersist.init(getDataBaseConnection());
             if (imageFile != null) {
                 if (imageFile.getContentType().startsWith("image")) {
                     try {
@@ -168,8 +167,8 @@ public class ProductChangeActionBean extends ProductBaseActionBean {
     @ValidationMethod(on = "form")
     public void validateProductIdIsAvalaible(ValidationErrors errors) {
         try {
-            ProductPersist productPersist = new ProductPersist(getDataBaseConnection());
-            TaxPersist taxPersist = new TaxPersist(getDataBaseConnection());
+            productPersist.init(getDataBaseConnection());
+            taxPersist.init(getDataBaseConnection());
             Product product = productPersist.read(getProduct().getId());
             if (product != null) {
                 product.setTax(taxPersist.read(product.getTaxCategory().getId()));

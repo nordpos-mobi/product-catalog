@@ -20,8 +20,6 @@ import java.util.List;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.dao.model.Product;
 import mobi.nordpos.dao.model.ProductCategory;
-import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
-import mobi.nordpos.dao.ormlite.ProductPersist;
 import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -69,8 +67,9 @@ public class CategoryProductListActionBean extends CategoryBaseActionBean {
     @ValidationMethod
     public void validateCategoryProductListIsAvalaible(ValidationErrors errors) {
         try {
-            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
-            TaxPersist taxPersist = new TaxPersist(getDataBaseConnection());
+            pcPersist.init(getDataBaseConnection());            
+            TaxPersist taxPersist = new TaxPersist();
+            taxPersist.init(getDataBaseConnection());
             ProductCategory category = pcPersist.read(getCategory().getId());
             if (category != null) {
                 setCategory(category);

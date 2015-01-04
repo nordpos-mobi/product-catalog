@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import mobi.nordpos.dao.model.ProductCategory;
 import mobi.nordpos.catalog.util.ImagePreview;
-import mobi.nordpos.dao.ormlite.ProductCategoryPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -51,7 +50,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     public Resolution update() {
         ProductCategory category = getCategory();
         try {
-            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            pcPersist.init(getDataBaseConnection());
             if (pcPersist.change(category)) {
                 getContext().getMessages().add(
                         new SimpleMessage(getLocalizationKey("message.ProductCategory.updated"),
@@ -68,7 +67,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     public Resolution delete() throws SQLException {
         ProductCategory category = getCategory();
         try {
-            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            pcPersist.init(getDataBaseConnection());
             if (pcPersist.delete(category.getId())) {
                 getContext().getMessages().add(
                         new SimpleMessage(getLocalizationKey("message.ProductCategory.deleted"),
@@ -83,13 +82,18 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     }
 
     @ValidationMethod(on = "delete")
-    public void validateProductListIsEmpty(ValidationErrors errors) throws SQLException {
-        ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
-        setCategory(pcPersist.read(getCategory().getId()));
-        if (!getCategory().getProductCollection().isEmpty()) {
-            errors.addGlobalError(new SimpleError(
-                    getLocalizationKey("error.ProductCategory.IncludeProducts"), getCategory().getName(), getCategory().getProductCollection().size()
-            ));
+    public void validateProductListIsEmpty(ValidationErrors errors) {
+        try {
+            pcPersist.init(getDataBaseConnection());
+            setCategory(pcPersist.read(getCategory().getId()));
+            if (!getCategory().getProductCollection().isEmpty()) {
+                errors.addGlobalError(new SimpleError(
+                        getLocalizationKey("error.ProductCategory.IncludeProducts"), getCategory().getName(), getCategory().getProductCollection().size()
+                ));
+            }
+        } catch (SQLException ex) {
+            getContext().getValidationErrors().addGlobalError(
+                    new SimpleError(ex.getMessage()));
         }
     }
 
@@ -98,7 +102,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         String name = getCategory().getName();
         if (name != null && !name.isEmpty() && !name.equals(currentCategory.getName())) {
             try {
-                ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+                pcPersist.init(getDataBaseConnection());
                 if (pcPersist.find(ProductCategory.NAME, name) != null) {
                     errors.add("category.name", new SimpleError(
                             getLocalizationKey("error.ProductCategory.AlreadyExists"), name));
@@ -115,7 +119,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
         String code = getCategory().getCode();
         if (code != null && !code.isEmpty() && !code.equals(currentCategory.getCode())) {
             try {
-                ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+                pcPersist.init(getDataBaseConnection());
                 if (pcPersist.find(ProductCategory.CODE, code) != null) {
                     errors.add("category.code", new SimpleError(
                             getLocalizationKey("error.ProductCategory.AlreadyExists"), code));
@@ -130,18 +134,18 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     @ValidationMethod(on = "update")
     public void validateCategoryImageUpload(ValidationErrors errors) {
         try {
-            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            pcPersist.init(getDataBaseConnection());
             if (imageFile != null) {
                 if (imageFile.getContentType().startsWith("image")) {
                     try {
                         getCategory().setImage(ImagePreview.createThumbnail(imageFile.getInputStream(), 256));
                     } catch (IOException ex) {
                         errors.add("category.image", new SimpleError(
-                                getLocalizationKey("error.ProductCategory.FileNotUpload"), imageFile.getFileName()));
+                                getLocalizationKey("error.FileNotUpload"), imageFile.getFileName()));
                     }
                 } else {
                     errors.add("category.image", new SimpleError(
-                            getLocalizationKey("error.ProductCategory.FileNotImage"), imageFile.getFileName()));
+                            getLocalizationKey("error.FileNotImage"), imageFile.getFileName()));
                 }
             } else {
                 getCategory().setImage(pcPersist.read(getCategory().getId()).getImage());
@@ -155,7 +159,7 @@ public class CategoryChangeActionBean extends CategoryBaseActionBean {
     @ValidationMethod(on = "form")
     public void validateCategoryIdIsAvalaible(ValidationErrors errors) {
         try {
-            ProductCategoryPersist pcPersist = new ProductCategoryPersist(getDataBaseConnection());
+            pcPersist.init(getDataBaseConnection());
             ProductCategory category = pcPersist.read(getCategory().getId());
             if (category != null) {
                 setCategory(category);
