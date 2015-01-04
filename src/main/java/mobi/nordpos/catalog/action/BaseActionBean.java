@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BaseActionBean implements ActionBean {
 
+    private static final String WEB_APP_VERSION = "1.2.0-SNAPSHOT";
     private static final String DB_URL = "db.URL";
     private static final String DB_USER = "db.user";
     private static final String DB_PASSWORD = "db.password";
@@ -55,7 +56,7 @@ public abstract class BaseActionBean implements ActionBean {
     public BaseActionBean() {
         appPersist = new ApplicationPersist();
     }
-    
+
     @Override
     public MobileActionBeanContext getContext() {
         return this.context;
@@ -107,6 +108,10 @@ public abstract class BaseActionBean implements ActionBean {
 
     public String getBarcodePrefix() {
         return getContext().getServletContext().getInitParameter(BARCODE_PREFIX);
+    }
+
+    public String getWebApplicationVersion() {
+        return WEB_APP_VERSION;
     }
 
     @SuppressWarnings("unchecked")
