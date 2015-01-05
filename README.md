@@ -2,7 +2,14 @@ Product Catalog for the Mobile POS Back-End
 ===========================================
 Project: http://nordpos.mobi
 
-## Release features
+## Release and Bug fixes ##
+* [1.2.0](https://github.com/nordpos-mobi/product-catalog/releases/tag/1.2.0):
+  * DAO layer moved to [mobi.nordpos.dao.*](https://github.com/nordpos-mobi/nordpos-dao) packages and changed structure of the source code;
+  * fixed critical bug "Not close connection after get foreign collection.";
+  * change the image of login user in view panel; 
+  * upgraded jQuery Mobile to version 1.4.5; 
+  * set  by default Apache Derby JDBC parameters;
+  * and more other.
 * [1.1.1](https://github.com/nordpos-mobi/product-catalog/releases/tag/1.1.1):
   * check the image of the product and category, that it is not null;
   * remove a dot in the values of the layout component name;
