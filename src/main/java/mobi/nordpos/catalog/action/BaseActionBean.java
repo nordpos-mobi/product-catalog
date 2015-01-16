@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import mobi.nordpos.catalog.ext.MobileActionBeanContext;
 import mobi.nordpos.catalog.ext.MyLocalePicker;
 import mobi.nordpos.dao.model.Application;
-import mobi.nordpos.dao.ormlite.ApplicationPersist;
+import mobi.nordpos.dao.factory.ApplicationPersist;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.controller.StripesFilter;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BaseActionBean implements ActionBean {
 
-    private static final String WEB_APP_VERSION = "1.2.0";
+    private static final String WEB_APP_VERSION = "1.2.2";
     private static final String DB_URL = "db.URL";
     private static final String DB_USER = "db.user";
     private static final String DB_PASSWORD = "db.password";

@@ -16,8 +16,8 @@
 package mobi.nordpos.catalog.action;
 
 import mobi.nordpos.dao.model.Product;
-import mobi.nordpos.dao.ormlite.ProductPersist;
-import mobi.nordpos.dao.ormlite.TaxPersist;
+import mobi.nordpos.dao.factory.ProductPersist;
+import mobi.nordpos.dao.factory.TaxPersist;
 
 /**
  * @author Andrey Svininykh <svininykh@gmail.com>

@@ -18,7 +18,6 @@ package mobi.nordpos.catalog.action;
 import java.sql.SQLException;
 import mobi.nordpos.catalog.ext.Public;
 import mobi.nordpos.dao.model.Product;
-import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;

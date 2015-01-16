@@ -21,7 +21,6 @@ import java.math.MathContext;
 import java.sql.SQLException;
 import mobi.nordpos.dao.model.Product;
 import mobi.nordpos.catalog.util.ImagePreview;
-import mobi.nordpos.dao.ormlite.TaxPersist;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
